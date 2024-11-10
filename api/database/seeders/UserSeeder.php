@@ -12,6 +12,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        User::create([
+            'name' => 'John Daniel De Castro',
+            'email' => 'jd@gmail.com',
+            'password' => 'Qweszxcda21!',
+        ]);
+
         User::factory()
             ->unverified()
             ->count(10)
