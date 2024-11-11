@@ -13,7 +13,7 @@ class RecipePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class RecipePolicy
      */
     public function view(User $user, Recipe $recipe): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,38 +29,46 @@ class RecipePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Recipe $recipe): bool
+    public function update(User $user, Recipe $recipe): Response
     {
-        //
+        return $user->id === $recipe->user_id
+            ? Response::allow()
+            : Response::deny('You do not own this post.');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Recipe $recipe): bool
+    public function delete(User $user, Recipe $recipe): Response
     {
-        //
+        return $user->id === $recipe->user_id
+            ? Response::allow()
+            : Response::deny('You do not own this post.');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Recipe $recipe): bool
+    public function restore(User $user, Recipe $recipe): Response
     {
-        //
+        return $user->id === $recipe->user_id
+            ? Response::allow()
+            : Response::deny('You do not own this post.');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Recipe $recipe): bool
+    public function forceDelete(User $user, Recipe $recipe): Response
     {
-        //
+        return $user->id === $recipe->user_id
+            ? Response::allow()
+            : Response::deny('You do not own this post.');
     }
 }
