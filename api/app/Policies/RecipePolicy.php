@@ -49,7 +49,7 @@ class RecipePolicy
     {
         return $user->id === $recipe->user_id
             ? Response::allow()
-            : Response::deny('You do not own this post.');
+            : Response::deny('You do not own this recipe.');
     }
 
     /**
@@ -59,7 +59,7 @@ class RecipePolicy
     {
         return $user->id === $recipe->user_id
             ? Response::allow()
-            : Response::deny('You do not own this post.');
+            : Response::deny('You do not own this recipe.');
     }
 
     /**
@@ -69,6 +69,6 @@ class RecipePolicy
     {
         return $user->id === $recipe->user_id
             ? Response::allow()
-            : Response::deny('You do not own this post.');
+            : Response::deny('You do not own this recipe.');
     }
 }
