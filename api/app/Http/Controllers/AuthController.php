@@ -74,7 +74,7 @@ class AuthController extends Controller
         // Generate unique token to be given to user
         $token = $user->createToken($user->name);
 
-        return [
+        return response()->json([
             'status' => 'success',
             'message' => 'Login successfully',
             'data' => [
@@ -83,19 +83,19 @@ class AuthController extends Controller
             ],
             'errors' => [],
             'timestamp' => now(),
-        ];
+        ]);
     }
 
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
 
-        return [
+        return response()->json([
             'status' => 'success',
             'message' => 'You are now logged out',
             'data' => [],
             'errors' => [],
             'timestamp' => now(),
-        ];
+        ]);
     }
 }
