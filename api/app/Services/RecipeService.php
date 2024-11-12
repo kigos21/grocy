@@ -20,9 +20,14 @@ class RecipeService
             $sort = 'newest';
         }
 
-        // Base query from current user
-        $id = Auth::id();
-        $query = Recipe::query()->where('user_id', $id);
+        // Form base query for USER and ADMIN
+        $user = $request->user();
+        $query = null;
+        if ($user->role === 'USER') {
+            $query = Recipe::query()->where('user_id', $user->id);
+        } else {
+            $query = Recipe::query();
+        }
 
         // Apply search if 'q' parameter is present
         if ($searchQuery) {
