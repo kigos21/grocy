@@ -19,3 +19,4 @@ Route::get('/recipes', [RecipeController::class, 'index'])->middleware('auth:san
 Route::post('/recipes', [RecipeController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/recipes/{id}', [RecipeController::class, 'show'])->middleware('auth:sanctum')->whereNumber('id');
 Route::put('/recipes/{id}', [RecipeController::class, 'update'])->middleware('auth:sanctum')->whereNumber('id');
+Route::delete('/recipes/{id}', [RecipeController::class, 'destroy'])->middleware('auth:sanctum')->whereNumber('id');

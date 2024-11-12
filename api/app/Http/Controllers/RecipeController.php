@@ -141,7 +141,7 @@ class RecipeController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Recipe created successfully',
+            'message' => 'Recipe updated successfully',
             'data' => [
                 'recipe' => $recipe,
             ],
@@ -153,8 +153,27 @@ class RecipeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Recipe $recipe)
+    public function destroy(Request $request, $id)
     {
-        //
+        // Get the existing recipe
+        $recipe = Recipe::findOrFail($id);
+
+        // Check if user is authorized for this action
+        if ($request->user()->cannot('delete', $recipe)) {
+            abort(403);
+        }
+
+        // Delete the model (ingredients will cascade on delete)
+        $recipe->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Recipe deleted successfully',
+            'data' => [
+                'recipe' => $recipe,
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ]);
     }
 }
