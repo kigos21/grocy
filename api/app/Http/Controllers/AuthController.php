@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $data = $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
             'password' => [
@@ -25,7 +25,7 @@ class AuthController extends Controller
             ],
         ]);
 
-        $user = User::create($data);
+        $user = User::create($validatedData);
 
         return response()->json([
             'status' => 'success',
@@ -40,7 +40,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);

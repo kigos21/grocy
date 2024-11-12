@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Recipe;
+use App\Models\RecipeIngredient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,5 +38,24 @@ class RecipeService
 
         // Get the results with pagination
         return $query->paginate(6);
+    }
+
+    public function createRecipe($data)
+    {
+        $data['user_id'] = Auth::id();
+        return Recipe::create($data);
+    }
+
+    public function createIngredients($data, $recipe_id)
+    {
+        $recipe = Recipe::findOrFail($recipe_id);
+
+        foreach ($data as $ingredient) {
+            $ingredient = new RecipeIngredient($ingredient);
+            $recipe->ingredients()->save($ingredient);
+        }
+
+        // Return the ingredients
+        return RecipeIngredient::where('recipe_id', $recipe_id)->get();
     }
 }
