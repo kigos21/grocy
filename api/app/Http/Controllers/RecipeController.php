@@ -91,14 +91,15 @@ class RecipeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Recipe $recipe)
+    public function show($id)
     {
+        $recipe = Recipe::with('ingredients')->findOrFail($id);
+
         return response()->json([
             'status' => 'success',
             'message' => 'Recipe fetch successfully',
             'data' => [
                 'recipe' => $recipe,
-                'ingredients'
             ],
             'errors' => [],
             'timestamp' => now(),

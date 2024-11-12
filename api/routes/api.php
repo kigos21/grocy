@@ -17,3 +17,4 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 // Recipes
 Route::get('/recipes', [RecipeController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/recipes', [RecipeController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/recipes/{id}', [RecipeController::class, 'show'])->middleware('auth:sanctum')->whereNumber('id');
