@@ -42,20 +42,42 @@ class RecipeService
 
     public function createRecipe($data)
     {
-        $data['user_id'] = Auth::id();
-        return Recipe::create($data);
-    }
+        // Separate the ingredients data to be used later
+        $ingredientsData = $data['ingredients'];
+        unset($data['ingredients']);
 
-    public function createIngredientsForRecipe($data, $recipe)
-    {
-        foreach ($data as $ingredient) {
-            $ingredient = new RecipeIngredient($ingredient);
-            $recipe->ingredients()->save($ingredient);
+        // Create the recipe record, associated with the user
+        $data['user_id'] = Auth::id();
+        $createdRecipe = Recipe::create($data);
+
+        // Create the ingredients for the recipe
+        foreach ($ingredientsData as $data) {
+            $ingredient = new RecipeIngredient($data);
+            $createdRecipe->ingredients()->save($ingredient);
         }
+
+        // Query the final recipe with ingredients
+        return Recipe::with('ingredients')->findOrFail($createdRecipe->id);
     }
 
     public function updateRecipe($data, $recipe)
     {
+        // Separate the ingredients data to be used later
+        $ingredientsData = $data['ingredients'];
+        unset($data['ingredients']);
+
+        // Update recipe details
         $recipe->update($data);
+
+        // Remove existing records of recipe's ingredients
+        // Then repopulate
+        $recipe->ingredients()->delete();
+        foreach ($ingredientsData as $data) {
+            $ingredient = new RecipeIngredient($data);
+            $recipe->ingredients()->save($ingredient);
+        }
+
+        // Query the final recipe with ingredients
+        return Recipe::with('ingredients')->findOrFail($recipe->id);
     }
 }

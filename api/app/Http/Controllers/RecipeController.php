@@ -64,18 +64,8 @@ class RecipeController extends Controller
             'ingredients.*.quantity.regex' => 'The quantity must be a whole number and cannot include letters or special characters.'
         ]);
 
-        // Separate the ingredients data to be used later
-        $ingredientsData = $validatedData['ingredients'];
-        unset($validatedData['ingredients']);
-
-        // Create the recipe record
-        $createdRecipe = $this->recipeService->createRecipe($validatedData);
-
-        // Create the ingredients for the recipe
-        $this->recipeService->createIngredientsForRecipe($ingredientsData, $createdRecipe);
-
-        // Query the final recipe with ingredients
-        $recipe = Recipe::with('ingredients')->findOrFail($createdRecipe->id);
+        // Call service to create the recipe
+        $recipe = $this->recipeService->createRecipe($validatedData);
 
         return response()->json([
             'status' => 'success',
@@ -112,10 +102,10 @@ class RecipeController extends Controller
     public function update(Request $request, $id)
     {
         // Get the existing recipe
-        $recipe = Recipe::findOrFail($id);
+        $existingRecipe = Recipe::findOrFail($id);
 
         // Check if user is authorized for this action
-        if ($request->user()->cannot('update', $recipe)) {
+        if ($request->user()->cannot('update', $existingRecipe)) {
             abort(403);
         }
 
@@ -146,20 +136,8 @@ class RecipeController extends Controller
             'ingredients.*.quantity.regex' => 'The quantity must be a whole number and cannot include letters or special characters.'
         ]);
 
-        // Separate the ingredients data to be used later
-        $ingredientsData = $validatedData['ingredients'];
-        unset($validatedData['ingredients']);
-
-        // Update recipe details
-        $this->recipeService->updateRecipe($validatedData, $recipe);
-
-        // Remove existing records of recipe's ingredients
-        // Then repopulate
-        $recipe->ingredients()->delete();
-        $this->recipeService->createIngredientsForRecipe($ingredientsData, $recipe);
-
-        // Query the final recipe with ingredients
-        $recipe = Recipe::with('ingredients')->findOrFail($recipe->id);
+        // Call service to update the Recipe model
+        $recipe = $this->recipeService->updateRecipe($validatedData, $existingRecipe);
 
         return response()->json([
             'status' => 'success',
