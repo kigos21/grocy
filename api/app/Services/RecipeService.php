@@ -54,8 +54,5 @@ class RecipeService
             $ingredient = new RecipeIngredient($ingredient);
             $recipe->ingredients()->save($ingredient);
         }
-
-        // Return the ingredients
-        return $recipe->ingredients()->get();
     }
 }

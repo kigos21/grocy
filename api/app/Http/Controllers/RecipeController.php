@@ -69,17 +69,19 @@ class RecipeController extends Controller
         unset($validatedData['ingredients']);
 
         // Create the recipe record
-        $recipe = $this->recipeService->createRecipe($validatedData);
+        $createdRecipe = $this->recipeService->createRecipe($validatedData);
 
         // Create the ingredients for the recipe
-        $ingredients = $this->recipeService->createIngredients($ingredientsData, $recipe->id);
+        $this->recipeService->createIngredients($ingredientsData, $createdRecipe->id);
+
+        // Query the final recipe with ingredients
+        $recipe = Recipe::with('ingredients')->findOrFail($createdRecipe->id);
 
         return response()->json([
             'status' => 'success',
             'message' => 'Recipe created successfully',
             'data' => [
                 'recipe' => $recipe,
-                'ingredients' => $ingredients
             ],
             'errors' => [],
             'timestamp' => now(),
@@ -91,7 +93,16 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Recipe fetch successfully',
+            'data' => [
+                'recipe' => $recipe,
+                'ingredients'
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ]);
     }
 
     /**
