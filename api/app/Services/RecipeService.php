@@ -56,6 +56,6 @@ class RecipeService
         }
 
         // Return the ingredients
-        return RecipeIngredient::where('recipe_id', $recipe_id)->get();
+        return $recipe->ingredients()->get();
     }
 }
