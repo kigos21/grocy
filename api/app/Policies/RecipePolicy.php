@@ -37,7 +37,7 @@ class RecipePolicy
      */
     public function update(User $user, Recipe $recipe): Response
     {
-        return $user->id === $recipe->user_id
+        return $user->id === $recipe->user_id || $user->role === 'ADMIN'
             ? Response::allow()
             : Response::deny('You do not own this post.');
     }
@@ -47,7 +47,7 @@ class RecipePolicy
      */
     public function delete(User $user, Recipe $recipe): Response
     {
-        return $user->id === $recipe->user_id
+        return $user->id === $recipe->user_id || $user->role === 'ADMIN'
             ? Response::allow()
             : Response::deny('You do not own this recipe.');
     }
@@ -57,7 +57,7 @@ class RecipePolicy
      */
     public function restore(User $user, Recipe $recipe): Response
     {
-        return $user->id === $recipe->user_id
+        return $user->id === $recipe->user_id || $user->role === 'ADMIN'
             ? Response::allow()
             : Response::deny('You do not own this recipe.');
     }
@@ -67,7 +67,7 @@ class RecipePolicy
      */
     public function forceDelete(User $user, Recipe $recipe): Response
     {
-        return $user->id === $recipe->user_id
+        return $user->id === $recipe->user_id || $user->role === 'ADMIN'
             ? Response::allow()
             : Response::deny('You do not own this recipe.');
     }

@@ -46,13 +46,16 @@ class RecipeService
         return Recipe::create($data);
     }
 
-    public function createIngredients($data, $recipe_id)
+    public function createIngredientsForRecipe($data, $recipe)
     {
-        $recipe = Recipe::findOrFail($recipe_id);
-
         foreach ($data as $ingredient) {
             $ingredient = new RecipeIngredient($ingredient);
             $recipe->ingredients()->save($ingredient);
         }
+    }
+
+    public function updateRecipe($data, $recipe)
+    {
+        $recipe->update($data);
     }
 }

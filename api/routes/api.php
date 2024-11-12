@@ -18,3 +18,4 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::get('/recipes', [RecipeController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/recipes', [RecipeController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/recipes/{id}', [RecipeController::class, 'show'])->middleware('auth:sanctum')->whereNumber('id');
+Route::put('/recipes/{id}', [RecipeController::class, 'update'])->middleware('auth:sanctum')->whereNumber('id');
