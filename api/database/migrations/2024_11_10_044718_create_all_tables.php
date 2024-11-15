@@ -62,9 +62,21 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('grocery_list_id')->constrained()->cascadeOnDelete();
             $table->decimal('quantity', 10, 2);
-            $table->enum('unit', ['g', 'kg', 'ml', 'l', 'cup', 'tbsp', 'tsp', 'piece', 'whole']);
+            $table->enum('unit', ['g', 'kg', 'ml', 'l', 'cup', 'tbsp', 'tsp', 'piece']);
             $table->string('name');
-            $table->enum('category', ['produce', 'meat', 'dairy', 'pantry', 'spices', 'frozen']);
+            $table->enum('category', [
+                'produce',
+                'meat & seafood',
+                'dairy & eggs',
+                'baking goods',
+                'grains pasta & rice',
+                'condiments & spices',
+                'frozen',
+                'snacks & sweets',
+                'beverages',
+                'canned & jarred',
+                'others',
+            ]);
             $table->boolean('bought')->default(false);
             $table->timestamps();
         });
