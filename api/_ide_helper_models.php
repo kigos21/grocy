@@ -17,6 +17,52 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $user_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
+ * @property-read int|null $recipes_count
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\GroceryListFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList whereUserId($value)
+ */
+	class GroceryList extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $grocery_list_id
+ * @property int $recipe_id
+ * @property int $quantity
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe whereGroceryListId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe whereRecipeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe whereUpdatedAt($value)
+ */
+	class GroceryListRecipe extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
  * @property string $name
  * @property string|null $image_path
  * @property int $servings
@@ -80,6 +126,7 @@ namespace App\Models{
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
+ * @property string $role
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -100,6 +147,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  */
 	class User extends \Eloquent {}
