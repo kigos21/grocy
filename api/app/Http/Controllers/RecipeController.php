@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Recipe;
 use App\Services\RecipeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RecipeController extends Controller
 {
@@ -105,9 +106,7 @@ class RecipeController extends Controller
         $existingRecipe = Recipe::findOrFail($id);
 
         // Check if user is authorized for this action
-        if ($request->user()->cannot('update', $existingRecipe)) {
-            abort(403);
-        }
+        Gate::authorize('update', $existingRecipe);
 
         // Proceed with request validation
         $validatedData = $request->validate([
@@ -159,9 +158,7 @@ class RecipeController extends Controller
         $recipe = Recipe::findOrFail($id);
 
         // Check if user is authorized for this action
-        if ($request->user()->cannot('delete', $recipe)) {
-            abort(403);
-        }
+        Gate::authorize('delete', $recipe);
 
         // Delete the model (ingredients will cascade on delete)
         $recipe->delete();
