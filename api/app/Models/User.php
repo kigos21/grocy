@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $this->hasMany(Recipe::class);
     }
 
+    public function groceryLists(): HasMany
+    {
+        return $this->hasMany(GroceryList::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

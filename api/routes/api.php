@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GroceryListController;
 use App\Http\Controllers\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,11 @@ Route::post('/recipes', [RecipeController::class, 'store'])->middleware('auth:sa
 Route::get('/recipes/{id}', [RecipeController::class, 'show'])->middleware('auth:sanctum')->whereNumber('id');
 Route::put('/recipes/{id}', [RecipeController::class, 'update'])->middleware('auth:sanctum')->whereNumber('id');
 Route::delete('/recipes/{id}', [RecipeController::class, 'destroy'])->middleware('auth:sanctum')->whereNumber('id');
+
+// Grocery List
+Route::get('/grocery-lists', [GroceryListController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/grocery-lists', [GroceryListController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/grocery-lists/{id}', [GroceryListController::class, 'show'])->middleware('auth:sanctum')->whereNumber('id');
+Route::put('/grocery-lists/{id}', [GroceryListController::class, 'update'])->middleware('auth:sanctum')->whereNumber('id');
+Route::delete('/grocery-lists/{id}', [GroceryListController::class, 'destroy'])->middleware('auth:sanctum')->whereNumber('id');
+Route::put('/grocery-lists/{id}/items/{itemId}', [GroceryListController::class, 'updateItem'])->middleware('auth:sanctum')->whereNumber(['id', 'itemId']);
