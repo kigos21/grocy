@@ -58,11 +58,11 @@ class RecipeService
         // Create the ingredients for the recipe
         foreach ($ingredientsData as $data) {
             $ingredient = new RecipeIngredient($data);
-            $createdRecipe->ingredients()->save($ingredient);
+            $createdRecipe->recipeIngredients()->save($ingredient);
         }
 
         // Query the final recipe with ingredients
-        return Recipe::with('ingredients')->findOrFail($createdRecipe->id);
+        return Recipe::with('recipeIngredients')->findOrFail($createdRecipe->id);
     }
 
     public function updateRecipe($data, $recipe)
@@ -76,13 +76,13 @@ class RecipeService
 
         // Remove existing records of recipe's ingredients
         // Then repopulate
-        $recipe->ingredients()->delete();
+        $recipe->recipeIngredients()->delete();
         foreach ($ingredientsData as $data) {
             $ingredient = new RecipeIngredient($data);
-            $recipe->ingredients()->save($ingredient);
+            $recipe->recipeIngredients()->save($ingredient);
         }
 
         // Query the final recipe with ingredients
-        return Recipe::with('ingredients')->findOrFail($recipe->id);
+        return Recipe::with('recipeIngredients')->findOrFail($recipe->id);
     }
 }
