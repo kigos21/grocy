@@ -17,7 +17,9 @@ class GroceryListRecipeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'grocery_list_id' => $this->faker->numberBetween(1, 100),
+            'recipe_id' => $this->faker->numberBetween(1, 40),
+            'quantity' => $this->faker->numberBetween(1, 4),
         ];
     }
 }

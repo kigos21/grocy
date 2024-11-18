@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\GroceryListRecipe;
 use Illuminate\Database\Seeder;
 
 class GroceryListRecipeSeeder extends Seeder
@@ -12,6 +12,8 @@ class GroceryListRecipeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        GroceryListRecipe::factory()
+            ->count(400)
+            ->create();
     }
 }

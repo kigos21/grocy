@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GroceryListRecipe extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'grocery_list_id',
         'recipe_id',

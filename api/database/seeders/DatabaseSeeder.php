@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             RecipeSeeder::class,
             RecipeIngredientSeeder::class,
             GroceryListSeeder::class,
+            GroceryListRecipeSeeder::class
         ]);
     }
 }
