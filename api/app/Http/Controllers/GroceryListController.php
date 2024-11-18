@@ -62,9 +62,19 @@ class GroceryListController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(GroceryList $groceryList)
+    public function show($id)
     {
-        //
+        $grocery_list = GroceryList::with(['groceryListRecipes.recipe'])->findOrFail($id);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Grocery list fetch successfully',
+            'data' => [
+                'grocery_list' => $grocery_list,
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ]);
     }
 
     /**
