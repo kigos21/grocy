@@ -13,7 +13,7 @@ class GroceryListRecipeSeeder extends Seeder
     public function run(): void
     {
         GroceryListRecipe::factory()
-            ->count(400)
+            ->count(200)
             ->create();
     }
 }
