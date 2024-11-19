@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\GroceryList;
 use App\Services\GroceryListService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class GroceryListController extends Controller
 {
@@ -80,9 +81,31 @@ class GroceryListController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGroceryListRequest $request, GroceryList $groceryList)
+    public function update(Request $request, $id)
     {
-        //
+        $existingGroceryList = GroceryList::findOrFail($id);
+
+        Gate::authorize('update', $existingGroceryList);
+
+        $validatedData = $request->validate([
+            'recipes' => 'required|array|min:1',
+            'recipes.*.id' => 'required|exists:recipes,id',
+            'recipes.*.quantity' => 'required|integer|min:1'
+        ], [
+            'recipes' => 'There should be at least 1 recipe for the list.'
+        ]);
+
+        $grocery_list = $this->groceryListService->updateGroceryList($validatedData, $existingGroceryList);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Grocery list updated successfully',
+            'data' => [
+                'grocery_list' => $grocery_list,
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ], 201);
     }
 
     /**

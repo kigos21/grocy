@@ -139,6 +139,87 @@ class GroceryListService
             ]);
         }
 
-        return GroceryList::with('groceryListRecipes', 'groceryListItems')->findOrFail($createdGroceryList->id);
+        return GroceryList::with('groceryListRecipes.recipe', 'groceryListItems')->findOrFail($createdGroceryList->id);
+    }
+
+    public function updateGroceryList($data, $groceryList)
+    {
+        $recipesData = $data['recipes'];
+
+        $unitConversions = [
+            'kg' => 1000, // 1 kg = 1000 g
+            'g' => 1,
+            'l' => 1000,  // 1 l = 1000 ml
+            'ml' => 1,
+        ];
+
+        $ingredientTotals = []; // {quantity, unit, name, category}[]
+
+        // Delete related rows associated with the grocery list
+        $groceryList->groceryListRecipes()->delete();
+        $groceryList->groceryListItems()->delete();
+
+        // Create records based on the request again
+        foreach ($recipesData as $data) {
+            GroceryListRecipe::create([
+                'grocery_list_id' => $groceryList->id,
+                'recipe_id' => $data['id'],
+                'quantity' => $data['quantity'],
+            ]);
+
+            // assuming that this query returns {quantity, unit, name, category}[]
+            $ingredients = RecipeIngredient::where('recipe_id', $data['id'])->get();
+
+            // loop through each ingredient, aggregate it with the ingredientTotals array
+            foreach ($ingredients as $ingredient) {
+                $name = $ingredient['name'];
+                $category = $ingredient['category'];
+                $unit = $ingredient['unit'];
+                $quantity = $ingredient['quantity'];
+
+                // Standardize to smallest unit (g or ml)
+                if (isset($unitConversions[$unit])) {
+                    $quantity *= $unitConversions[$unit];
+                    $unit = in_array($unit, ['kg', 'g']) ? 'g' : 'ml';
+                }
+
+                /**
+                 * Generate unique key by combining name+category+unit here.
+                 *
+                 * Basically, what we want to achieve is to separate ingredients with
+                 * the same name, but didn't have matching category, or unit.
+                 *
+                 * We want to prevent any errors by adding 'g' to 'cups', and the like.
+                 * So we generate uniqueKeys, aggregating items that share these
+                 * three fields.
+                 */
+
+                $uniqueKey = $name . '|' . $category . '|' . $unit;
+
+                // Aggregate quantities
+                if (!isset($ingredientTotals[$uniqueKey])) {
+                    $ingredientTotals[$uniqueKey] = [
+                        'quantity' => 0,
+                        'unit' => $unit,
+                        'name' => $name,
+                        'category' => $category
+                    ];
+                }
+
+                $ingredientTotals[$uniqueKey]['quantity'] += $quantity * $data['quantity'];
+            }
+        }
+
+        foreach ($ingredientTotals as $total) {
+            GroceryListItem::create([
+                'grocery_list_id' => $groceryList->id,
+                'quantity' => $total['quantity'],
+                'unit' => $total['unit'],
+                'name' => $total['name'],
+                'category' => $total['category'],
+            ]);
+        }
+
+        return GroceryList::with('groceryListRecipes', 'groceryListItems')->findOrFail($groceryList->id);
     }
 }
