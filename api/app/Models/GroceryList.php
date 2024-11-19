@@ -25,8 +25,8 @@ class GroceryList extends Model
         return $this->hasMany(GroceryListRecipe::class);
     }
 
-//    public function groceryListItems(): HasMany
-//    {
-//        return $this->hasMany(GroceryListItems::class);
-//    }
+    public function groceryListItems(): HasMany
+    {
+        return $this->hasMany(GroceryListItem::class);
+    }
 }

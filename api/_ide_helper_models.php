@@ -19,8 +19,10 @@ namespace App\Models{
  * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
- * @property-read int|null $recipes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroceryListItem> $groceryListItems
+ * @property-read int|null $grocery_list_items_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroceryListRecipe> $groceryListRecipes
+ * @property-read int|null $grocery_list_recipes_count
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\GroceryListFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList newModelQuery()
@@ -40,10 +42,43 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $grocery_list_id
+ * @property string $quantity
+ * @property string $unit
+ * @property string $name
+ * @property string $category
+ * @property int $bought
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\GroceryList $groceryList
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem whereBought($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem whereCategory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem whereGroceryListId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem whereUnit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListItem whereUpdatedAt($value)
+ */
+	class GroceryListItem extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $grocery_list_id
  * @property int $recipe_id
  * @property int $quantity
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\GroceryList $groceryList
+ * @property-read \App\Models\Recipe $recipe
+ * @method static \Database\Factories\GroceryListRecipeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryListRecipe query()
@@ -69,8 +104,10 @@ namespace App\Models{
  * @property int|null $cook_time
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RecipeIngredient> $ingredients
- * @property-read int|null $ingredients_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroceryListRecipe> $groceryListRecipes
+ * @property-read int|null $grocery_list_recipes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RecipeIngredient> $recipeIngredients
+ * @property-read int|null $recipe_ingredients_count
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\RecipeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe newModelQuery()
@@ -130,6 +167,8 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroceryList> $groceryLists
+ * @property-read int|null $grocery_lists_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
