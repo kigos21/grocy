@@ -146,7 +146,7 @@ class RecipeController extends Controller
             ],
             'errors' => [],
             'timestamp' => now(),
-        ], 201);
+        ]);
     }
 
     /**

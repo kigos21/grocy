@@ -41,7 +41,7 @@ class GroceryListController extends Controller
     {
         $validatedData = $request->validate([
             'recipes' => 'required|array|min:1',
-            'recipes.*.id' => 'required|exists:recipes,id',
+            'recipes.*.id' => 'required|distinct|exists:recipes,id',
             'recipes.*.quantity' => 'required|integer|min:1'
         ], [
             'recipes' => 'There should be at least 1 recipe for the list.'
@@ -89,7 +89,7 @@ class GroceryListController extends Controller
 
         $validatedData = $request->validate([
             'recipes' => 'required|array|min:1',
-            'recipes.*.id' => 'required|exists:recipes,id',
+            'recipes.*.id' => 'required|distinct|exists:recipes,id',
             'recipes.*.quantity' => 'required|integer|min:1'
         ], [
             'recipes' => 'There should be at least 1 recipe for the list.'
@@ -105,14 +105,28 @@ class GroceryListController extends Controller
             ],
             'errors' => [],
             'timestamp' => now(),
-        ], 201);
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(GroceryList $groceryList)
+    public function destroy(Request $request, $id)
     {
-        //
+        $grocery_list = GroceryList::findOrFail($id);
+
+        Gate::authorize('delete', $grocery_list);
+
+        $grocery_list->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Grocery list deleted successfully',
+            'data' => [
+                'grocery_list' => $grocery_list,
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ]);
     }
 }
