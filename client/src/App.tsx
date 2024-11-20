@@ -1,11 +1,14 @@
-import { Button } from "./components/ui/button";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div>Hello world!</div>,
+  },
+]);
 
 function App() {
-  return (
-    <>
-      <Button>Test</Button>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
