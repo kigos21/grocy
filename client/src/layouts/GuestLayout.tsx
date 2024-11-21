@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
+import { Button } from "@/components/ui/button";
 
 function GuestLayout() {
   const { isAuthenticated } = useAuthStore();
@@ -9,12 +10,32 @@ function GuestLayout() {
   }
 
   return (
-    <div>
-      <header className="bg-gray-800 text-white">TODO: Guest Header</header>
+    <div className="flex h-screen flex-col">
+      <header className="flex items-center justify-between bg-secondary p-4">
+        <p className="text-2xl font-semibold tracking-wider text-white">
+          Grocy ツ
+        </p>
+        <div className="flex gap-1">
+          <Button variant={"secondary"}>Login</Button>
+          <Button>Register</Button>
+        </div>
+      </header>
 
-      <main>
+      <main className="flex-grow">
         <Outlet />
       </main>
+
+      <footer className="border-t p-4">
+        <div className="mx-auto max-w-screen-lg">
+          <p className="mb-1 text-lg font-semibold tracking-wider">Grocy ツ</p>
+          <p className="mb-6 text-sm text-muted">
+            Your smart grocery companion. Shop smarter, eat better.
+          </p>
+          <p className="text-sm text-muted">
+            &copy; {new Date().getFullYear()} Grocy. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

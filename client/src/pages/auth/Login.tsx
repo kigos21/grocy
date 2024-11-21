@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { TypographyH2, TypographyMuted } from "@/components/ui/typography";
+import { Link } from "react-router-dom";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const loginFormSchema = z.object({
@@ -32,9 +34,13 @@ function Login() {
   };
 
   return (
-    <div className="p-4">
+    <div className="mx-auto max-w-screen-sm px-4 py-8 md:py-16">
+      <TypographyH2>Login</TypographyH2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full space-y-4"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -61,7 +67,15 @@ function Login() {
               </FormItem>
             )}
           />
-          <Button type="submit">Login</Button>
+          <div className="grid grid-cols-1 items-center gap-2">
+            <Button type="submit">Login</Button>
+            <TypographyMuted className="text-center">
+              Don't have an account?{" "}
+              <Link to={"/register"} className="link">
+                Register
+              </Link>
+            </TypographyMuted>
+          </div>
         </form>
       </Form>
     </div>
