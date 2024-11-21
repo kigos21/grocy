@@ -1,9 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+// Layouts
 import RequireAuth from "./components/RequireAuth";
-
 import GuestLayout from "./layouts/GuestLayout";
 import AppLayout from "./layouts/AppLayout";
+
+// Pages
+import Login from "./pages/auth/Login";
 
 const router = createBrowserRouter([
   {
@@ -11,7 +14,7 @@ const router = createBrowserRouter([
     element: <GuestLayout />, // Guest routes
     children: [
       // { index: true, element: <LandingPage /> },
-      // { path: "login", element: <Login /> },
+      { path: "login", element: <Login /> },
       // { path: "register", element: <Register /> },
     ],
   },

@@ -10,7 +10,7 @@ function GuestLayout() {
 
   return (
     <div>
-      <header>Guest Header</header>
+      <header className="bg-gray-800 text-white">TODO: Guest Header</header>
 
       <main>
         <Outlet />
