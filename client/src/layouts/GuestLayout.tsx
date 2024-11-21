@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
 import { Button } from "@/components/ui/button";
 
@@ -12,9 +12,12 @@ function GuestLayout() {
   return (
     <div className="flex h-screen flex-col">
       <header className="flex items-center justify-between bg-secondary p-4">
-        <p className="text-2xl font-semibold tracking-wider text-white">
+        <Link
+          to={"/"}
+          className="text-2xl font-semibold tracking-wider text-white"
+        >
           Grocy ツ
-        </p>
+        </Link>
         <div className="flex gap-1">
           <Button variant={"secondary"}>Login</Button>
           <Button>Register</Button>
