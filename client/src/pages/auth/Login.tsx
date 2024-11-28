@@ -1,6 +1,6 @@
-import { z } from "zod";
 // import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import {
   Form,
   FormControl,
@@ -11,14 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TypographyH2, TypographyMuted } from "@/components/ui/typography";
-import { Link } from "react-router-dom";
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const loginFormSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8),
-});
-type LoginFormValues = z.infer<typeof loginFormSchema>;
+import { LoginFormValues } from "@/types/zod";
+import { AuthService } from "@/services/AuthService";
+import useAuthStore from "@/store/authStore";
+import { AxiosError } from "axios";
 
 function Login() {
   const form = useForm<LoginFormValues>({
@@ -29,8 +25,19 @@ function Login() {
     },
   });
 
-  const onSubmit = (values: LoginFormValues) => {
-    console.log(JSON.stringify(values, null, 2));
+  const { login } = useAuthStore();
+
+  const onSubmit = async (values: LoginFormValues) => {
+    try {
+      const { data } = await AuthService.login(values);
+      login(data.user, data.token);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.log(JSON.stringify(error.response?.data, null, 2));
+      } else {
+        console.log("An unexpected error occurred:", error);
+      }
+    }
   };
 
   return (
