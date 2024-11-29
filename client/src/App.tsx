@@ -5,6 +5,9 @@ import RequireAuth from "./components/RequireAuth";
 import GuestLayout from "./layouts/GuestLayout";
 import AppLayout from "./layouts/AppLayout";
 
+// Toast Provider
+import { Toaster } from "./components/ui/toaster";
+
 // Pages
 import Login from "./pages/auth/Login";
 
@@ -47,7 +50,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />;
+      <Toaster />
+    </>
+  );
 }
 
 export default App;

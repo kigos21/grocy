@@ -1,4 +1,3 @@
-// import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import {
@@ -7,6 +6,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,8 +15,16 @@ import { LoginFormValues } from "@/types/zod";
 import { AuthService } from "@/services/AuthService";
 import useAuthStore from "@/store/authStore";
 import { AxiosError } from "axios";
+import { useState } from "react";
+import { ValidationErrors } from "@/types";
+import { useToast } from "@/hooks/use-toast";
+import { getErrorMessage } from "@/lib/utils";
 
 function Login() {
+  const { toast } = useToast();
+
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>();
+
   const form = useForm<LoginFormValues>({
     // resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -26,16 +34,24 @@ function Login() {
   });
 
   const { login } = useAuthStore();
-
   const onSubmit = async (values: LoginFormValues) => {
     try {
       const { data } = await AuthService.login(values);
       login(data.user, data.token);
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        console.log(JSON.stringify(error.response?.data, null, 2));
+    } catch (e: unknown) {
+      if (e instanceof AxiosError) {
+        const errors: ValidationErrors = e.response?.data;
+        setValidationErrors(errors);
+        toast({
+          variant: "destructive",
+          description: errors.message,
+        });
       } else {
-        console.log("An unexpected error occurred:", error);
+        toast({
+          variant: "destructive",
+          title: "An unexpected error occured",
+          description: getErrorMessage(e),
+        });
       }
     }
   };
@@ -57,7 +73,9 @@ function Login() {
                 <FormControl>
                   <Input placeholder="Email" {...field} />
                 </FormControl>
-                {/* <FormMessage /> */}
+                {validationErrors?.errors.email && (
+                  <FormMessage>{validationErrors?.errors.email[0]}</FormMessage>
+                )}
               </FormItem>
             )}
           />
@@ -70,7 +88,11 @@ function Login() {
                 <FormControl>
                   <Input type="password" placeholder="Password" {...field} />
                 </FormControl>
-                {/* <FormMessage /> */}
+                {validationErrors?.errors.password && (
+                  <FormMessage>
+                    {validationErrors?.errors.password[0]}
+                  </FormMessage>
+                )}
               </FormItem>
             )}
           />

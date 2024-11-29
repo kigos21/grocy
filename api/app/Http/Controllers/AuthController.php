@@ -50,11 +50,11 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json([
                 'status' => 'fail',
-                'message' => 'User not found',
+                'message' => 'The entered email is not found.',
                 'data' => [],
                 'errors' => [
                     'email' => [
-                        'Email is not registered'
+                        'This email is not registered.'
                     ]
                 ],
                 'timestamp' => now(),
