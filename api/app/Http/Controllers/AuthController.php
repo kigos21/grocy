@@ -23,13 +23,14 @@ class AuthController extends Controller
                     ->mixedCase()
                     ->symbols()
             ],
+            'password_confirmation' => 'required'
         ]);
 
         $user = User::create($validatedData);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Successfully registered',
+            'message' => 'You have successfully registered your account.',
             'data' => [
                 'user' => $user,
             ],
@@ -64,7 +65,7 @@ class AuthController extends Controller
         if (!Hash::check($request->password, $user->password)) {
             return response()->json([
                 'status' => 'fail',
-                'message' => 'Invalid credentials provided',
+                'message' => 'Invalid credentials provided.',
                 'data' => [],
                 'errors' => [],
                 'timestamp' => now(),
@@ -76,7 +77,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Login successfully',
+            'message' => 'You have logged in successfully.',
             'data' => [
                 'user' => $user,
                 'token' => $token->plainTextToken
@@ -92,7 +93,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'You are now logged out',
+            'message' => 'You are now logged out.',
             'data' => [],
             'errors' => [],
             'timestamp' => now(),

@@ -1,10 +1,15 @@
-import { LoginFormValues } from "@/types/zod";
+import { LoginFormValues, RegisterFormValues } from "@/types/zod";
 import apiClient from "@/lib/apiClient";
 
 export class AuthService {
-  static async login({ email, password }: LoginFormValues) {
+  static async login(values: LoginFormValues) {
     await apiClient.get("/sanctum/csrf-cookie");
-    const response = await apiClient.post("/api/login", { email, password });
+    const response = await apiClient.post("/api/login", values);
+    return response.data;
+  }
+
+  static async register(values: RegisterFormValues) {
+    const response = await apiClient.post("/api/register", values);
     return response.data;
   }
 

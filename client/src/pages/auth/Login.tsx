@@ -1,3 +1,5 @@
+import { AxiosError } from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import {
@@ -11,14 +13,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TypographyH2, TypographyMuted } from "@/components/ui/typography";
-import { LoginFormValues } from "@/types/zod";
-import { AuthService } from "@/services/AuthService";
-import useAuthStore from "@/store/authStore";
-import { AxiosError } from "axios";
-import { useState } from "react";
-import { ValidationErrors } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 import { getErrorMessage } from "@/lib/utils";
+import { AuthService } from "@/services/AuthService";
+import useAuthStore from "@/store/authStore";
+import { ValidationErrors } from "@/types";
+import { LoginFormValues } from "@/types/zod";
 
 function Login() {
   const { toast } = useToast();
@@ -36,8 +36,12 @@ function Login() {
   const { login } = useAuthStore();
   const onSubmit = async (values: LoginFormValues) => {
     try {
-      const { data } = await AuthService.login(values);
+      const { message, data } = await AuthService.login(values);
+      setValidationErrors(undefined);
       login(data.user, data.token);
+      toast({
+        description: message,
+      });
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         const errors: ValidationErrors = e.response?.data;
@@ -49,7 +53,7 @@ function Login() {
       } else {
         toast({
           variant: "destructive",
-          title: "An unexpected error occured",
+          title: "An unexpected error occured.",
           description: getErrorMessage(e),
         });
       }
@@ -71,11 +75,12 @@ function Login() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="Email" {...field} />
+                  <Input {...field} />
                 </FormControl>
-                {validationErrors?.errors.email && (
-                  <FormMessage>{validationErrors?.errors.email[0]}</FormMessage>
-                )}
+                {validationErrors?.errors.email &&
+                  validationErrors?.errors.email.map((error) => (
+                    <FormMessage>{error}</FormMessage>
+                  ))}
               </FormItem>
             )}
           />
@@ -86,17 +91,16 @@ function Login() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="Password" {...field} />
+                  <Input type="password" {...field} />
                 </FormControl>
-                {validationErrors?.errors.password && (
-                  <FormMessage>
-                    {validationErrors?.errors.password[0]}
-                  </FormMessage>
-                )}
+                {validationErrors?.errors.password &&
+                  validationErrors?.errors.password.map((error) => (
+                    <FormMessage>{error}</FormMessage>
+                  ))}
               </FormItem>
             )}
           />
-          <div className="grid grid-cols-1 items-center gap-2">
+          <div className="grid grid-cols-1 items-center gap-2 pt-2">
             <Button type="submit">Login</Button>
             <TypographyMuted className="text-center">
               Don't have an account?{" "}

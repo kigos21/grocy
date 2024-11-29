@@ -5,11 +5,9 @@ import RequireAuth from "./components/RequireAuth";
 import GuestLayout from "./layouts/GuestLayout";
 import AppLayout from "./layouts/AppLayout";
 
-// Toast Provider
-import { Toaster } from "./components/ui/toaster";
-
 // Pages
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       // { index: true, element: <LandingPage /> },
       { path: "login", element: <Login /> },
-      // { path: "register", element: <Register /> },
+      { path: "register", element: <Register /> },
     ],
   },
   {
@@ -50,12 +48,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-    <>
-      <RouterProvider router={router} />;
-      <Toaster />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
