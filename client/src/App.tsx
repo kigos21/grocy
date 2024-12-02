@@ -10,6 +10,7 @@ import AppLayout from "./layouts/AppLayout";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import GroceryLists from "./pages/grocery-lists/GroceryLists";
+import Recipes from "./pages/recipes/Recipes";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       {
         path: "recipes",
         children: [
-          // { index: true, element: <Recipes /> },
+          { index: true, element: <Recipes /> },
           // { path: "new", element: <RecipeForm /> },
           // { path: ":id", element: <RecipeDetail /> },
         ],
