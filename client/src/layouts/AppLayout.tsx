@@ -16,10 +16,10 @@ function AppLayout() {
   };
 
   return (
-    <div>
-      <aside>Sidebar</aside>
-
-      <Button onClick={handleLogout}>Logout</Button>
+    <div className="grid h-screen grid-rows-[1fr_72px] md:grid-cols-[72px_1fr] md:grid-rows-1">
+      <aside className="order-1 bg-secondary text-white md:order-none">
+        Sidebar
+      </aside>
 
       <main>
         <Outlet />

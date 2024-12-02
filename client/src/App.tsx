@@ -9,6 +9,7 @@ import AppLayout from "./layouts/AppLayout";
 // Pages
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import GroceryLists from "./pages/grocery-lists/GroceryLists";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       {
         path: "grocery-lists",
         children: [
-          // { index: true, element: <GroceryLists /> },
+          { index: true, element: <GroceryLists /> },
           // { path: "new", element: <GroceryListForm /> },
           // { path: ":id", element: <GroceryListDetail /> },
         ],
