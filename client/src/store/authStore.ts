@@ -1,27 +1,41 @@
 import { create } from "zustand";
 import { User } from "@/types";
+import { persist } from "zustand/middleware";
+import {
+  applyAuthInterceptor,
+  removeAuthInterceptor,
+} from "@/lib/interceptors";
 
 interface AuthState {
   user: User | null;
+  token: string | null;
   isAuthenticated: boolean;
+
   login: (user: User, token: string) => void;
   logout: () => void;
 }
 
-const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  isAuthenticated: false,
-  login: (user: User, token: string) => {
-    // Store token in localStorage
-    localStorage.setItem("authToken", token);
+const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      token: null,
+      isAuthenticated: false,
 
-    // Update state
-    set({ isAuthenticated: true, user: user });
-  },
-  logout: () => {
-    localStorage.removeItem("authToken"); // Remove token
-    set({ isAuthenticated: false, user: null });
-  },
-}));
+      login: (user: User, token: string) => {
+        set({ isAuthenticated: true, user, token });
+        applyAuthInterceptor();
+      },
+
+      logout: () => {
+        set({ isAuthenticated: false, user: null, token: null });
+        removeAuthInterceptor();
+      },
+    }),
+    {
+      name: "auth-storage",
+    },
+  ),
+);
 
 export default useAuthStore;

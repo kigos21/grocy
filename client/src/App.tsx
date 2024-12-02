@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { initializeAuthInterceptor } from "@/lib/interceptors";
 
 // Layouts
 import RequireAuth from "./components/RequireAuth";
@@ -46,6 +47,9 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+// Initialize auth interceptor when user is logged in on boot
+initializeAuthInterceptor();
 
 function App() {
   return <RouterProvider router={router} />;

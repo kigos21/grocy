@@ -10,4 +10,29 @@ const apiClient = axios.create({
   withXSRFToken: true,
 });
 
+// Add console logging interceptors
+apiClient.interceptors.request.use(
+  (config) => {
+    // Log request headers
+    console.log("Request Headers:", JSON.stringify(config.headers, null, 2));
+    return config;
+  },
+  (error) => {
+    // Log error if request configuration fails
+    console.error("Request error:", error);
+    return Promise.reject(error);
+  },
+);
+
+// Initialize XSRF token and token (if applicable) on initialization
+try {
+  await apiClient.get("/sanctum/csrf-cookie");
+} catch (error) {
+  if (error instanceof Error) {
+    console.error(error.message);
+  } else {
+    console.error(error);
+  }
+}
+
 export default apiClient;

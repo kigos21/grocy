@@ -3,7 +3,6 @@ import apiClient from "@/lib/apiClient";
 
 export class AuthService {
   static async login(values: LoginFormValues) {
-    await apiClient.get("/sanctum/csrf-cookie");
     const response = await apiClient.post("/api/login", values);
     return response.data;
   }
@@ -18,8 +17,8 @@ export class AuthService {
   //   return response.data; // Returns the user's profile information
   // }
 
-  // static async logout() {
-  //   const response = await axios.post("/api/logout");
-  //   return response.data; // Optional: Handle any data from logout response
-  // }
+  static async logout() {
+    const response = await apiClient.post("/api/logout");
+    return response.data;
+  }
 }

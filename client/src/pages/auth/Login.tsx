@@ -79,7 +79,7 @@ function Login() {
                 </FormControl>
                 {validationErrors?.errors.email &&
                   validationErrors?.errors.email.map((error) => (
-                    <FormMessage>{error}</FormMessage>
+                    <FormMessage key={error}>{error}</FormMessage>
                   ))}
               </FormItem>
             )}
@@ -95,7 +95,7 @@ function Login() {
                 </FormControl>
                 {validationErrors?.errors.password &&
                   validationErrors?.errors.password.map((error) => (
-                    <FormMessage>{error}</FormMessage>
+                    <FormMessage key={error}>{error}</FormMessage>
                   ))}
               </FormItem>
             )}

@@ -82,7 +82,7 @@ function Register() {
                 </FormControl>
                 {validationErrors?.errors.name &&
                   validationErrors?.errors.name.map((error) => (
-                    <FormMessage>{error}</FormMessage>
+                    <FormMessage key={error}>{error}</FormMessage>
                   ))}
               </FormItem>
             )}
@@ -98,7 +98,7 @@ function Register() {
                 </FormControl>
                 {validationErrors?.errors.email &&
                   validationErrors?.errors.email.map((error) => (
-                    <FormMessage>{error}</FormMessage>
+                    <FormMessage key={error}>{error}</FormMessage>
                   ))}
               </FormItem>
             )}
@@ -114,7 +114,7 @@ function Register() {
                 </FormControl>
                 {validationErrors?.errors.password &&
                   validationErrors?.errors.password.map((error) => (
-                    <FormMessage>{error}</FormMessage>
+                    <FormMessage key={error}>{error}</FormMessage>
                   ))}
               </FormItem>
             )}
@@ -130,7 +130,7 @@ function Register() {
                 </FormControl>
                 {validationErrors?.errors.password_confirmation &&
                   validationErrors?.errors.password_confirmation.map(
-                    (error) => <FormMessage>{error}</FormMessage>,
+                    (error) => <FormMessage key={error}>{error}</FormMessage>,
                   )}
               </FormItem>
             )}
