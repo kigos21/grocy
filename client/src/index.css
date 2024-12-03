@@ -75,6 +75,10 @@
 }
 
 /* Custom Classes */
+img {
+  width: 100%;
+}
+
 .link {
   @apply text-blue-500 underline underline-offset-2;
 }
