@@ -28,8 +28,12 @@ function AppLayout() {
   };
 
   return (
-    <div className="grid h-screen grid-rows-[1fr_72px] md:grid-cols-[72px_1fr] md:grid-rows-1">
-      <aside className="order-1 flex items-center justify-center gap-12 bg-secondary text-white md:order-none md:flex-col md:justify-normal md:gap-8 md:py-6">
+    <div className="grid h-screen grid-rows-[1fr_4.5rem] md:grid-cols-[4.5rem_1fr] md:grid-rows-1">
+      {/* An empty element to place at the side, so as not to mess the grid layout */}
+      <div className="order-1 md:order-none" />
+
+      {/* Nav */}
+      <aside className="fixed bottom-0 left-0 right-0 flex items-center justify-center gap-12 bg-secondary text-white max-md:h-[4.5rem] md:bottom-0 md:top-0 md:w-[4.5rem] md:flex-col md:justify-normal md:gap-8 md:py-6">
         <Link
           to={"/grocery-lists"}
           className="hidden text-2xl font-semibold tracking-wider text-white md:block"
