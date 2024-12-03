@@ -25,3 +25,14 @@ export interface User {
   email: string;
   role: "USER" | "ADMIN";
 }
+
+export interface Recipe {
+  id: number;
+  user_id: number;
+  name: string;
+  image_path: string;
+  servings: number;
+  cook_time: number;
+  createdAt: string;
+  updatedAt: string;
+}

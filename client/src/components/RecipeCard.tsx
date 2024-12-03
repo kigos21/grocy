@@ -1,25 +1,28 @@
 import { Clock4, Utensils } from "lucide-react";
 import { Button } from "./ui/button";
 import { TypographyMuted } from "./ui/typography";
+import { Recipe } from "@/types";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-interface Props {
-  imageUrl?: string;
-}
+function RecipeCard({ id, name, image_path, servings, cook_time }: Recipe) {
+  const navigate = useNavigate();
+  const [imageError, setImageError] = useState(false);
 
-function RecipeCard({ imageUrl }: Props) {
   return (
     <div className="overflow-hidden rounded-md border">
       <div className="border-b">
-        {imageUrl ? (
+        {image_path && !imageError ? (
           <img
-            src={"http://localhost:8000/storage/tiger.jpg"}
-            alt=""
-            className="aspect-video object-cover"
+            src={image_path}
+            alt={`Image of ${name}`}
+            onError={() => setImageError(true)}
+            className="aspect-video bg-gray-100 object-cover"
           />
         ) : (
           <div className="flex aspect-video items-center justify-center bg-gray-100">
             <p className="text-xs font-bold uppercase text-gray-300">
-              No image uploaded
+              No image
             </p>
           </div>
         )}
@@ -27,23 +30,24 @@ function RecipeCard({ imageUrl }: Props) {
 
       <div className="flex flex-col gap-3 p-4">
         <div className="flex flex-col gap-1">
-          <p className="line-clamp-1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia,
-            velit.
-          </p>
+          <p className="line-clamp-1">{name}</p>
           <div className="flex justify-between">
             <TypographyMuted className="flex items-center gap-1 md:text-xs">
-              <Utensils className="h-3 w-3" /> 2 servings
+              <Utensils className="h-3 w-3" /> {servings} servings
             </TypographyMuted>
             <TypographyMuted className="flex items-center gap-1 md:text-xs">
               <Clock4 className="h-3 w-3" />
-              45 mins
+              {cook_time} mins
             </TypographyMuted>
           </div>
         </div>
 
         <div>
-          <Button variant={"secondary"} className="w-full">
+          <Button
+            variant={"secondary"}
+            className="w-full"
+            onClick={() => navigate(`/recipes/${id}`)}
+          >
             View
           </Button>
         </div>

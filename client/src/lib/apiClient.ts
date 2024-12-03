@@ -14,7 +14,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     // Log request headers
-    console.log("Request Headers:", JSON.stringify(config.headers, null, 2));
+    console.log("Requesting...");
     return config;
   },
   (error) => {
