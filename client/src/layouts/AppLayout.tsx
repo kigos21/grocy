@@ -28,7 +28,7 @@ function AppLayout() {
   };
 
   return (
-    <div className="grid h-screen grid-rows-[1fr_4.5rem] md:grid-cols-[4.5rem_1fr] md:grid-rows-1">
+    <div className="grid h-screenromm] md:grid-cols-[4.5rem_1fr] md:grid-rows-1">
       {/* An empty element to place at the side, so as not to mess the grid layout */}
       <div className="order-1 md:order-none" />
 

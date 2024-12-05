@@ -33,6 +33,21 @@ export interface Recipe {
   image_path: string;
   servings: number;
   cook_time: number;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface RecipeIngredient {
+  id: number;
+  recipe_id: number;
+  quantity: number;
+  unit: string;
+  name: string;
+  category: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface RecipeWithIngredients extends Recipe {
+  recipe_ingredients: RecipeIngredient[];
 }

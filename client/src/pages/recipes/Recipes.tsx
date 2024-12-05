@@ -88,12 +88,21 @@ function Recipes() {
             : data.data.recipes.data.map((recipe: Recipe) => (
                 <RecipeCard key={recipe.id} {...recipe} />
               ))}
+          {data?.data.recipes.data.length === 0 && (
+            <div className="col-span-full flex h-96 items-center justify-center">
+              <p className="text-xs font-bold uppercase text-gray-300">
+                No recipes to display
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-between">
-          <p className="text-xs font-semibold">6 out of 25 items</p>
-        </div>
+        {data?.data.recipes.data.length !== 0 && (
+          <div className="flex justify-between">
+            <p className="text-xs font-semibold">6 out of 25 items</p>
+          </div>
+        )}
       </div>
     </div>
   );

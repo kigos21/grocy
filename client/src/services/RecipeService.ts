@@ -11,10 +11,10 @@ export class RecipeService {
     return response.data;
   }
 
-  // static async fetchRecipeById(id: string) {
-  //   const response = await apiClient.get(`/api/recipes/${id}`);
-  //   return response.data;
-  // }
+  static async fetchRecipeById(id: string) {
+    const response = await apiClient.get(`/api/recipes/${id}`);
+    return response.data;
+  }
 
   // static async createRecipe(recipeData: any) {
   //   const response = await apiClient.post("/api/recipes", recipeData);
@@ -26,8 +26,8 @@ export class RecipeService {
   //   return response.data;
   // }
 
-  // static async deleteRecipe(id: string) {
-  //   const response = await apiClient.delete(`/api/recipes/${id}`);
-  //   return response.data;
-  // }
+  static async deleteRecipe(id: string) {
+    const response = await apiClient.delete(`/api/recipes/${id}`);
+    return response.data;
+  }
 }

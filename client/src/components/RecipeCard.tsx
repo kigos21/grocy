@@ -32,10 +32,10 @@ function RecipeCard({ id, name, image_path, servings, cook_time }: Recipe) {
         <div className="flex flex-col gap-1">
           <p className="line-clamp-1">{name}</p>
           <div className="flex justify-between">
-            <TypographyMuted className="flex items-center gap-1 md:text-xs">
+            <TypographyMuted className="flex items-center gap-1">
               <Utensils className="h-3 w-3" /> {servings} servings
             </TypographyMuted>
-            <TypographyMuted className="flex items-center gap-1 md:text-xs">
+            <TypographyMuted className="flex items-center gap-1">
               <Clock4 className="h-3 w-3" />
               {cook_time} mins
             </TypographyMuted>
