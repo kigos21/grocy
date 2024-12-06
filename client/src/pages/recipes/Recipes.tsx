@@ -16,10 +16,12 @@ import { ChevronDown, Plus } from "lucide-react";
 import { useState } from "react";
 import ErrorPage from "../ErrorPage";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 function Recipes() {
   const [sort, setSort] = useState("newest");
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["recipes", { sort, q: search }],
@@ -66,7 +68,7 @@ function Recipes() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <Button>
+            <Button onClick={() => navigate("/recipes/new")}>
               <Plus />
               <span className="hidden md:inline">New</span>
             </Button>

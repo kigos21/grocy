@@ -12,6 +12,7 @@ import Register from "./pages/auth/Register";
 import GroceryLists from "./pages/grocery-lists/GroceryLists";
 import Recipes from "./pages/recipes/Recipes";
 import RecipeDetail from "./pages/recipes/RecipeDetail";
+import RecipeCreate from "./pages/recipes/RecipeCreate";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
         path: "recipes",
         children: [
           { index: true, element: <Recipes /> },
-          // { path: "new", element: <RecipeCreate /> },
+          { path: "new", element: <RecipeCreate /> },
           // { path: "new", element: <RecipeEdit /> },
           { path: ":id", element: <RecipeDetail /> },
         ],

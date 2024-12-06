@@ -17,3 +17,21 @@ export const registerFormSchema = z.object({
 });
 
 export type RegisterFormValues = z.infer<typeof registerFormSchema>;
+
+// Recipe Form
+export const ingredientSchema = z.object({
+  quantity: z.string(),
+  unit: z.string(),
+  name: z.string(),
+  category: z.string(),
+});
+
+export const recipeFormSchema = z.object({
+  name: z.string(),
+  recipe_image: z.string(),
+  servings: z.string(),
+  cook_time: z.string(),
+  ingredients: z.array(ingredientSchema),
+});
+
+export type RecipeFormValues = z.infer<typeof recipeFormSchema>;

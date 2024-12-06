@@ -101,8 +101,8 @@ function RecipeDetail() {
                     Move {data?.data.recipe.name} to trash?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    Are you sure you want to move this resource to trash? You
-                    can restore it later from the trash.
+                    Are you sure you want to move this recipe to trash? You can
+                    restore it later from the trash.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
