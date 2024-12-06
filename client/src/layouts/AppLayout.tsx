@@ -2,7 +2,7 @@ import { toast } from "@/hooks/use-toast";
 import { AuthService } from "@/services/AuthService";
 import useAuthStore from "@/store/authStore";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
-import { ChefHat, House } from "lucide-react";
+import { ChefHat, House, Trash } from "lucide-react";
 import { Link, Outlet } from "react-router-dom";
 import {
   Dialog,
@@ -52,6 +52,16 @@ function AppLayout() {
           <div className="flex flex-col items-center">
             <ChefHat />
             <span className="hidden md:inline">Recipes</span>
+          </div>
+        </Link>
+
+        <Link
+          to={"/recently-deleted"}
+          className="order-0 text-xs md:order-none"
+        >
+          <div className="flex flex-col items-center text-center">
+            <Trash />
+            <span className="hidden md:inline">Recently Deleted</span>
           </div>
         </Link>
 

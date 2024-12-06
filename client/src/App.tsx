@@ -1,4 +1,10 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
+
 import { initializeAuthInterceptor } from "@/lib/interceptors";
 
 // Layouts
@@ -16,6 +22,9 @@ import RecipeCreate from "./pages/recipes/RecipeCreate";
 import RecipeEdit from "./pages/recipes/RecipeEdit";
 
 import FullDisplayList from "./pages/grocery-lists/FullDisplayList";
+import DeletedRecipe from "./pages/RecentlyDeleted/DeletedRecipe";
+import DeletedGrocery from "./pages/RecentlyDeleted/DeletedGrocery";
+import NavbarTrash from "./components/navbarTrash";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,9 +60,34 @@ const router = createBrowserRouter([
           { path: ":id", element: <RecipeDetail /> },
         ],
       },
+
       {
         path: "test",
         children: [{ index: true, element: <FullDisplayList /> }],
+      },
+
+      {
+        path: "recently-deleted",
+        element: (
+          <div>
+            <NavbarTrash />
+            <Outlet />
+          </div>
+        ),
+        children: [
+          {
+            index: true,
+            element: <Navigate to="recipe" replace />,
+          },
+          {
+            path: "recipe",
+            children: [{ index: true, element: <DeletedRecipe /> }],
+          },
+          {
+            path: "grocery",
+            children: [{ index: true, element: <DeletedGrocery /> }],
+          },
+        ],
       },
     ],
   },
