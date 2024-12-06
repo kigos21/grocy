@@ -13,8 +13,7 @@ import GroceryLists from "./pages/grocery-lists/GroceryLists";
 import Recipes from "./pages/recipes/Recipes";
 import RecipeDetail from "./pages/recipes/RecipeDetail";
 import RecipeCreate from "./pages/recipes/RecipeCreate";
-import FullDisplayList from "./components/FullDisplayList";
-
+import FullDisplayList from "./pages/grocery-lists/FullDisplayList";
 const router = createBrowserRouter([
   {
     path: "/",

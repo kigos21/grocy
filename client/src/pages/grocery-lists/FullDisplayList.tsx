@@ -2,7 +2,8 @@ import { TypographyH2 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import FullDisplayListCard from "@/components/FullDisplayListCard";
+// import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 
 import {
@@ -24,7 +25,7 @@ function FullDisplayList() {
         Whip up your grocery list from your favorite recipes!
       </TypographyH2>
       <div className="flex flex-row gap-8">
-        <div className="w-1/2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+        <div className="flex w-1/2 flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
           <div className="flex gap-12">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -57,9 +58,27 @@ function FullDisplayList() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <p>item</p>
-          <p>item 2</p>
-          <p>item 3</p>
+          <FullDisplayListCard
+            id={0}
+            user_id={0}
+            name={"sample"}
+            image_path={""}
+            servings={0}
+            cook_time={0}
+            created_at={""}
+            updated_at={""}
+          />
+          <FullDisplayListCard
+            id={0}
+            user_id={0}
+            name={"sample"}
+            image_path={""}
+            servings={0}
+            cook_time={0}
+            created_at={""}
+            updated_at={""}
+          />
+
           <div className="flex justify-between">
             <p className="text-xs font-semibold">6 out of 25 items</p>
           </div>
