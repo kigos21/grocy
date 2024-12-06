@@ -25,7 +25,7 @@ class RecipeController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Recipe fetch successfully',
+            'message' => 'Recipe fetch successfully.',
             'data' => [
                 'recipes' => $recipes,
             ],
@@ -70,7 +70,7 @@ class RecipeController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Recipe created successfully',
+            'message' => 'Recipe created successfully.',
             'data' => [
                 'recipe' => $recipe,
             ],
@@ -140,7 +140,7 @@ class RecipeController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Recipe updated successfully',
+            'message' => 'Recipe updated successfully.',
             'data' => [
                 'recipe' => $recipe,
             ],
@@ -165,7 +165,7 @@ class RecipeController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Recipe deleted successfully',
+            'message' => 'Recipe deleted successfully.',
             'data' => [
                 'recipe' => $recipe,
             ],
