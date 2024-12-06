@@ -88,7 +88,7 @@ function GroceryLists() {
                   </div>
                 </div>
               ))
-            : data.data.groceries.data.map((grocery: Grocery) => (
+            : data?.data.groceries.data.map((grocery: Grocery) => (
                 <GroceryCard key={grocery.id} {...grocery} />
               ))}
           {data?.data.groceries.data.length === 0 && (
