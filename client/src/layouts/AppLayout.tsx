@@ -28,9 +28,9 @@ function AppLayout() {
   };
 
   return (
-    <div className="grid h-screenromm] md:grid-cols-[4.5rem_1fr] md:grid-rows-1">
+    <div className="h-screenromm] grid md:grid-cols-[4.5rem_1fr] md:grid-rows-1">
       {/* An empty element to place at the side, so as not to mess the grid layout */}
-      <div className="order-1 md:order-none" />
+      <div className="order-1 h-[4.5rem] md:order-none md:h-0" />
 
       {/* Nav */}
       <aside className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center gap-12 bg-secondary text-white max-md:h-[4.5rem] md:bottom-0 md:top-0 md:w-[4.5rem] md:flex-col md:justify-normal md:gap-8 md:py-6">

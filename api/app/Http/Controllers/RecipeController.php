@@ -62,7 +62,13 @@ class RecipeController extends Controller
 
             // Custom error message for ingredient.quantity
             'ingredients.*.quantity.numeric' => 'The quantity must be a whole number and cannot include letters or special characters.',
-            'ingredients.*.quantity.regex' => 'The quantity must be a whole number and cannot include letters or special characters.'
+            'ingredients.*.quantity.regex' => 'The quantity must be a whole number and cannot include letters or special characters.',
+
+            // Custom error message for other ingredients fields
+            'ingredients.*.quantity.required' => 'Quantity is required.',
+            'ingredients.*.unit.required' => 'Unit is required.',
+            'ingredients.*.name.required' => 'Ingredient name is required.',
+            'ingredients.*.category.required' => 'Category is required.'
         ]);
 
         // Call service to create the recipe
