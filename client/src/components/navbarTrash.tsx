@@ -2,14 +2,14 @@ import { NavLink } from "react-router-dom";
 
 const NavbarTrash = () => {
   return (
-    <div className="navbar-trash-container">
-      <nav className="flex justify-center space-x-4 border-b border-gray-300 pb-2">
+    <div className="pb-2 pt-6">
+      <nav className="flex justify-center space-x-4 pb-2">
         <NavLink
           to="/recently-deleted/recipe"
           className={({ isActive }) =>
-            `px-4 py-2 ${
+            ` ${
               isActive
-                ? "border-b-2 border-blue-600 text-blue-600"
+                ? "border-b-2 border-black font-semibold text-black"
                 : "text-gray-500"
             }`
           }
@@ -19,9 +19,9 @@ const NavbarTrash = () => {
         <NavLink
           to="/recently-deleted/grocery"
           className={({ isActive }) =>
-            `px-4 py-2 ${
+            ` ${
               isActive
-                ? "border-b-2 border-blue-600 text-blue-600"
+                ? "border-b-2 border-black font-semibold text-black"
                 : "text-gray-500"
             }`
           }
