@@ -43,7 +43,6 @@ export interface Grocery {
   name: string;
   created_at: string;
   updated_at: string;
-  recipe: string;
 }
 
 export interface RecipeIngredient {

@@ -3,7 +3,7 @@ import { TypographyMuted } from "./ui/typography";
 import { Grocery } from "@/types";
 import { useNavigate } from "react-router-dom";
 
-function GroceryCard({ id, name, updated_at, recipe }: Grocery) {
+function GroceryCard({ id, name, updated_at }: Grocery) {
   const navigate = useNavigate();
 
   return (
@@ -11,14 +11,14 @@ function GroceryCard({ id, name, updated_at, recipe }: Grocery) {
       <div className="flex flex-col gap-2 space-y-3 p-4">
         <div className="flex flex-col gap-2 space-y-2">
           <div className="">
-            <p className="text-lg font-medium text-gray-900">January 1, 2025</p>
+            <p className="text-lg font-medium text-gray-900">{updated_at}</p>
           </div>
           <TypographyMuted>
             <div className="space-y-1">
-              <p>Baked macaroni</p>
-              <p>Mac n cheese</p>
-              <p>Lasagna</p>
-              <p>And more...</p>
+              <p>{name}</p>
+              <p>{name}</p>
+              <p>{name}</p>
+              <p>{name}</p>
             </div>
           </TypographyMuted>
         </div>
@@ -26,7 +26,7 @@ function GroceryCard({ id, name, updated_at, recipe }: Grocery) {
           <Button
             variant="secondary"
             className="w-20"
-            onClick={() => navigate(`/`)}
+            onClick={() => navigate(`/grocery-lists/${id}`)}
           >
             View
           </Button>
