@@ -15,6 +15,7 @@ import RecipeDetail from "./pages/recipes/RecipeDetail";
 import RecipeCreate from "./pages/recipes/RecipeCreate";
 import RecipeEdit from "./pages/recipes/RecipeEdit";
 
+import FullDisplayList from "./pages/grocery-lists/FullDisplayList";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
           { path: ":id/edit", element: <RecipeEdit /> },
           { path: ":id", element: <RecipeDetail /> },
         ],
+      },
+      {
+        path: "test",
+        children: [{ index: true, element: <FullDisplayList /> }],
       },
     ],
   },

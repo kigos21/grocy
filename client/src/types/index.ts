@@ -37,6 +37,14 @@ export interface Recipe {
   updated_at: string;
 }
 
+export interface Grocery {
+  id: number;
+  user_id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface RecipeIngredient {
   id: number;
   recipe_id: number;
