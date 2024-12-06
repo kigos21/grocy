@@ -51,7 +51,8 @@ function FullDisplayListCard({
         <div className="block text-right">
           <Button
             variant={"secondary"}
-            className="w-20"
+            className="h-7 w-12 items-center text-xs"
+            size={"sm"}
             onClick={() => navigate(`/`)}
           >
             Add

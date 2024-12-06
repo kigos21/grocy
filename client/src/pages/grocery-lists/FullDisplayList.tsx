@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import FullDisplayListCard from "@/components/FullDisplayListCard";
+import AddedRecipes from "@/components/AddedRecipes";
 // import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 
@@ -87,9 +88,9 @@ function FullDisplayList() {
         {/* division of row */}
         <div className="flex w-1/2 flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
           <div className="flex gap-12">
-            <span className="font-semibold">Added Recipes</span>
+            <span className="py-2 font-semibold">Added Recipes</span>
           </div>
-          <FullDisplayListCard
+          <AddedRecipes
             id={0}
             user_id={0}
             name={"sample"}
@@ -99,7 +100,7 @@ function FullDisplayList() {
             created_at={""}
             updated_at={""}
           />
-          <FullDisplayListCard
+          <AddedRecipes
             id={0}
             user_id={0}
             name={"sample"}
