@@ -56,7 +56,7 @@ function RecipeForm() {
     name: "ingredients",
   });
 
-  const onSubmit = async (values: LoginFormValues) => {
+  const onSubmit = async (values: RecipeFormValues) => {
     console.log(JSON.stringify(values, null, 2));
     try {
       const { message } = await RecipeService.createRecipe(values);
