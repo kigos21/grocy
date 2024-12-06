@@ -13,6 +13,7 @@ import GroceryLists from "./pages/grocery-lists/GroceryLists";
 import Recipes from "./pages/recipes/Recipes";
 import RecipeDetail from "./pages/recipes/RecipeDetail";
 import RecipeCreate from "./pages/recipes/RecipeCreate";
+import FullDisplayList from "./components/FullDisplayList";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
           // { path: "new", element: <RecipeEdit /> },
           { path: ":id", element: <RecipeDetail /> },
         ],
+      },
+      {
+        path: "test",
+        children: [{ index: true, element: <FullDisplayList /> }],
       },
     ],
   },
