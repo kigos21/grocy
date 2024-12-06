@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import { initializeAuthInterceptor } from "@/lib/interceptors";
 
 // Layouts
@@ -14,6 +18,8 @@ import Recipes from "./pages/recipes/Recipes";
 import RecipeDetail from "./pages/recipes/RecipeDetail";
 import RecipeCreate from "./pages/recipes/RecipeCreate";
 import FullDisplayList from "./pages/grocery-lists/FullDisplayList";
+import DeletedRecipe from "./pages/RecentlyDeleted/DeletedRecipe";
+import DeletedGrocery from "./pages/RecentlyDeleted/DeletedGrocery";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -49,9 +55,28 @@ const router = createBrowserRouter([
           { path: ":id", element: <RecipeDetail /> },
         ],
       },
+
       {
         path: "test",
         children: [{ index: true, element: <FullDisplayList /> }],
+      },
+
+      {
+        path: "recently-deleted",
+        children: [
+          {
+            index: true,
+            element: <Navigate to="recipe" replace />,
+          },
+          {
+            path: "recipe",
+            children: [{ index: true, element: <DeletedRecipe /> }],
+          },
+          {
+            path: "grocery",
+            children: [{ index: true, element: <DeletedGrocery /> }],
+          },
+        ],
       },
     ],
   },
