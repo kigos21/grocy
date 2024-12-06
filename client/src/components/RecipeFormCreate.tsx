@@ -27,7 +27,7 @@ import { RecipeService } from "@/services/RecipeService";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-function RecipeForm() {
+function RecipeFormCreate() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -37,7 +37,7 @@ function RecipeForm() {
   const form = useForm<RecipeFormValues>({
     defaultValues: {
       name: "",
-      recipe_image: "",
+      image_path: "",
       servings: "",
       cook_time: "",
       ingredients: [
@@ -110,15 +110,15 @@ function RecipeForm() {
           />
           <FormField
             control={form.control}
-            name="recipe_image"
+            name="image_path"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Recipe Image (optional)</FormLabel>
                 <FormControl>
                   <Input type="file" {...field} className="border-dashed" />
                 </FormControl>
-                {validationErrors?.errors.recipe_image &&
-                  validationErrors?.errors.recipe_image.map((error) => (
+                {validationErrors?.errors.image_path &&
+                  validationErrors?.errors.image_path.map((error) => (
                     <FormMessage key={error}>{error}</FormMessage>
                   ))}
               </FormItem>
@@ -404,4 +404,4 @@ function RecipeForm() {
   );
 }
 
-export default RecipeForm;
+export default RecipeFormCreate;
