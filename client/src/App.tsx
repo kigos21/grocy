@@ -2,7 +2,9 @@ import {
   createBrowserRouter,
   RouterProvider,
   Navigate,
+  Outlet,
 } from "react-router-dom";
+
 import { initializeAuthInterceptor } from "@/lib/interceptors";
 
 // Layouts
@@ -20,6 +22,7 @@ import RecipeCreate from "./pages/recipes/RecipeCreate";
 import FullDisplayList from "./pages/grocery-lists/FullDisplayList";
 import DeletedRecipe from "./pages/RecentlyDeleted/DeletedRecipe";
 import DeletedGrocery from "./pages/RecentlyDeleted/DeletedGrocery";
+import NavbarTrash from "./components/navbarTrash";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -63,6 +66,12 @@ const router = createBrowserRouter([
 
       {
         path: "recently-deleted",
+        element: (
+          <div>
+            <NavbarTrash />
+            <Outlet />
+          </div>
+        ),
         children: [
           {
             index: true,
