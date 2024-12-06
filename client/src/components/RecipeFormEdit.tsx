@@ -27,6 +27,7 @@ import { RecipeService } from "@/services/RecipeService";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { Skeleton } from "./ui/skeleton";
+import ErrorPage from "@/pages/ErrorPage";
 
 function RecipeFormEdit() {
   const { toast } = useToast();
@@ -106,10 +107,16 @@ function RecipeFormEdit() {
     }
   };
 
+  if (error) {
+    return <ErrorPage message={error.message} />;
+  }
+
   if (isPending) {
     return (
-      <div>
-        <Skeleton />
+      <div className="flex flex-col gap-2">
+        <Skeleton className="h-96 w-full rounded-xl" />
+        <Skeleton className="h-6 w-2/3 rounded-full" />
+        <Skeleton className="h-6 w-1/2 rounded-full" />
       </div>
     );
   }
