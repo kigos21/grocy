@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import FullDisplayListCard from "@/components/FullDisplayListCard";
+import AddedRecipes from "@/components/AddedRecipes";
 // import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 
@@ -21,7 +22,7 @@ function FullDisplayList() {
 
   return (
     <div className="mx-auto max-w-screen-lg p-4">
-      <TypographyH2>
+      <TypographyH2 className="mb-4">
         Whip up your grocery list from your favorite recipes!
       </TypographyH2>
       <div className="flex flex-row gap-8">
@@ -84,8 +85,40 @@ function FullDisplayList() {
           </div>
         </div>
 
-        <div className="w-1/2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <p>ello</p>
+        {/* division of row */}
+        <div className="flex w-1/2 flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+          <div className="flex gap-12">
+            <span className="py-2 font-semibold">Added Recipes</span>
+          </div>
+          <AddedRecipes
+            id={0}
+            user_id={0}
+            name={"sample"}
+            image_path={""}
+            servings={0}
+            cook_time={0}
+            created_at={""}
+            updated_at={""}
+          />
+          <AddedRecipes
+            id={0}
+            user_id={0}
+            name={"sample"}
+            image_path={""}
+            servings={0}
+            cook_time={0}
+            created_at={""}
+            updated_at={""}
+          />
+          <div className="py-4">
+            <Button
+              variant={"default"}
+              className="w-full"
+              // onClick={() => navigate(`/`)}
+            >
+              Save & Generate
+            </Button>
+          </div>
         </div>
       </div>
     </div>
