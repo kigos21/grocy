@@ -32,7 +32,7 @@ class GroceryListService
         // Apply sorting based on 'sort' parameter
         if ($sort === 'newest') {
             $query->orderBy('updated_at', 'desc');
-        } elseif ($sort === 'name') {
+        } elseif ($sort === 'oldest') {
             $query->orderBy('updated_at');
         }
 
