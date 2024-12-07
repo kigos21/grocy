@@ -23,14 +23,16 @@ import RecipeEdit from "./pages/recipes/RecipeEdit";
 
 import FullDisplayList from "./pages/grocery-lists/FullDisplayList";
 import DeletedRecipe from "./pages/RecentlyDeleted/DeletedRecipe";
-import DeletedGrocery from "./pages/RecentlyDeleted/DeletedGrocery";
+import * as DeletedGrocery from "./pages/RecentlyDeleted/DeletedGrocery";
 import NavbarTrash from "./components/navbarTrash";
+import LandingPage from "./pages/LandingPage";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <GuestLayout />, // Guest routes
     children: [
-      // { index: true, element: <LandingPage /> },
+      { index: true, element: <LandingPage /> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
     ],
