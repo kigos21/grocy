@@ -11,8 +11,10 @@ function GroceryListRecipeCard({
   servings,
   cook_time,
   onAdd,
+  isAdded,
 }: Recipe & {
   onAdd: () => void;
+  isAdded: boolean;
 }) {
   const [imageError, setImageError] = useState(false);
 
@@ -50,14 +52,24 @@ function GroceryListRecipeCard({
         </div>
 
         <div className="block text-right">
-          <Button
-            variant={"secondary"}
-            className="h-7 w-12 items-center text-xs"
-            size={"sm"}
-            onClick={onAdd}
-          >
-            Add
-          </Button>
+          {!isAdded ? (
+            <Button
+              variant={"secondary"}
+              className="h-7 w-12 items-center text-xs"
+              size={"sm"}
+              onClick={onAdd}
+            >
+              Add
+            </Button>
+          ) : (
+            <Button
+              variant={"outline"}
+              size={"sm"}
+              className="h-7 items-center text-xs"
+            >
+              Added
+            </Button>
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import apiClient from "@/lib/apiClient";
+import { GroceryListFormValues } from "@/types/zod";
 
 export class GroceryListService {
   static async fetchGroceryLists(sort: string) {
@@ -15,15 +16,24 @@ export class GroceryListService {
     return response.data;
   }
 
-  // static async createRecipe(recipeData: any) {
-  //   const response = await apiClient.post("/api/recipes", recipeData);
-  //   return response.data;
-  // }
+  static async createGroceryList(groceryListData: GroceryListFormValues) {
+    const response = await apiClient.post(
+      "/api/grocery-lists",
+      groceryListData,
+    );
+    return response.data;
+  }
 
-  // static async updateRecipe(id: string, recipeData: any) {
-  //   const response = await apiClient.put(`/api/recipes/${id}`, recipeData);
-  //   return response.data;
-  // }
+  static async updateGroceryList(
+    id: string,
+    groceryListData: GroceryListFormValues,
+  ) {
+    const response = await apiClient.put(
+      `/api/grocery-lists/${id}`,
+      groceryListData,
+    );
+    return response.data;
+  }
 
   static async deleteGroceryList(id: string) {
     const response = await apiClient.delete(`/api/grocery-lists/${id}`);

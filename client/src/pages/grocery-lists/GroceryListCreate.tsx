@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TypographyH2 } from "@/components/ui/typography";
 import { RecipeService } from "@/services/RecipeService";
-import { Recipe } from "@/types";
+import { Recipe, ValidationErrors } from "@/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,17 +12,24 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ErrorPage from "../ErrorPage";
 import GroceryListRecipeAdded from "@/components/GroceryListRecipeAdded";
+import { GroceryListService } from "@/services/GroceryListService";
+import { AxiosError } from "axios";
+import { toast } from "@/hooks/use-toast";
+import { getErrorMessage } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 function GroceryListCreate() {
   const [sort, setSort] = useState("newest");
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const [addedRecipes, setAddedRecipes] = useState<
-    // { id: number; name: string; quantity: number }[]
     (Recipe & { quantity: number })[]
   >([]);
 
@@ -32,10 +39,40 @@ function GroceryListCreate() {
     // queryFn: () => new Promise(() => {}),
   });
 
-  // LOG THE DATA, JUST TO CHECK
-  useEffect(() => {
-    console.log(JSON.stringify(addedRecipes, null, 2));
-  }, [addedRecipes]);
+  const handleSubmit = async () => {
+    const payload = addedRecipes.map(({ id, quantity }) => ({
+      id: String(id),
+      quantity: String(quantity),
+    }));
+
+    try {
+      const { message } = await GroceryListService.createGroceryList({
+        recipes: payload,
+      });
+      toast({
+        description: message,
+      });
+      queryClient.invalidateQueries({ queryKey: ["groceryLists"] });
+      navigate("/grocery-lists");
+    } catch (e: unknown) {
+      console.error(e);
+      if (e instanceof AxiosError) {
+        const errors: ValidationErrors = e.response?.data;
+        toast({
+          variant: "destructive",
+          description: errors.message,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "An unexpected error occured.",
+          description: getErrorMessage(e),
+        });
+      }
+    }
+
+    console.log(data);
+  };
 
   const handleRecipeAdd = (recipe: Recipe) => {
     setAddedRecipes((prev) => {
@@ -137,6 +174,9 @@ function GroceryListCreate() {
                     <GroceryListRecipeCard
                       key={recipe.id}
                       {...recipe}
+                      isAdded={addedRecipes.some(
+                        (r) => String(r.id) === String(recipe.id),
+                      )}
                       onAdd={() => handleRecipeAdd(recipe)}
                     />
                   ))}
@@ -180,7 +220,9 @@ function GroceryListCreate() {
           </div>
 
           <div className="flex items-center rounded-b-lg border border-t-0 p-4">
-            <Button className="w-full">Save & Generate</Button>
+            <Button className="w-full" onClick={handleSubmit}>
+              Save & Generate
+            </Button>
           </div>
         </div>
       </div>
