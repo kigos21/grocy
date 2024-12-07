@@ -37,7 +37,7 @@ function DeletedGrocery() {
     <div className="mx-auto max-w-screen-lg p-4">
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap justify-between gap-x-4">
-          <TypographyH2> Groceries at a glance</TypographyH2>
+          <TypographyH2>Recently Deleted: Grocery</TypographyH2>
           <div className="flex gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -78,7 +78,7 @@ function DeletedGrocery() {
 
         {/* grocery Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {isPending
+          {/* {isPending
             ? Array.from({ length: 6 }).map((_, index) => (
                 <div key={index} className="flex flex-col space-y-3">
                   <Skeleton className="aspect-video w-full rounded-xl" />
@@ -88,24 +88,30 @@ function DeletedGrocery() {
                   </div>
                 </div>
               ))
-            : data?.data.groceries.data.map((grocery: Grocery) => (
-                <GroceryCard key={grocery.id} {...grocery} />
-              ))}
-          {data?.data.groceries.data.length === 0 && (
+            : data?.data.groceries.data.map((grocery: Grocery) => ( */}
+          <GroceryCard
+            id={0}
+            user_id={0}
+            name={""}
+            created_at={""}
+            updated_at={""}
+          />
+          {/* ))} */}
+          {/* {data?.data.groceries.data.length === 0 && (
             <div className="col-span-full flex h-96 items-center justify-center">
               <p className="text-xs font-bold uppercase text-gray-300">
                 Recently Deleted Grocery is empty
               </p>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Pagination */}
-        {data?.data.groceries.data.length !== 0 && (
-          <div className="flex justify-between">
-            <p className="text-xs font-semibold">6 out of 25 items</p>
-          </div>
-        )}
+        {/* {data?.data.groceries.data.length !== 0 && ( */}
+        <div className="flex justify-between">
+          <p className="text-xs font-semibold">6 out of 25 items</p>
+        </div>
+        {/* )} */}
       </div>
     </div>
   );
