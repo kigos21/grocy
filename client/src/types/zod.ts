@@ -28,7 +28,7 @@ export const ingredientSchema = z.object({
 
 export const recipeFormSchema = z.object({
   name: z.string(),
-  recipe_image: z.string(),
+  image_path: z.string(),
   servings: z.string(),
   cook_time: z.string(),
   ingredients: z.array(ingredientSchema),

@@ -1,4 +1,4 @@
-import RecipeForm from "@/components/RecipeForm";
+import RecipeFormCreate from "@/components/RecipeFormCreate";
 import { TypographyH2 } from "@/components/ui/typography";
 
 function RecipeCreate() {
@@ -7,7 +7,7 @@ function RecipeCreate() {
       <div className="flex flex-col gap-2">
         <TypographyH2>Whip up a recipe!</TypographyH2>
 
-        <RecipeForm />
+        <RecipeFormCreate />
       </div>
     </div>
   );

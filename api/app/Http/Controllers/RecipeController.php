@@ -41,15 +41,15 @@ class RecipeController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'image_path' => 'image|max:4096',
+            'image_path' => 'nullable|image|max:4096',
 
             // Making sure that servings and cook_time only accept base-10 digits
-            'servings' => 'bail|required|numeric|regex:/^[0-9]+$/',
-            'cook_time' => 'bail|numeric|regex:/^[0-9]+$/',
+            'servings' => 'bail|required|numeric|regex:/^[0-9]+(\.[0-9]+)?$/',
+            'cook_time' => 'bail|numeric|regex:/^[0-9]+(\.[0-9]+)?$/',
 
             // Validate each ingredient
             'ingredients' => 'required|array|min:1',
-            'ingredients.*.quantity' => 'bail|required|numeric|regex:/^[0-9]+$/',
+            'ingredients.*.quantity' => 'bail|required|numeric|regex:/^[0-9]+(\.[0-9]+)?$/',
             'ingredients.*.unit' => 'required|string|in:g,kg,ml,l,cup,tbsp,tsp,piece',
             'ingredients.*.name' => 'required|string|max:255',
             'ingredients.*.category' => 'required|string|in:produce,meat & seafood,dairy & eggs,baking goods,grains pasta & rice,condiments & spices,frozen,snacks & sweets,beverages,canned & jarred,others',
@@ -62,7 +62,13 @@ class RecipeController extends Controller
 
             // Custom error message for ingredient.quantity
             'ingredients.*.quantity.numeric' => 'The quantity must be a whole number and cannot include letters or special characters.',
-            'ingredients.*.quantity.regex' => 'The quantity must be a whole number and cannot include letters or special characters.'
+            'ingredients.*.quantity.regex' => 'The quantity must be a whole number and cannot include letters or special characters.',
+
+            // Custom error message for other ingredients fields
+            'ingredients.*.quantity.required' => 'Quantity is required.',
+            'ingredients.*.unit.required' => 'Unit is required.',
+            'ingredients.*.name.required' => 'Ingredient name is required.',
+            'ingredients.*.category.required' => 'Category is required.'
         ]);
 
         // Call service to create the recipe
@@ -111,15 +117,15 @@ class RecipeController extends Controller
         // Proceed with request validation
         $validatedData = $request->validate([
             'name' => 'required',
-            'image_path' => 'image|max:4096',
+            'image_path' => 'nullable|image|max:4096',
 
             // Making sure that servings and cook_time only accept base-10 digits
-            'servings' => 'bail|required|numeric|regex:/^[0-9]+$/',
-            'cook_time' => 'bail|numeric|regex:/^[0-9]+$/',
+            'servings' => 'bail|required|numeric|regex:/^[0-9]+(\.[0-9]+)?$/',
+            'cook_time' => 'bail|numeric|regex:/^[0-9]+(\.[0-9]+)?$/',
 
             // Validate each ingredient
             'ingredients' => 'required|array|min:1',
-            'ingredients.*.quantity' => 'bail|required|numeric|regex:/^[0-9]+$/',
+            'ingredients.*.quantity' => 'bail|required|numeric|regex:/^[0-9]+(\.[0-9]+)?$/',
             'ingredients.*.unit' => 'required|string|in:g,kg,ml,l,cup,tbsp,tsp,piece',
             'ingredients.*.name' => 'required|string|max:255',
             'ingredients.*.category' => 'required|string|in:produce,meat & seafood,dairy & eggs,baking goods,grains pasta & rice,condiments & spices,frozen,snacks & sweets,beverages,canned & jarred,others',
@@ -134,6 +140,9 @@ class RecipeController extends Controller
             'ingredients.*.quantity.numeric' => 'The quantity must be a whole number and cannot include letters or special characters.',
             'ingredients.*.quantity.regex' => 'The quantity must be a whole number and cannot include letters or special characters.'
         ]);
+
+        // TODO: Check if recipe has existing image, do not change if the image_path is null
+        // TODO: Update the image_path if image_path !== previousImagePath
 
         // Call service to update the Recipe model
         $recipe = $this->recipeService->updateRecipe($validatedData, $existingRecipe);
