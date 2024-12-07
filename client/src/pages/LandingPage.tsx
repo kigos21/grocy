@@ -5,71 +5,70 @@ import groceryIllustration from "../assets/grocery-illustration.png";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 md:px-16 py-8 gap-16">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-        <div className="w-full md:max-w-xl text-center md:text-left">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-16 px-6 py-8 md:px-16">
+      <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
+        <div className="w-full text-center md:max-w-xl md:text-left">
+          <h1 className="mb-4 text-4xl font-bold md:mb-6 md:text-5xl lg:text-6xl">
             Make grocery shopping much easier
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">
+          <p className="mb-6 text-lg text-gray-600 md:mb-8 md:text-xl">
             Grocery & Recipe maker
           </p>
           <Link
             to="/login"
-            className="inline-block bg-gray-900 text-white px-6 py-3 rounded-md font-medium hover:bg-gray-800 transition-colors"
+            className="inline-block rounded-md bg-gray-900 px-6 py-3 font-medium text-white transition-colors hover:bg-gray-800"
           >
             LOGIN NOW
           </Link>
         </div>
-        
-        <div className="w-full md:flex-1 flex justify-center md:justify-end">
-          <img 
-            src={chefIllustration} 
-            alt="Chef illustration" 
-            className="w-[500px] md:w-[600px] lg:w-[800px] object-contain transition-transform duration-300 hover:scale-105"
+
+        <div className="flex w-full justify-center md:flex-1 md:justify-end">
+          <img
+            src={chefIllustration}
+            alt="Chef illustration"
+            className="w-[500px] object-contain transition-transform duration-300 hover:scale-105 md:w-[600px] lg:w-[800px]"
           />
         </div>
       </div>
 
-      <hr className="w-full border-t border-black my-8" />
+      <hr className="my-8 w-full border-t border-black" />
 
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-        <img 
-          src={recipeIllustration} 
-          alt="Recipe illustration" 
-          className="w-[500px] md:w-[600px] lg:w-[800px] object-contain transition-transform duration-300 hover:scale-105"
+      <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
+        <img
+          src={recipeIllustration}
+          alt="Recipe illustration"
+          className="w-[300px] object-contain transition-transform duration-300 hover:scale-105 md:w-[400px] lg:w-[600px]"
         />
         <div className="text-center md:text-left">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+          <h2 className="mb-4 text-4xl font-bold md:mb-6 md:text-5xl lg:text-6xl">
             Create your favorite recipe
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">
+          <p className="mb-6 text-lg text-gray-600 md:mb-8 md:text-xl">
             • Discover new recipes and customize them to your taste.
-            <br></br>
-            • Easily create and save your favorite recipes.
+            <br></br>• Easily create and save your favorite recipes.
           </p>
         </div>
       </div>
 
-      <hr className="w-full border-t border-black my-8" />
+      <hr className="my-8 w-full border-t border-black" />
 
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-        <div className="w-full md:max-w-xl text-center md:text-left">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+      <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
+        <div className="w-full text-center md:max-w-xl md:text-left">
+          <h1 className="mb-4 text-4xl font-bold md:mb-6 md:text-5xl lg:text-6xl">
             Make your own grocery list
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">
+          <p className="mb-6 text-lg text-gray-600 md:mb-8 md:text-xl">
             • Organize your shopping with ease and efficiency.
-            <br></br>
-            • Create personalized grocery lists from your favorite recipes.
+            <br></br>• Create personalized grocery lists from your favorite
+            recipes.
           </p>
         </div>
-        
-        <div className="w-full md:flex-1 flex justify-center md:justify-end">
-          <img 
-            src={groceryIllustration} 
-            alt="Grocery illustration" 
-            className="w-[500px] md:w-[600px] lg:w-[800px] object-contain transition-transform duration-300 hover:scale-105"
+
+        <div className="flex w-full justify-center md:flex-1 md:justify-end">
+          <img
+            src={groceryIllustration}
+            alt="Grocery illustration"
+            className="w-[500px] object-contain transition-transform duration-300 hover:scale-105 md:w-[600px] lg:w-[800px]"
           />
         </div>
       </div>
