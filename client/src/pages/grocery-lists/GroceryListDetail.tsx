@@ -20,6 +20,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import GroceryListItemsCard from "@/components/GroceryListItemsCard";
+import { GroceryListRecipe } from "@/types";
 
 function GroceryListDetail() {
   const { id: groceryListId } = useParams();
@@ -59,6 +60,8 @@ function GroceryListDetail() {
   if (error) {
     return <ErrorPage message={error.message} />;
   }
+
+  if (!isPending) console.log(data.data.grocery_list.grocery_list_recipes);
 
   return (
     <div className="mx-auto max-w-screen-md p-4">
@@ -119,6 +122,16 @@ function GroceryListDetail() {
             >
               Back to Home
             </Button>
+
+            <div className="mt-1 rounded-md border px-3 py-2">
+              {data?.data.grocery_list.grocery_list_recipes.map(
+                (item: GroceryListRecipe, index: number) => (
+                  <p key={index} className="line-clamp-1 text-sm text-muted">
+                    {item.quantity}x {item.recipe.name}
+                  </p>
+                ),
+              )}
+            </div>
           </div>
         </div>
       </div>
