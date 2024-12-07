@@ -1,7 +1,7 @@
-import GroceryCard from "@/components/GroceryCard";
+import GroceryListCard from "@/components/GroceryListCard";
 import { Button } from "@/components/ui/button";
 import { TypographyH2 } from "@/components/ui/typography";
-import { Grocery } from "@/types";
+import { GroceryList } from "@/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,15 +23,13 @@ function GroceryLists() {
 
   const { isPending, error, data } = useQuery({
     queryKey: ["groceryLists", { sort }],
-    // queryFn: () => GroceryListService.fetchGroceryLists(sort),
-    queryFn: () => new Promise(() => {}),
+    queryFn: () => GroceryListService.fetchGroceryLists(sort),
+    // queryFn: () => new Promise(() => {}),
   });
 
   if (error) {
     return <ErrorPage message={error.message} />;
   }
-
-  if (data) console.log(data);
 
   return (
     <div className="mx-auto max-w-screen-lg p-4">
@@ -73,7 +71,7 @@ function GroceryLists() {
         </div>
 
         {/* Grocery Cards */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {isPending
             ? Array.from({ length: 8 }).map((_, index) => (
                 <div key={index} className="flex flex-col space-y-3">
@@ -83,13 +81,14 @@ function GroceryLists() {
                   </div>
                 </div>
               ))
-            : data?.data.grocery_lists.data.map((grocery: Grocery) => (
-                <GroceryCard key={grocery.id} {...grocery} />
+            : data?.data.grocery_lists.data.map((grocery: GroceryList) => (
+                <GroceryListCard key={grocery.id} {...grocery} />
               ))}
+
           {data?.data.grocery_lists.data.length === 0 && (
             <div className="col-span-full flex h-96 items-center justify-center">
               <p className="text-xs font-bold uppercase text-gray-300">
-                No groceries to display
+                No grocery list to display
               </p>
             </div>
           )}

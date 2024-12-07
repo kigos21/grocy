@@ -18,12 +18,28 @@ export class RecipeService {
   }
 
   static async createRecipe(recipeData: RecipeFormValues) {
-    const response = await apiClient.post("/api/recipes", recipeData);
+    const processedData = {
+      ...recipeData,
+      ingredients: recipeData.ingredients.map((ingredient) => ({
+        ...ingredient,
+        name: ingredient.name.toLowerCase(),
+      })),
+    };
+
+    const response = await apiClient.post("/api/recipes", processedData);
     return response.data;
   }
 
   static async updateRecipe(id: string, recipeData: RecipeFormValues) {
-    const response = await apiClient.put(`/api/recipes/${id}`, recipeData);
+    const processedData = {
+      ...recipeData,
+      ingredients: recipeData.ingredients.map((ingredient) => ({
+        ...ingredient,
+        name: ingredient.name.toLowerCase(),
+      })),
+    };
+
+    const response = await apiClient.put(`/api/recipes/${id}`, processedData);
     return response.data;
   }
 

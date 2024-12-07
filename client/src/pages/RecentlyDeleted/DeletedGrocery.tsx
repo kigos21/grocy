@@ -1,4 +1,4 @@
-import GroceryCard from "@/components/GroceryCard";
+import GroceryListCard from "@/components/GroceryListCard";
 import { Button } from "@/components/ui/button";
 import { TypographyH2 } from "@/components/ui/typography";
 import { Grocery } from "@/types";
@@ -82,7 +82,7 @@ function DeletedGrocery() {
                 </div>
               ))
             : data?.data.groceries.data.map((grocery: Grocery) => (
-                <GroceryCard key={grocery.id} {...grocery} />
+                <GroceryListCard key={grocery.id} {...grocery} />
               ))}
           {data?.data.groceries.data.length === 0 && (
             <div className="col-span-full flex h-96 items-center justify-center">
