@@ -1,17 +1,16 @@
 import apiClient from "@/lib/apiClient";
 
-export class GroceryService {
-  static async fetchGroceries(sort: string, q: string) {
+export class GroceryListService {
+  static async fetchGroceryLists(sort: string) {
     const response = await apiClient.get("/api/grocery-lists", {
       params: {
         sort,
-        q,
       },
     });
     return response.data;
   }
 
-  static async fetchGroceryById(id: string) {
+  static async fetchGroceryListById(id: string) {
     const response = await apiClient.get(`/api/grocery-lists/${id}`);
     return response.data;
   }
@@ -26,7 +25,7 @@ export class GroceryService {
   //   return response.data;
   // }
 
-  static async deleteGrocery(id: string) {
+  static async deleteGroceryList(id: string) {
     const response = await apiClient.delete(`/api/grocery-lists/${id}`);
     return response.data;
   }

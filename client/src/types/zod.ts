@@ -35,3 +35,15 @@ export const recipeFormSchema = z.object({
 });
 
 export type RecipeFormValues = z.infer<typeof recipeFormSchema>;
+
+// Grocery List Form
+export const groceryListRecipeSchema = z.object({
+  id: z.string(),
+  quantity: z.string(),
+});
+
+export const groceryListFormSchema = z.object({
+  recipes: z.array(groceryListRecipeSchema),
+});
+
+export type GroceryListFormValues = z.infer<typeof groceryListFormSchema>;

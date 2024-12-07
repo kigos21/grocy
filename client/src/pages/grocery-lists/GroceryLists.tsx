@@ -1,6 +1,5 @@
 import GroceryCard from "@/components/GroceryCard";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { TypographyH2 } from "@/components/ui/typography";
 import { Grocery } from "@/types";
 import {
@@ -16,22 +15,23 @@ import { useState } from "react";
 import ErrorPage from "../ErrorPage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useNavigate } from "react-router-dom";
-
-import { GroceryService } from "@/services/GroceryService";
+import { GroceryListService } from "@/services/GroceryListService";
 
 function GroceryLists() {
   const [sort, setSort] = useState("newest");
-  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["groceries", { sort, q: search }],
-    queryFn: () => GroceryService.fetchGroceries(sort, search),
+    queryKey: ["groceryLists", { sort }],
+    // queryFn: () => GroceryListService.fetchGroceryLists(sort),
+    queryFn: () => new Promise(() => {}),
   });
 
   if (error) {
     return <ErrorPage message={error.message} />;
   }
+
+  if (data) console.log(data);
 
   return (
     <div className="mx-auto max-w-screen-lg p-4">
@@ -56,42 +56,37 @@ function GroceryLists() {
                       Newest
                     </div>
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="name">
+                  <DropdownMenuRadioItem value="oldest">
                     <div className="cursor-pointer bg-white px-2 py-1 hover:bg-gray-100">
-                      Name
+                      Oldest
                     </div>
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Input
-              placeholder="Search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <Button onClick={() => navigate("/recipes/new")}>
+
+            <Button onClick={() => navigate("/grocery-lists/new")}>
               <Plus />
-              <span className="hidden md:inline">New</span>
+              <span className="">New</span>
             </Button>
           </div>
         </div>
 
-        {/* grocery Cards */}
+        {/* Grocery Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {isPending
-            ? Array.from({ length: 6 }).map((_, index) => (
+            ? Array.from({ length: 8 }).map((_, index) => (
                 <div key={index} className="flex flex-col space-y-3">
                   <Skeleton className="aspect-video w-full rounded-xl" />
                   <div className="space-y-2">
-                    <Skeleton className="h-4 w-[250px] rounded-full" />
-                    <Skeleton className="h-4 w-[200px] rounded-full" />
+                    <Skeleton className="ml-auto h-4 w-1/3 rounded-full" />
                   </div>
                 </div>
               ))
-            : data?.data.groceries.data.map((grocery: Grocery) => (
+            : data?.data.grocery_lists.data.map((grocery: Grocery) => (
                 <GroceryCard key={grocery.id} {...grocery} />
               ))}
-          {data?.data.groceries.data.length === 0 && (
+          {data?.data.grocery_lists.data.length === 0 && (
             <div className="col-span-full flex h-96 items-center justify-center">
               <p className="text-xs font-bold uppercase text-gray-300">
                 No groceries to display
@@ -101,7 +96,7 @@ function GroceryLists() {
         </div>
 
         {/* Pagination */}
-        {data?.data.groceries.data.length !== 0 && (
+        {data?.data.grocery_lists.data.length !== 0 && (
           <div className="flex justify-between">
             <p className="text-xs font-semibold">6 out of 25 items</p>
           </div>

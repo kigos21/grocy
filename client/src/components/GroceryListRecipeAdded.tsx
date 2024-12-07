@@ -1,35 +1,39 @@
-import { Clock4, Minus, Plus, Utensils } from "lucide-react";
+import { Clock4, Minus, Plus, Trash, Utensils } from "lucide-react";
 import { Button } from "./ui/button";
 import { TypographyMuted } from "./ui/typography";
 import { Recipe } from "@/types";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-function AddedRecipes({ id, name, image_path, servings, cook_time }: Recipe) {
-  const navigate = useNavigate();
+function GroceryListRecipeAdded({
+  // id,
+  name,
+  image_path,
+  servings,
+  cook_time,
+  onRemove,
+  onIncrement,
+  onDecrement,
+  quantity,
+}: Recipe & {
+  onRemove: () => void;
+  onIncrement: () => void;
+  onDecrement: () => void;
+  quantity: number;
+}) {
   const [imageError, setImageError] = useState(false);
-  //   const [serving, setServing] = useState(initialServins);
-
-  //   const incrementServing = () => {
-  //     setServing((prev) => prev + 1);
-  //   };
-
-  //   const decrementServings = () => {
-  //     setServing((prev) => Math.max(1, prev - 1));
-  //   };
 
   return (
-    <div className="flex flex-row items-center overflow-hidden rounded-md border px-3">
-      <div className="w-1/4 border-b">
+    <div className="flex gap-x-2 rounded-md border p-3">
+      <div className="aspect-square h-full w-[6.75rem] flex-shrink-0">
         {image_path && !imageError ? (
           <img
             src={image_path}
             alt={`Image of ${name}`}
             onError={() => setImageError(true)}
-            className="aspect-square bg-gray-100 object-cover"
+            className="aspect-square h-full bg-gray-100 object-cover"
           />
         ) : (
-          <div className="flex aspect-square items-center justify-center bg-gray-100">
+          <div className="flex aspect-square h-full items-center justify-center bg-gray-100">
             <p className="text-xs font-bold uppercase text-gray-300">
               No image
             </p>
@@ -37,29 +41,32 @@ function AddedRecipes({ id, name, image_path, servings, cook_time }: Recipe) {
         )}
       </div>
 
-      <div className="flex w-3/4 flex-col gap-3 p-4">
+      <div className="flex flex-1 flex-col gap-3">
         <div className="flex flex-col gap-1">
           <p className="line-clamp-1">{name}</p>
           <div className="flex flex-col">
             <TypographyMuted className="flex items-center gap-1">
-              <Utensils className="h-3 w-3" /> {servings} servings
+              <Utensils className="h-3 w-3" /> {servings}&nbsp;servings
             </TypographyMuted>
             <TypographyMuted className="flex items-center gap-1">
               <Clock4 className="h-3 w-3" />
-              {cook_time} mins
+              {cook_time}&nbsp;mins
             </TypographyMuted>
           </div>
         </div>
 
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between gap-1">
           <div className="">
             <Button
               variant={"secondary"}
-              className="h-7 w-16 items-center text-xs"
+              className="h-7 items-center px-2 text-xs"
               size={"sm"}
-              onClick={() => navigate(`/`)}
+              onClick={onRemove}
             >
-              Remove
+              <span className="hidden sm:block">Remove</span>
+              <span className="block sm:hidden">
+                <Trash />
+              </span>
             </Button>
           </div>
 
@@ -68,18 +75,18 @@ function AddedRecipes({ id, name, image_path, servings, cook_time }: Recipe) {
               variant="secondary"
               size="icon"
               className="h-7 w-7"
-              //   onClick={decrementServings}
+              onClick={onDecrement}
             >
               <Minus className="h-3 w-3" />
             </Button>
-            <span className="w-6 rounded-md border text-center">
-              {servings}
+            <span className="h-7 min-w-7 rounded-md border px-2 text-center">
+              {quantity}
             </span>
             <Button
               variant="secondary"
               size="icon"
               className="h-7 w-7"
-              //   onClick={incrementServings}
+              onClick={onIncrement}
             >
               <Plus className="h-3 w-3" />
             </Button>
@@ -90,4 +97,4 @@ function AddedRecipes({ id, name, image_path, servings, cook_time }: Recipe) {
   );
 }
 
-export default AddedRecipes;
+export default GroceryListRecipeAdded;
