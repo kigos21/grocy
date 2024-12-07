@@ -37,6 +37,16 @@ export interface Recipe {
   updated_at: string;
 }
 
+export interface DeleteRecipe {
+  id: number;
+  user_id: number;
+  name: string;
+  image_path: string;
+  servings: number;
+  cook_time: number;
+  deleted_at: string;
+}
+
 export interface Grocery {
   id: number;
   user_id: number;

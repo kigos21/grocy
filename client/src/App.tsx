@@ -23,7 +23,7 @@ import RecipeEdit from "./pages/recipes/RecipeEdit";
 
 import FullDisplayList from "./pages/grocery-lists/FullDisplayList";
 import DeletedRecipe from "./pages/RecentlyDeleted/DeletedRecipe";
-import * as DeletedGrocery from "./pages/RecentlyDeleted/DeletedGrocery";
+import DeletedGrocery from "./pages/RecentlyDeleted/DeletedGrocery";
 import NavbarTrash from "./components/navbarTrash";
 import LandingPage from "./pages/LandingPage";
 
