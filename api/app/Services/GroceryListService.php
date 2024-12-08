@@ -130,10 +130,22 @@ class GroceryListService
         }
 
         foreach ($ingredientTotals as $total) {
+            $quantity = $total['quantity'];
+            $unit = $total['unit'];
+
+            // Convert back to larger units if quantity > 1000
+            if ($unit === 'g' && $quantity >= 1000) {
+                $quantity = $quantity / 1000;
+                $unit = 'kg';
+            } elseif ($unit === 'ml' && $quantity >= 1000) {
+                $quantity = $quantity / 1000;
+                $unit = 'l';
+            }
+
             GroceryListItem::create([
                 'grocery_list_id' => $createdGroceryList->id,
-                'quantity' => $total['quantity'],
-                'unit' => $total['unit'],
+                'quantity' => $quantity,
+                'unit' => $unit,
                 'name' => $total['name'],
                 'category' => $total['category'],
             ]);
@@ -211,10 +223,22 @@ class GroceryListService
         }
 
         foreach ($ingredientTotals as $total) {
+            $quantity = $total['quantity'];
+            $unit = $total['unit'];
+
+            // Convert back to larger units if quantity > 1000
+            if ($unit === 'g' && $quantity >= 1000) {
+                $quantity = $quantity / 1000;
+                $unit = 'kg';
+            } elseif ($unit === 'ml' && $quantity >= 1000) {
+                $quantity = $quantity / 1000;
+                $unit = 'l';
+            }
+
             GroceryListItem::create([
                 'grocery_list_id' => $groceryList->id,
-                'quantity' => $total['quantity'],
-                'unit' => $total['unit'],
+                'quantity' => $quantity,
+                'unit' => $unit,
                 'name' => $total['name'],
                 'category' => $total['category'],
             ]);
