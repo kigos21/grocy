@@ -2,11 +2,12 @@ import apiClient from "@/lib/apiClient";
 import { RecipeFormValues } from "@/types/zod";
 
 export class RecipeService {
-  static async fetchRecipes(sort: string, q: string) {
+  static async fetchRecipes(sort: string, q: string, page: string = "1") {
     const response = await apiClient.get("/api/recipes", {
       params: {
         sort,
         q,
+        page,
       },
     });
     return response.data;

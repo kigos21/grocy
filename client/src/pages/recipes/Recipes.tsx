@@ -12,7 +12,14 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronDown, Plus } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronFirst,
+  ChevronLast,
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import ErrorPage from "../ErrorPage";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -22,6 +29,7 @@ function Recipes() {
   const [sort, setSort] = useState("newest");
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState(search);
+  const [page, setPage] = useState("1");
   const navigate = useNavigate();
 
   // Debounce the search state
@@ -36,8 +44,8 @@ function Recipes() {
   }, [search]);
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["recipes", { sort, q: debouncedSearch }],
-    queryFn: () => RecipeService.fetchRecipes(sort, debouncedSearch),
+    queryKey: ["recipes", { sort, q: debouncedSearch, page }],
+    queryFn: () => RecipeService.fetchRecipes(sort, debouncedSearch, page),
   });
 
   if (error) {
@@ -113,8 +121,68 @@ function Recipes() {
 
         {/* Pagination */}
         {data?.data.recipes.data.length !== 0 && (
-          <div className="flex justify-between">
-            <p className="text-xs font-semibold">6 out of 25 items</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold">
+              Page {data?.data.recipes.current_page} out of{" "}
+              {data?.data.recipes.last_page}
+            </p>
+
+            <div className="flex items-center gap-1">
+              {/* First Page */}
+              {data?.data.recipes.current_page !== 1 && (
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  className="h-7 px-2"
+                  onClick={() => setPage("1")}
+                >
+                  <ChevronFirst className="h-2 w-2" />
+                </Button>
+              )}
+
+              {/* Previous Page */}
+              {data?.data.recipes.prev_page_url && (
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  className="h-7 px-2"
+                  onClick={() =>
+                    setPage((prev) => (parseInt(prev) - 1).toString())
+                  }
+                >
+                  <ChevronLeft className="h-2 w-2" />
+                </Button>
+              )}
+
+              {/* Next Page */}
+              {data?.data.recipes.next_page_url && (
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  className="h-7 px-2"
+                  onClick={() =>
+                    setPage((prev) => (parseInt(prev) + 1).toString())
+                  }
+                >
+                  <ChevronRight className="h-2 w-2" />
+                </Button>
+              )}
+
+              {/* Last Page */}
+              {data?.data.recipes.current_page !==
+                data?.data.recipes.last_page && (
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  className="h-7 px-2"
+                  onClick={() =>
+                    setPage(data.data.recipes.last_page.toString())
+                  }
+                >
+                  <ChevronLast className="h-2 w-2" />
+                </Button>
+              )}
+            </div>
           </div>
         )}
       </div>
