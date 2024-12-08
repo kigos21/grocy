@@ -18,13 +18,17 @@ function GroceryListCard({
 
           <div className="flex h-[5.75rem] flex-col gap-1 text-sm text-muted">
             {grocery_list_recipes.slice(0, 3).map((recipe) => (
-              <p key={recipe.id}>{recipe.recipe.name}</p>
+              <p key={recipe.id} className="line-clamp-1">
+                {recipe.recipe.name}
+              </p>
             ))}
             {grocery_list_recipes.length > 4 ? (
               <p>And more...</p>
             ) : (
               grocery_list_recipes[3] && (
-                <p>{grocery_list_recipes[3].recipe.name}</p>
+                <p className="line-clamp-1">
+                  {grocery_list_recipes[3].recipe.name}
+                </p>
               )
             )}
           </div>
