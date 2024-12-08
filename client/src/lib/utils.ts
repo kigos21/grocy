@@ -26,3 +26,14 @@ export const getInitials = (input: string): string => {
   // If more than one word, take the first letter of the first two words
   return words[0][0]?.toUpperCase() + (words[1]?.[0]?.toUpperCase() || "");
 };
+
+export const formatIsoDateToLocale = (isoDate: string) => {
+  const date = new Date(isoDate);
+  const formattedDate = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+
+  return formattedDate;
+};

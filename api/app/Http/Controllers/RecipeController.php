@@ -182,4 +182,89 @@ class RecipeController extends Controller
             'timestamp' => now(),
         ]);
     }
+
+    public function restore(Request $request, $id)
+    {
+        // Get the existing recipe
+        $recipe = Recipe::findOrFail($id);
+
+        // Check if user is authorized for this action
+        Gate::authorize('restore', $recipe);
+
+        // Check if it's soft-deleted
+        if ($recipe->trashed()) {
+            // Perform force delete
+            $recipe->restore();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Recipe restored successfully.',
+                'data' => [
+                    'recipe' => $recipe,
+                ],
+                'errors' => [],
+                'timestamp' => now(),
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'fail',
+            'message' => 'Recipe is not soft-deleted.',
+            'data' => [
+                'recipe' => $recipe,
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ], 400);
+    }
+
+    public function trashed(Request $request)
+    {
+        $recipes = $this->recipeService->getTrashed($request);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Trashed recipes fetch successfully.',
+            'data' => [
+                'recipes' => $recipes,
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ]);
+    }
+
+    public function forceDelete(Request $request, $id)
+    {
+        // Get the existing recipe
+        $recipe = Recipe::findOrFail($id);
+
+        // Check if user is authorized for this action
+        Gate::authorize('forceDelete', $recipe);
+
+        // Check if it's soft-deleted
+        if ($recipe->trashed()) {
+            // Perform force delete
+            $recipe->forceDelete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Recipe deleted permanently.',
+                'data' => [
+                    'recipe' => $recipe,
+                ],
+                'errors' => [],
+                'timestamp' => now(),
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'fail',
+            'message' => 'Recipe is not soft-deleted.',
+            'data' => [
+                'recipe' => $recipe,
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ], 400);
+    }
 }

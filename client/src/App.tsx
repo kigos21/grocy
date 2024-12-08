@@ -16,15 +16,18 @@ import AppLayout from "./layouts/AppLayout";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import GroceryLists from "./pages/grocery-lists/GroceryLists";
+
 import Recipes from "./pages/recipes/Recipes";
 import RecipeDetail from "./pages/recipes/RecipeDetail";
 import RecipeCreate from "./pages/recipes/RecipeCreate";
 import RecipeEdit from "./pages/recipes/RecipeEdit";
 
-import FullDisplayList from "./pages/grocery-lists/FullDisplayList";
 import DeletedRecipe from "./pages/RecentlyDeleted/DeletedRecipe";
 import DeletedGrocery from "./pages/RecentlyDeleted/DeletedGrocery";
 import NavbarTrash from "./components/navbarTrash";
+import GroceryListCreate from "./pages/grocery-lists/GroceryListCreate";
+import GroceryListDetail from "./pages/grocery-lists/GroceryListDetail";
+import GroceryListEdit from "./pages/grocery-lists/GroceryListEdit";
 import LandingPage from "./pages/LandingPage";
 
 const router = createBrowserRouter([
@@ -49,8 +52,9 @@ const router = createBrowserRouter([
         path: "grocery-lists",
         children: [
           { index: true, element: <GroceryLists /> },
-          // { path: "new", element: <GroceryListForm /> },
-          // { path: ":id", element: <GroceryListDetail /> },
+          { path: "new", element: <GroceryListCreate /> },
+          { path: ":id/edit", element: <GroceryListEdit /> },
+          { path: ":id", element: <GroceryListDetail /> },
         ],
       },
       {
@@ -63,11 +67,7 @@ const router = createBrowserRouter([
         ],
       },
 
-      {
-        path: "test",
-        children: [{ index: true, element: <FullDisplayList /> }],
-      },
-
+      // Trashed
       {
         path: "recently-deleted",
         element: (

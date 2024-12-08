@@ -129,4 +129,89 @@ class GroceryListController extends Controller
             'timestamp' => now(),
         ]);
     }
+
+    public function restore(Request $request, $id)
+    {
+        // Get the existing grocery list
+        $grocery_list = GroceryList::findOrFail($id);
+
+        // Check if user is authorized for this action
+        Gate::authorize('restore', $grocery_list);
+
+        // Check if it's soft-deleted
+        if ($grocery_list->trashed()) {
+            // Perform restore
+            $grocery_list->restore();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Grocery list restored successfully.',
+                'data' => [
+                    'grocery_list' => $grocery_list,
+                ],
+                'errors' => [],
+                'timestamp' => now(),
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'fail',
+            'message' => 'Grocery list is not soft-deleted.',
+            'data' => [
+                'grocery_list' => $grocery_list,
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ], 400);
+    }
+
+    public function trashed(Request $request)
+    {
+        $grocery_lists = $this->groceryListService->getTrashed($request);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Trashed grocery lists fetch successfully.',
+            'data' => [
+                'grocery_lists' => $grocery_lists,
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ]);
+    }
+
+    public function forceDelete(Request $request, $id)
+    {
+        // Get the existing grocery list
+        $grocery_list = GroceryList::findOrFail($id);
+
+        // Check if user is authorized for this action
+        Gate::authorize('forceDelete', $grocery_list);
+
+        // Check if it's soft-deleted
+        if ($grocery_list->trashed()) {
+            // Perform force delete
+            $grocery_list->forceDelete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Grocery list deleted permanently.',
+                'data' => [
+                    'grocery_list' => $grocery_list,
+                ],
+                'errors' => [],
+                'timestamp' => now(),
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'fail',
+            'message' => 'Grocery list is not soft-deleted.',
+            'data' => [
+                'grocery_list' => $grocery_list,
+            ],
+            'errors' => [],
+            'timestamp' => now(),
+        ], 400);
+    }
 }

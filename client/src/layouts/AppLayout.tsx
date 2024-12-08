@@ -41,14 +41,14 @@ function AppLayout() {
           ツ
         </Link>
 
-        <Link to={"/grocery-lists"} className="order-1 text-xs md:order-none">
+        <Link to={"/grocery-lists"} className="text-xs">
           <div className="flex flex-col items-center">
             <House />
             <span className="hidden md:inline">Home</span>
           </div>
         </Link>
 
-        <Link to={"/recipes"} className="order-0 text-xs md:order-none">
+        <Link to={"/recipes"} className="text-xs">
           <div className="flex flex-col items-center">
             <ChefHat />
             <span className="hidden md:inline">Recipes</span>
@@ -57,7 +57,7 @@ function AppLayout() {
 
         <Link
           to={"/recently-deleted"}
-          className="order-0 text-xs md:order-none"
+          className="order-first text-xs md:order-none"
         >
           <div className="flex flex-col items-center text-center">
             <Trash />
@@ -65,7 +65,7 @@ function AppLayout() {
           </div>
         </Link>
 
-        <div className="order-2 text-xs md:order-none md:mt-auto">
+        <div className="text-xs md:mt-auto">
           <div className="flex flex-col items-center">
             <Dialog>
               <DialogTrigger>

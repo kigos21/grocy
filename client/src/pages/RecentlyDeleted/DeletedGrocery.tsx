@@ -1,6 +1,5 @@
-import GroceryCard from "@/components/GroceryCard";
+import GroceryListCard from "@/components/GroceryListCard";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { TypographyH2 } from "@/components/ui/typography";
 import { Grocery } from "@/types";
 import {
@@ -17,16 +16,15 @@ import ErrorPage from "../ErrorPage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useNavigate } from "react-router-dom";
 
-import { GroceryService } from "@/services/GroceryService";
+import { GroceryListService } from "@/services/GroceryListService";
 
 function DeletedGrocery() {
   const [sort, setSort] = useState("newest");
-  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["groceries", { sort, q: search }],
-    queryFn: () => GroceryService.fetchGroceries(sort, search),
+    queryFn: () => GroceryListService.fetchGroceryLists(sort),
   });
 
   if (error) {
@@ -64,11 +62,6 @@ function DeletedGrocery() {
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Input
-              placeholder="Search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
             <Button onClick={() => navigate("/recipes/new")}>
               <Plus />
               <span className="hidden md:inline">New</span>
@@ -88,6 +81,10 @@ function DeletedGrocery() {
                   </div>
                 </div>
               ))
+            : data?.data.groceries.data.map((grocery: Grocery) => (
+                <GroceryListCard key={grocery.id} {...grocery} />
+              ))}
+          {data?.data.groceries.data.length === 0 && (
             : data?.data.groceries.data.map((grocery: Grocery) => ( */}
           <GroceryCard
             id={0}

@@ -19,6 +19,7 @@ namespace App\Models{
  * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroceryListItem> $groceryListItems
  * @property-read int|null $grocery_list_items_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroceryListRecipe> $groceryListRecipes
@@ -27,11 +28,15 @@ namespace App\Models{
  * @method static \Database\Factories\GroceryListFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroceryList withoutTrashed()
  */
 	class GroceryList extends \Eloquent {}
 }
@@ -104,6 +109,7 @@ namespace App\Models{
  * @property int|null $cook_time
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroceryListRecipe> $groceryListRecipes
  * @property-read int|null $grocery_list_recipes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RecipeIngredient> $recipeIngredients
@@ -112,15 +118,19 @@ namespace App\Models{
  * @method static \Database\Factories\RecipeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereCookTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereImagePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereServings($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe withoutTrashed()
  */
 	class Recipe extends \Eloquent {}
 }

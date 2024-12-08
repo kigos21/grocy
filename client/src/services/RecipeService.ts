@@ -2,11 +2,12 @@ import apiClient from "@/lib/apiClient";
 import { RecipeFormValues } from "@/types/zod";
 
 export class RecipeService {
-  static async fetchRecipes(sort: string, q: string) {
+  static async fetchRecipes(sort: string, q: string, page: string = "1") {
     const response = await apiClient.get("/api/recipes", {
       params: {
         sort,
         q,
+        page,
       },
     });
     return response.data;
@@ -18,12 +19,28 @@ export class RecipeService {
   }
 
   static async createRecipe(recipeData: RecipeFormValues) {
-    const response = await apiClient.post("/api/recipes", recipeData);
+    const processedData = {
+      ...recipeData,
+      ingredients: recipeData.ingredients.map((ingredient) => ({
+        ...ingredient,
+        name: ingredient.name.toLowerCase(),
+      })),
+    };
+
+    const response = await apiClient.post("/api/recipes", processedData);
     return response.data;
   }
 
   static async updateRecipe(id: string, recipeData: RecipeFormValues) {
-    const response = await apiClient.put(`/api/recipes/${id}`, recipeData);
+    const processedData = {
+      ...recipeData,
+      ingredients: recipeData.ingredients.map((ingredient) => ({
+        ...ingredient,
+        name: ingredient.name.toLowerCase(),
+      })),
+    };
+
+    const response = await apiClient.put(`/api/recipes/${id}`, processedData);
     return response.data;
   }
 

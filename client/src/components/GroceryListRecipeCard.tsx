@@ -3,30 +3,33 @@ import { Button } from "./ui/button";
 import { TypographyMuted } from "./ui/typography";
 import { Recipe } from "@/types";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-function FullDisplayListCard({
-  id,
+function GroceryListRecipeCard({
+  // id,
   name,
   image_path,
   servings,
   cook_time,
-}: Recipe) {
-  const navigate = useNavigate();
+  onAdd,
+  isAdded,
+}: Recipe & {
+  onAdd: () => void;
+  isAdded: boolean;
+}) {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div className="flex flex-row items-center overflow-hidden rounded-md border px-3">
-      <div className="w-1/4 border-b">
+    <div className="flex gap-x-2 rounded-md border p-3">
+      <div className="aspect-square h-full w-[6.75rem] flex-shrink-0">
         {image_path && !imageError ? (
           <img
             src={image_path}
             alt={`Image of ${name}`}
             onError={() => setImageError(true)}
-            className="aspect-square bg-gray-100 object-cover"
+            className="aspect-square h-full bg-gray-100 object-cover"
           />
         ) : (
-          <div className="flex aspect-square items-center justify-center bg-gray-100">
+          <div className="flex aspect-square h-full items-center justify-center bg-gray-100">
             <p className="text-xs font-bold uppercase text-gray-300">
               No image
             </p>
@@ -34,33 +37,43 @@ function FullDisplayListCard({
         )}
       </div>
 
-      <div className="flex w-3/4 flex-col gap-3 p-4">
+      <div className="flex flex-1 flex-col gap-3">
         <div className="flex flex-col gap-1">
           <p className="line-clamp-1">{name}</p>
           <div className="flex flex-col">
             <TypographyMuted className="flex items-center gap-1">
-              <Utensils className="h-3 w-3" /> {servings} servings
+              <Utensils className="h-3 w-3" /> {servings}&nbsp;servings
             </TypographyMuted>
             <TypographyMuted className="flex items-center gap-1">
               <Clock4 className="h-3 w-3" />
-              {cook_time} mins
+              {cook_time}&nbsp;mins
             </TypographyMuted>
           </div>
         </div>
 
         <div className="block text-right">
-          <Button
-            variant={"secondary"}
-            className="h-7 w-12 items-center text-xs"
-            size={"sm"}
-            onClick={() => navigate(`/`)}
-          >
-            Add
-          </Button>
+          {!isAdded ? (
+            <Button
+              variant={"secondary"}
+              className="h-7 w-12 items-center text-xs"
+              size={"sm"}
+              onClick={onAdd}
+            >
+              Add
+            </Button>
+          ) : (
+            <Button
+              variant={"outline"}
+              size={"sm"}
+              className="h-7 items-center text-xs"
+            >
+              Added
+            </Button>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-export default FullDisplayListCard;
+export default GroceryListRecipeCard;
