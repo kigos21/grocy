@@ -13,7 +13,7 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronDown, Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ErrorPage from "../ErrorPage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useNavigate } from "react-router-dom";
@@ -21,11 +21,23 @@ import { useNavigate } from "react-router-dom";
 function Recipes() {
   const [sort, setSort] = useState("newest");
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
   const navigate = useNavigate();
 
+  // Debounce the search state
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 200);
+
+    return () => {
+      clearTimeout(handler); // Clear timeout on cleanup
+    };
+  }, [search]);
+
   const { isPending, error, data } = useQuery({
-    queryKey: ["recipes", { sort, q: search }],
-    queryFn: () => RecipeService.fetchRecipes(sort, search),
+    queryKey: ["recipes", { sort, q: debouncedSearch }],
+    queryFn: () => RecipeService.fetchRecipes(sort, debouncedSearch),
   });
 
   if (error) {

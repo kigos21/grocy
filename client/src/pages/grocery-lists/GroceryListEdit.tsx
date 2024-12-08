@@ -26,17 +26,29 @@ import { useNavigate, useParams } from "react-router-dom";
 function GroceryListEdit() {
   const [sort, setSort] = useState("newest");
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { id: groceryListId } = useParams();
+
+  // Debounce the search state
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 200);
+
+    return () => {
+      clearTimeout(handler); // Clear timeout on cleanup
+    };
+  }, [search]);
 
   const [addedRecipes, setAddedRecipes] = useState<
     (Recipe & { quantity: number })[]
   >([]);
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["recipes", { sort, q: search }],
-    queryFn: () => RecipeService.fetchRecipes(sort, search),
+    queryKey: ["recipes", { sort, q: debouncedSearch }],
+    queryFn: () => RecipeService.fetchRecipes(sort, debouncedSearch),
     // queryFn: () => new Promise(() => {}),
   });
 

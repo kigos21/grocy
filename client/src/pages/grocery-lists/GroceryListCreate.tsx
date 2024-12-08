@@ -14,7 +14,7 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ErrorPage from "../ErrorPage";
 import GroceryListRecipeAdded from "@/components/GroceryListRecipeAdded";
 import { GroceryListService } from "@/services/GroceryListService";
@@ -26,16 +26,28 @@ import { useNavigate } from "react-router-dom";
 function GroceryListCreate() {
   const [sort, setSort] = useState("newest");
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  // Debounce the search state
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 200);
+
+    return () => {
+      clearTimeout(handler); // Clear timeout on cleanup
+    };
+  }, [search]);
 
   const [addedRecipes, setAddedRecipes] = useState<
     (Recipe & { quantity: number })[]
   >([]);
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["recipes", { sort, q: search }],
-    queryFn: () => RecipeService.fetchRecipes(sort, search),
+    queryKey: ["recipes", { sort, q: debouncedSearch }],
+    queryFn: () => RecipeService.fetchRecipes(sort, debouncedSearch),
     // queryFn: () => new Promise(() => {}),
   });
 
