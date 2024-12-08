@@ -27,6 +27,7 @@ import DeletedGrocery from "./pages/RecentlyDeleted/DeletedGrocery";
 import NavbarTrash from "./components/navbarTrash";
 import GroceryListCreate from "./pages/grocery-lists/GroceryListCreate";
 import GroceryListDetail from "./pages/grocery-lists/GroceryListDetail";
+import GroceryListEdit from "./pages/grocery-lists/GroceryListEdit";
 
 const router = createBrowserRouter([
   {
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <GroceryLists /> },
           { path: "new", element: <GroceryListCreate /> },
-          // { path: ":id/edit", element: <GroceryListEdit /> },
+          { path: ":id/edit", element: <GroceryListEdit /> },
           { path: ":id", element: <GroceryListDetail /> },
         ],
       },
