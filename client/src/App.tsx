@@ -28,13 +28,14 @@ import NavbarTrash from "./components/navbarTrash";
 import GroceryListCreate from "./pages/grocery-lists/GroceryListCreate";
 import GroceryListDetail from "./pages/grocery-lists/GroceryListDetail";
 import GroceryListEdit from "./pages/grocery-lists/GroceryListEdit";
+import LandingPage from "./pages/LandingPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <GuestLayout />, // Guest routes
     children: [
-      // { index: true, element: <LandingPage /> },
+      { index: true, element: <LandingPage /> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
     ],

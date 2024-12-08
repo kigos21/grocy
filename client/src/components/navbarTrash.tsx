@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 const NavbarTrash = () => {
   return (
     <div className="pb-2 pt-6">
-      <nav className="flex justify-center space-x-4 pb-2">
+      <nav className="flex justify-center space-x-12 pb-2">
         <NavLink
           to="/recently-deleted/recipe"
           className={({ isActive }) =>
