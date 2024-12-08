@@ -246,4 +246,18 @@ class GroceryListService
 
         return GroceryList::with('groceryListRecipes', 'groceryListItems')->findOrFail($groceryList->id);
     }
+
+    public function getTrashed(Request $request)
+    {
+        // Form base query for USER and ADMIN
+        $user = $request->user();
+        $query = GroceryList::query()->with(['groceryListRecipes.recipe', 'groceryListItems']);
+
+        if ($user->role === 'USER') {
+            $query->where('user_id', $user->id);
+        }
+
+        // Get the results with pagination
+        return $query->onlyTrashed()->paginate(6);
+    }
 }

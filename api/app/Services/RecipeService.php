@@ -85,4 +85,21 @@ class RecipeService
         // Query the final recipe with ingredients
         return Recipe::with('recipeIngredients')->findOrFail($recipe->id);
     }
+
+    public function getTrashed(Request $request)
+    {
+        // Form base query for USER and ADMIN
+        $user = $request->user();
+
+        // Initialize $query to prevent scoping issues
+        $query = Recipe::query(); // Default to fetching all recipes
+
+        if ($user->role === 'USER') {
+            // If user role is 'USER', only fetch recipes belonging to that user
+            $query->where('user_id', $user->id);
+        }
+
+        // Now you can use $query to build the desired query and return results
+        return $query->onlyTrashed()->paginate(6);
+    }
 }
