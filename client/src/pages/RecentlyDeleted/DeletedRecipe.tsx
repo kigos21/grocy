@@ -1,9 +1,9 @@
-import DeletedRecipeCard from "@/components/DeletedRecipeCard";
+import RecipeCard from "@/components/RecipeCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TypographyH2 } from "@/components/ui/typography";
 import { RecipeService } from "@/services/RecipeService";
-import { DeleteRecipe } from "@/types";
+import { Recipe } from "@/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -87,8 +87,8 @@ function DeletedRecipe() {
                   </div>
                 </div>
               ))
-            : data.data.recipes.data.map((DeleteRecipe: DeleteRecipe) => (
-                <DeletedRecipeCard key={DeleteRecipe.id} {...DeleteRecipe} />
+            : data.data.recipes.data.map((recipe: Recipe) => (
+                <RecipeCard key={recipe.id} {...recipe} />
               ))}
           {data?.data.recipes.data.length === 0 && (
             <div className="col-span-full flex h-96 items-center justify-center">

@@ -20,9 +20,9 @@ function GuestLayout() {
           Grocy&nbsp;ツ
         </Link>
         <div className="flex gap-1">
-          {/* <Button variant={"secondary"}>
+          <Button variant={"secondary"}>
             <Link to={"/login"}>Login</Link>
-          </Button> */}
+          </Button>
           <Button>
             <Link to={"/register"}>Register</Link>
           </Button>
