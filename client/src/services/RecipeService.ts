@@ -57,4 +57,14 @@ export class RecipeService {
     });
     return response.data;
   }
+
+  static async restoreRecipe(id: string) {
+    const response = await apiClient.patch(`/api/trash/recipes/${id}`);
+    return response.data;
+  }
+
+  static async forceDeleteRecipe(id: string) {
+    const response = await apiClient.delete(`/api/trash/recipes/${id}`);
+    return response.data;
+  }
 }

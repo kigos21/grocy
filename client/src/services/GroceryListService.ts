@@ -49,4 +49,14 @@ export class GroceryListService {
     });
     return response.data;
   }
+
+  static async restoreGroceryList(id: string) {
+    const response = await apiClient.patch(`/api/trash/grocery-lists/${id}`);
+    return response.data;
+  }
+
+  static async forceDeleteGroceryList(id: string) {
+    const response = await apiClient.delete(`/api/trash/grocery-lists/${id}`);
+    return response.data;
+  }
 }

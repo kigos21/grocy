@@ -89,8 +89,6 @@ function GroceryListCreate() {
         });
       }
     }
-
-    console.log(data);
   };
 
   const handleRecipeAdd = (recipe: Recipe) => {

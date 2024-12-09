@@ -1,11 +1,15 @@
 import { TypographyH2 } from "@/components/ui/typography";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { RecipeService } from "@/services/RecipeService";
 import ErrorPage from "./ErrorPage";
 import { GroceryList, Recipe } from "@/types";
-import { formatIsoDateToLocale, timeDiffForHumans } from "@/lib/utils";
+import {
+  formatIsoDateToLocale,
+  getErrorMessage,
+  timeDiffForHumans,
+} from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -15,10 +19,14 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { GroceryListService } from "@/services/GroceryListService";
+import { useToast } from "@/hooks/use-toast";
+import { AxiosError } from "axios";
 
 function TrashPage() {
+  const { toast } = useToast();
   const [recipePage, setRecipePage] = useState("1");
   const [groceryListPage, setGroceryListPage] = useState("1");
+  const queryClient = useQueryClient();
 
   const {
     isPending: recipeIsPending,
@@ -40,6 +48,106 @@ function TrashPage() {
     // queryFn: () => new Promise(() => {}),
   });
 
+  // Restore recipe
+  const restoreRecipe = async (id: string | number) => {
+    try {
+      const { message } = await RecipeService.restoreRecipe(String(id));
+      toast({
+        description: message,
+      });
+      queryClient.invalidateQueries({ queryKey: ["trashedRecipes"] });
+    } catch (e: unknown) {
+      if (e instanceof AxiosError) {
+        toast({
+          variant: "destructive",
+          description: JSON.stringify(e),
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "An unexpected error occured.",
+          description: getErrorMessage(e),
+        });
+      }
+    }
+  };
+
+  // Restore grocery list
+  const restoreGroceryList = async (id: string | number) => {
+    try {
+      const { message } = await GroceryListService.restoreGroceryList(
+        String(id),
+      );
+      toast({
+        description: message,
+      });
+      queryClient.invalidateQueries({ queryKey: ["trashedGroceryLists"] });
+    } catch (e: unknown) {
+      if (e instanceof AxiosError) {
+        toast({
+          variant: "destructive",
+          description: JSON.stringify(e),
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "An unexpected error occured.",
+          description: getErrorMessage(e),
+        });
+      }
+    }
+  };
+
+  // Force delete recipe
+  const forceDeleteRecipe = async (id: string | number) => {
+    try {
+      const { message } = await RecipeService.forceDeleteRecipe(String(id));
+      toast({
+        description: message,
+      });
+      queryClient.invalidateQueries({ queryKey: ["trashedRecipes"] });
+    } catch (e: unknown) {
+      if (e instanceof AxiosError) {
+        toast({
+          variant: "destructive",
+          description: JSON.stringify(e),
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "An unexpected error occured.",
+          description: getErrorMessage(e),
+        });
+      }
+    }
+  };
+
+  // Force delete grocery list
+  const forceDeleteGroceryList = async (id: string | number) => {
+    try {
+      const { message } = await GroceryListService.forceDeleteGroceryList(
+        String(id),
+      );
+      toast({
+        description: message,
+      });
+      queryClient.invalidateQueries({ queryKey: ["trashedGroceryLists"] });
+    } catch (e: unknown) {
+      if (e instanceof AxiosError) {
+        toast({
+          variant: "destructive",
+          description: JSON.stringify(e),
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "An unexpected error occured.",
+          description: getErrorMessage(e),
+        });
+      }
+    }
+  };
+
   if (recipeError) {
     return <ErrorPage message={recipeError.message} />;
   }
@@ -47,8 +155,6 @@ function TrashPage() {
   if (groceryListError) {
     return <ErrorPage message={groceryListError.message} />;
   }
-
-  if (groceryListData) console.log(groceryListData);
 
   return (
     <div className="mx-auto max-w-screen-md p-4">
@@ -78,10 +184,18 @@ function TrashPage() {
                       </div>
 
                       <div className="ml-auto flex gap-1">
-                        <Button variant={"secondary"} size={"sm"}>
+                        <Button
+                          variant={"secondary"}
+                          size={"sm"}
+                          onClick={() => restoreRecipe(recipe.id)}
+                        >
                           Restore
                         </Button>
-                        <Button variant={"destructive"} size={"sm"}>
+                        <Button
+                          variant={"destructive"}
+                          size={"sm"}
+                          onClick={() => forceDeleteRecipe(recipe.id)}
+                        >
                           Delete
                         </Button>
                       </div>
@@ -186,7 +300,10 @@ function TrashPage() {
               {!groceryListIsPending
                 ? groceryListData.data.grocery_lists.data.map(
                     (groceryList: GroceryList) => (
-                      <div className="flex flex-col gap-4 rounded-md border px-4 py-3">
+                      <div
+                        key={groceryList.id}
+                        className="flex flex-col gap-4 rounded-md border px-4 py-3"
+                      >
                         <div>
                           <p>{formatIsoDateToLocale(groceryList.updated_at)}</p>{" "}
                           <p className="text-xs text-muted">
@@ -195,10 +312,20 @@ function TrashPage() {
                         </div>
 
                         <div className="ml-auto flex gap-1">
-                          <Button variant={"secondary"} size={"sm"}>
+                          <Button
+                            variant={"secondary"}
+                            size={"sm"}
+                            onClick={() => restoreGroceryList(groceryList.id)}
+                          >
                             Restore
                           </Button>
-                          <Button variant={"destructive"} size={"sm"}>
+                          <Button
+                            variant={"destructive"}
+                            size={"sm"}
+                            onClick={() =>
+                              forceDeleteGroceryList(groceryList.id)
+                            }
+                          >
                             Delete
                           </Button>
                         </div>

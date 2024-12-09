@@ -133,7 +133,7 @@ class GroceryListController extends Controller
     public function restore(Request $request, $id)
     {
         // Get the existing grocery list
-        $grocery_list = GroceryList::findOrFail($id);
+        $grocery_list = GroceryList::withTrashed()->findOrFail($id);
 
         // Check if user is authorized for this action
         Gate::authorize('restore', $grocery_list);
@@ -183,7 +183,7 @@ class GroceryListController extends Controller
     public function forceDelete(Request $request, $id)
     {
         // Get the existing grocery list
-        $grocery_list = GroceryList::findOrFail($id);
+        $grocery_list = GroceryList::withTrashed()->findOrFail($id);
 
         // Check if user is authorized for this action
         Gate::authorize('forceDelete', $grocery_list);

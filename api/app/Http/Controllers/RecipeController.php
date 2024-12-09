@@ -186,7 +186,7 @@ class RecipeController extends Controller
     public function restore(Request $request, $id)
     {
         // Get the existing recipe
-        $recipe = Recipe::findOrFail($id);
+        $recipe = Recipe::withTrashed()->findOrFail($id);
 
         // Check if user is authorized for this action
         Gate::authorize('restore', $recipe);
@@ -236,7 +236,7 @@ class RecipeController extends Controller
     public function forceDelete(Request $request, $id)
     {
         // Get the existing recipe
-        $recipe = Recipe::findOrFail($id);
+        $recipe = Recipe::withTrashed()->findOrFail($id);
 
         // Check if user is authorized for this action
         Gate::authorize('forceDelete', $recipe);
