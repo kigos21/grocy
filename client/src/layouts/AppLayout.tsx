@@ -55,13 +55,10 @@ function AppLayout() {
           </div>
         </Link>
 
-        <Link
-          to={"/recently-deleted"}
-          className="order-first text-xs md:order-none"
-        >
+        <Link to={"/trash"} className="order-first text-xs md:order-none">
           <div className="flex flex-col items-center text-center">
             <Trash />
-            <span className="hidden md:inline">Recently Deleted</span>
+            <span className="hidden md:inline">Trash</span>
           </div>
         </Link>
 

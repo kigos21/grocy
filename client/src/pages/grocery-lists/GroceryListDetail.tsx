@@ -130,7 +130,7 @@ function GroceryListDetail() {
                 {data?.data.grocery_list.grocery_list_recipes.map(
                   (item: GroceryListRecipe, index: number) => (
                     <p key={index} className="line-clamp-1 text-sm text-muted">
-                      {item.quantity}x {item.recipe.name}
+                      {item.quantity}x {item.recipe?.name}
                     </p>
                   ),
                 )}

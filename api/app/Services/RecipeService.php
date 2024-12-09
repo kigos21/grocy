@@ -92,7 +92,7 @@ class RecipeService
         $user = $request->user();
 
         // Initialize $query to prevent scoping issues
-        $query = Recipe::query(); // Default to fetching all recipes
+        $query = Recipe::query()->orderBy('deleted_at', 'desc'); // Default to fetching all recipes
 
         if ($user->role === 'USER') {
             // If user role is 'USER', only fetch recipes belonging to that user

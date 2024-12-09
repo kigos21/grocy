@@ -37,7 +37,7 @@ class GroceryListService
         }
 
         // Get the results with pagination
-        return $query->paginate(6);
+        return $query->paginate(8);
     }
 
     public function createGroceryList($data)
@@ -251,7 +251,7 @@ class GroceryListService
     {
         // Form base query for USER and ADMIN
         $user = $request->user();
-        $query = GroceryList::query()->with(['groceryListRecipes.recipe', 'groceryListItems']);
+        $query = GroceryList::query()->with(['groceryListRecipes.recipe', 'groceryListItems'])->orderBy('deleted_at', 'desc');
 
         if ($user->role === 'USER') {
             $query->where('user_id', $user->id);

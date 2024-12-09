@@ -48,4 +48,13 @@ export class RecipeService {
     const response = await apiClient.delete(`/api/recipes/${id}`);
     return response.data;
   }
+
+  static async fetchTrashed(page: string = "1") {
+    const response = await apiClient.get("/api/trash/recipes", {
+      params: {
+        page,
+      },
+    });
+    return response.data;
+  }
 }

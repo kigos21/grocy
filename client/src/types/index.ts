@@ -37,6 +37,7 @@ export interface Recipe {
   cook_time: number;
   created_at: string;
   updated_at: string;
+  deleted_at: string;
 }
 
 export interface RecipeIngredient {
@@ -91,6 +92,7 @@ export interface GroceryList {
   user_id: number;
   created_at: string;
   updated_at: string;
+  deleted_at: string;
   grocery_list_recipes: GroceryListRecipe[];
   grocery_list_items: GroceryListItem[];
 }

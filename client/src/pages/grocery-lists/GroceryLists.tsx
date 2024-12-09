@@ -10,7 +10,14 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronDown, Plus } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronFirst,
+  ChevronLast,
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+} from "lucide-react";
 import { useState } from "react";
 import ErrorPage from "../ErrorPage";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,11 +26,12 @@ import { GroceryListService } from "@/services/GroceryListService";
 
 function GroceryLists() {
   const [sort, setSort] = useState("newest");
+  const [page, setPage] = useState("1");
   const navigate = useNavigate();
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["groceryLists", { sort }],
-    queryFn: () => GroceryListService.fetchGroceryLists(sort),
+    queryKey: ["groceryLists", { sort, page }],
+    queryFn: () => GroceryListService.fetchGroceryLists(sort, page),
     // queryFn: () => new Promise(() => {}),
   });
 
@@ -96,8 +104,68 @@ function GroceryLists() {
 
         {/* Pagination */}
         {data?.data.grocery_lists.data.length !== 0 && (
-          <div className="flex justify-between">
-            <p className="text-xs font-semibold">6 out of 25 items</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold">
+              Page {data?.data.grocery_lists.current_page} out of{" "}
+              {data?.data.grocery_lists.last_page}
+            </p>
+
+            <div className="flex items-center gap-1">
+              {/* First Page */}
+              {data?.data.grocery_lists.current_page !== 1 && (
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  className="h-7 px-2"
+                  onClick={() => setPage("1")}
+                >
+                  <ChevronFirst className="h-2 w-2" />
+                </Button>
+              )}
+
+              {/* Previous Page */}
+              {data?.data.grocery_lists.prev_page_url && (
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  className="h-7 px-2"
+                  onClick={() =>
+                    setPage((prev) => (parseInt(prev) - 1).toString())
+                  }
+                >
+                  <ChevronLeft className="h-2 w-2" />
+                </Button>
+              )}
+
+              {/* Next Page */}
+              {data?.data.grocery_lists.next_page_url && (
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  className="h-7 px-2"
+                  onClick={() =>
+                    setPage((prev) => (parseInt(prev) + 1).toString())
+                  }
+                >
+                  <ChevronRight className="h-2 w-2" />
+                </Button>
+              )}
+
+              {/* Last Page */}
+              {data?.data.grocery_lists.current_page !==
+                data?.data.grocery_lists.last_page && (
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  className="h-7 px-2"
+                  onClick={() =>
+                    setPage(data.data.grocery_lists.last_page.toString())
+                  }
+                >
+                  <ChevronLast className="h-2 w-2" />
+                </Button>
+              )}
+            </div>
           </div>
         )}
       </div>
