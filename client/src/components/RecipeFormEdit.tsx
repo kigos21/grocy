@@ -34,6 +34,7 @@ function RecipeFormEdit() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { id: recipeId } = useParams();
+  const [imageError, setImageError] = useState(false);
 
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>();
 
@@ -160,7 +161,22 @@ function RecipeFormEdit() {
                 {data?.data.recipe.image_path && (
                   <span className="text-xs text-muted">
                     <span className="font-semibold">Current image:</span>{" "}
-                    {data?.data.recipe.image_path}
+                    <div>
+                      {!imageError ? (
+                        <img
+                          src={data?.data.recipe.image_path}
+                          alt={`Image of ${data?.data.recipe.name}`}
+                          onError={() => setImageError(true)}
+                          className="aspect-video max-w-[18.75rem] rounded-sm bg-gray-100 object-cover"
+                        />
+                      ) : (
+                        <div className="flex aspect-video items-center justify-center bg-gray-100">
+                          <p className="text-xs font-bold uppercase text-gray-300">
+                            There was an error rendering the image
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </span>
                 )}
               </FormItem>
