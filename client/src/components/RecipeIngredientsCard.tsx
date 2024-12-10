@@ -56,7 +56,7 @@ function RecipeIngredientsCard({
                   {ingredient.quantity}
                   {ingredient.unit}
                 </p>
-                <p>{ingredient.name}</p>
+                <p className="capitalize">{ingredient.name}</p>
               </Fragment>
             ))}
           </div>
