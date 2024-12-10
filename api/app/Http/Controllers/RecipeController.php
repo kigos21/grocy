@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Recipe;
 use App\Services\RecipeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
@@ -90,7 +91,7 @@ class RecipeController extends Controller
                 // Resize image
                 Image::read('storage/' . $filename)->scaleDown(height: 400)->save();
 
-                $imagePath = "http://localhost:8000/storage/" . $filename;
+                $imagePath = "storage/" . $filename;
                 $validatedData['image_path'] = $imagePath;
             } catch (\Exception $e) {
                 return response()->json([
@@ -149,7 +150,7 @@ class RecipeController extends Controller
         // Proceed with request validation
         $validatedData = $request->validate([
             'name' => 'required',
-            'image_path' => 'nullable|image|max:4096',
+            'image_path' => 'nullable|string',
 
             // Making sure that servings and cook_time only accept base-10 digits
             'servings' => 'bail|required|numeric|regex:/^[0-9]+(\.[0-9]+)?$/',
@@ -182,8 +183,47 @@ class RecipeController extends Controller
         // TODO: Check if recipe has existing image, do not change if the image_path is null
         // TODO: Update the image_path if image_path !== previousImagePath
 
+        $prevImagePath = $existingRecipe->image_path;
+
+        if ($validatedData['image_path']) {
+            try {
+                // Extract the image data from the Base64 string
+                $imageData = $request->input('image_path');
+                $imageData = explode(',', $imageData)[1]; // Remove the header part (data:image/*;base64,)
+                $image = base64_decode($imageData);
+
+                // Generate a unique filename
+                $filename = time() . '_' . Str::random(10) . '.png'; // You can determine the extension from the Base64 header if needed
+
+                // Save the image to the 'uploads' directory
+                $filePath = public_path('storage') . '/' . $filename;
+                file_put_contents($filePath, $image);
+
+                // Resize image
+                Image::read('storage/' . $filename)->scaleDown(height: 400)->save();
+
+                $imagePath = "storage/" . $filename;
+                $validatedData['image_path'] = $imagePath;
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 'fail',
+                    'message' => 'Error processing image: ' . $e->getMessage(),
+                    'data' => [],
+                    'errors' => [],
+                    'timestamp' => now(),
+                ], 500);
+            }
+        } else {
+            $validatedData['image_path'] = $prevImagePath;
+        }
+        
         // Call service to update the Recipe model
         $recipe = $this->recipeService->updateRecipe($validatedData, $existingRecipe);
+
+        // After updating the record, and upload is successful, delete the previous file, ONLY IF it was changed
+        if (File::exists(public_path($prevImagePath)) && $validatedData['image_path'] != $prevImagePath) {
+            File::delete(public_path($prevImagePath));
+        }
 
         return response()->json([
             'status' => 'success',
@@ -283,6 +323,11 @@ class RecipeController extends Controller
         if ($recipe->trashed()) {
             // Perform force delete
             $recipe->forceDelete();
+
+            // Delete the image in the filesystem
+            if (File::exists(public_path($recipe->image_path))) {
+                File::delete(public_path($recipe->image_path));
+            }
 
             return response()->json([
                 'status' => 'success',
