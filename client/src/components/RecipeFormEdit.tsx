@@ -148,11 +148,26 @@ function RecipeFormEdit() {
           <FormField
             control={form.control}
             name="image_path"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Recipe Image (optional)</FormLabel>
                 <FormControl>
-                  <Input type="file" {...field} className="border-dashed" />
+                  <Input
+                    type="file"
+                    className="border-dashed"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        // encode to Base64
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          form.setValue("image_path", reader.result as string);
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
                 </FormControl>
                 {validationErrors?.errors.image_path &&
                   validationErrors?.errors.image_path.map((error) => (
@@ -164,7 +179,7 @@ function RecipeFormEdit() {
                     <div>
                       {!imageError ? (
                         <img
-                          src={data?.data.recipe.image_path}
+                          src={`http://localhost:8000/${data?.data.recipe.image_path}`}
                           alt={`Image of ${data?.data.recipe.name}`}
                           onError={() => setImageError(true)}
                           className="aspect-video max-w-[18.75rem] rounded-sm bg-gray-100 object-cover"
