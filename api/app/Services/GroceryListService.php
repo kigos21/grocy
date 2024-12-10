@@ -91,7 +91,7 @@ class GroceryListService
 
             // loop through each ingredient, aggregate it with the ingredientTotals array
             foreach ($ingredients as $ingredient) {
-                $name = $ingredient['name'];
+                $name = strtolower($ingredient['name']);
                 $category = $ingredient['category'];
                 $unit = $ingredient['unit'];
                 $quantity = $ingredient['quantity'];
@@ -184,7 +184,7 @@ class GroceryListService
 
             // loop through each ingredient, aggregate it with the ingredientTotals array
             foreach ($ingredients as $ingredient) {
-                $name = $ingredient['name'];
+                $name = strtolower($ingredient['name']);
                 $category = $ingredient['category'];
                 $unit = $ingredient['unit'];
                 $quantity = $ingredient['quantity'];
