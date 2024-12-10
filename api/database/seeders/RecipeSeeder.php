@@ -18,16 +18,16 @@ class RecipeSeeder extends Seeder
 
         // Define the 10 recipes
         $recipes = [
-            ['image_path' => 'http://localhost:8000/storage/0001-adobong-manok.jpg', 'name' => 'Adobong Manok', 'servings' => 2, 'cook_time' => 60],
-            ['image_path' => 'http://localhost:8000/storage/0002-sinigang-baboy.jpg', 'name' => 'Sinigang na Baboy', 'servings' => 4, 'cook_time' => 90],
-            ['image_path' => 'http://localhost:8000/storage/0003-kare-kare.jpg', 'name' => 'Kare-Kare', 'servings' => 6, 'cook_time' => 120],
-            ['image_path' => 'http://localhost:8000/storage/0004-bulalo.jpg', 'name' => 'Bulalo', 'servings' => 5, 'cook_time' => 150],
-            ['image_path' => 'http://localhost:8000/storage/0005-pancit-canton.jpg', 'name' => 'Pancit Canton', 'servings' => 3, 'cook_time' => 45],
-            ['image_path' => 'http://localhost:8000/storage/0006-bicol-express.jpg', 'name' => 'Bicol Express', 'servings' => 4, 'cook_time' => 70],
-            ['image_path' => 'http://localhost:8000/storage/0007-tinolang-manok.jpg', 'name' => 'Tinolang Manok', 'servings' => 4, 'cook_time' => 60],
-            ['image_path' => 'http://localhost:8000/storage/0008-sisig.jpg', 'name' => 'Sisig', 'servings' => 2, 'cook_time' => 30],
-            ['image_path' => 'http://localhost:8000/storage/0009-laing.jpg', 'name' => 'Laing', 'servings' => 3, 'cook_time' => 50],
-            ['image_path' => 'http://localhost:8000/storage/0010-caldereta.jpg', 'name' => 'Caldereta', 'servings' => 5, 'cook_time' => 120],
+            ['image_path' => 'storage/0001-adobong-manok.jpg', 'name' => 'Adobong Manok', 'servings' => 2, 'cook_time' => 60],
+            ['image_path' => 'storage/0002-sinigang-baboy.jpg', 'name' => 'Sinigang na Baboy', 'servings' => 4, 'cook_time' => 90],
+            ['image_path' => 'storage/0003-kare-kare.jpg', 'name' => 'Kare-Kare', 'servings' => 6, 'cook_time' => 120],
+            ['image_path' => 'storage/0004-bulalo.jpg', 'name' => 'Bulalo', 'servings' => 5, 'cook_time' => 150],
+            ['image_path' => 'storage/0005-pancit-canton.jpg', 'name' => 'Pancit Canton', 'servings' => 3, 'cook_time' => 45],
+            ['image_path' => 'storage/0006-bicol-express.jpg', 'name' => 'Bicol Express', 'servings' => 4, 'cook_time' => 70],
+            ['image_path' => 'storage/0007-tinolang-manok.jpg', 'name' => 'Tinolang Manok', 'servings' => 4, 'cook_time' => 60],
+            ['image_path' => 'storage/0008-sisig.jpg', 'name' => 'Sisig', 'servings' => 2, 'cook_time' => 30],
+            ['image_path' => 'storage/0009-laing.jpg', 'name' => 'Laing', 'servings' => 3, 'cook_time' => 50],
+            ['image_path' => 'storage/0010-caldereta.jpg', 'name' => 'Caldereta', 'servings' => 5, 'cook_time' => 120],
         ];
 
         // Define the user IDs
