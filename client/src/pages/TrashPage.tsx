@@ -33,7 +33,7 @@ function TrashPage() {
     error: recipeError,
     data: recipeData,
   } = useQuery({
-    queryKey: ["trashedRecipes", { recipePage }],
+    queryKey: ["trash", "trashedRecipes", { recipePage }],
     queryFn: () => RecipeService.fetchTrashed(recipePage),
     // queryFn: () => new Promise(() => {}),
   });
@@ -43,7 +43,7 @@ function TrashPage() {
     error: groceryListError,
     data: groceryListData,
   } = useQuery({
-    queryKey: ["trashedGroceryLists", { groceryListPage }],
+    queryKey: ["trash", "trashedGroceryLists", { groceryListPage }],
     queryFn: () => GroceryListService.fetchTrashed(groceryListPage),
     // queryFn: () => new Promise(() => {}),
   });
@@ -55,7 +55,7 @@ function TrashPage() {
       toast({
         description: message,
       });
-      queryClient.invalidateQueries({ queryKey: ["trashedRecipes"] });
+      queryClient.invalidateQueries({ queryKey: ["trash"] });
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         toast({
@@ -81,7 +81,7 @@ function TrashPage() {
       toast({
         description: message,
       });
-      queryClient.invalidateQueries({ queryKey: ["trashedGroceryLists"] });
+      queryClient.invalidateQueries({ queryKey: ["trash"] });
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         toast({
@@ -105,7 +105,9 @@ function TrashPage() {
       toast({
         description: message,
       });
-      queryClient.invalidateQueries({ queryKey: ["trashedRecipes"] });
+      queryClient.invalidateQueries({
+        queryKey: ["trash"],
+      });
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         toast({
@@ -131,7 +133,7 @@ function TrashPage() {
       toast({
         description: message,
       });
-      queryClient.invalidateQueries({ queryKey: ["trashedGroceryLists"] });
+      queryClient.invalidateQueries({ queryKey: ["trash"] });
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         toast({
