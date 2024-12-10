@@ -14,7 +14,7 @@ function RecipeCard({ id, name, image_path, servings, cook_time }: Recipe) {
       <div className="border-b">
         {image_path && !imageError ? (
           <img
-            src={image_path}
+            src={`http://localhost:8000/${image_path}`}
             alt={`Image of ${name}`}
             onError={() => setImageError(true)}
             className="aspect-video bg-gray-100 object-cover"

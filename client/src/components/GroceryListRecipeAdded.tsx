@@ -27,7 +27,7 @@ function GroceryListRecipeAdded({
       <div className="aspect-square h-full w-[6.75rem] flex-shrink-0">
         {image_path && !imageError ? (
           <img
-            src={image_path}
+            src={`http://localhost:8000/${image_path}`}
             alt={`Image of ${name}`}
             onError={() => setImageError(true)}
             className="aspect-square h-full bg-gray-100 object-cover"
