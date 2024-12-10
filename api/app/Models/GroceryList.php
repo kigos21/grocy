@@ -17,14 +17,31 @@ class GroceryList extends Model
         'user_id',
     ];
 
-    public function user(): BelongsTo
+    public static function boot()
     {
-        return $this->belongsTo(User::class);
+        parent::boot();
+
+        static::restoring(function ($groceryList) {
+            $groceryListRecipes = $groceryList->groceryListRecipes()->get();
+
+            foreach ($groceryListRecipes as $groceryListRecipe) {
+                $recipeId = $groceryListRecipe->recipe_id;
+                $recipe = Recipe::onlyTrashed()->find($recipeId);
+                if ($recipe) {
+                    $recipe->restore();
+                }
+            }
+        });
     }
 
     public function groceryListRecipes(): HasMany
     {
         return $this->hasMany(GroceryListRecipe::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function groceryListItems(): HasMany
