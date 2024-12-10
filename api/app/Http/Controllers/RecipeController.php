@@ -7,6 +7,7 @@ use App\Services\RecipeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use Intervention\Image\Laravel\Facades\Image;
 
 class RecipeController extends Controller
 {
@@ -85,6 +86,9 @@ class RecipeController extends Controller
                 // Save the image to the 'uploads' directory
                 $filePath = public_path('storage') . '/' . $filename;
                 file_put_contents($filePath, $image);
+
+                // Resize image
+                Image::read('storage/' . $filename)->scaleDown(height: 400)->save();
 
                 $imagePath = "http://localhost:8000/storage/" . $filename;
                 $validatedData['image_path'] = $imagePath;
