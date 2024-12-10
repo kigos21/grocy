@@ -6,6 +6,7 @@ use App\Models\Recipe;
 use App\Services\RecipeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class RecipeController extends Controller
 {
@@ -41,7 +42,7 @@ class RecipeController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'image_path' => 'nullable|image|max:4096',
+            'image_path' => 'nullable|string',
 
             // Making sure that servings and cook_time only accept base-10 digits
             'servings' => 'bail|required|numeric|regex:/^[0-9]+(\.[0-9]+)?$/',
@@ -70,6 +71,33 @@ class RecipeController extends Controller
             'ingredients.*.name.required' => 'Ingredient name is required.',
             'ingredients.*.category.required' => 'Category is required.'
         ]);
+
+        if ($validatedData['image_path']) {
+            try {
+                // Extract the image data from the Base64 string
+                $imageData = $request->input('image_path');
+                $imageData = explode(',', $imageData)[1]; // Remove the header part (data:image/*;base64,)
+                $image = base64_decode($imageData);
+
+                // Generate a unique filename
+                $filename = time() . '_' . Str::random(10) . '.png'; // You can determine the extension from the Base64 header if needed
+
+                // Save the image to the 'uploads' directory
+                $filePath = public_path('storage') . '/' . $filename;
+                file_put_contents($filePath, $image);
+
+                $imagePath = "http://localhost:8000/storage/" . $filename;
+                $validatedData['image_path'] = $imagePath;
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 'fail',
+                    'message' => 'Error processing image: ' . $e->getMessage(),
+                    'data' => [],
+                    'errors' => [],
+                    'timestamp' => now(),
+                ], 500);
+            }
+        }
 
         // Call service to create the recipe
         $recipe = $this->recipeService->createRecipe($validatedData);
