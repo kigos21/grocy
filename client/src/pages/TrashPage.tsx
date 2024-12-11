@@ -18,6 +18,17 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { GroceryListService } from "@/services/GroceryListService";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
@@ -193,13 +204,33 @@ function TrashPage() {
                         >
                           Restore
                         </Button>
-                        <Button
-                          variant={"destructive"}
-                          size={"sm"}
-                          onClick={() => forceDeleteRecipe(recipe.id)}
-                        >
-                          Delete
-                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger>
+                            <Button variant={"destructive"} size={"sm"}>
+                              Delete
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Are you sure you want to delete this recipe?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                All data will be lost permanently! Proceed with
+                                caution.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => forceDeleteRecipe(recipe.id)}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                              >
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </div>
                     </div>
                   ))
@@ -321,15 +352,36 @@ function TrashPage() {
                           >
                             Restore
                           </Button>
-                          <Button
-                            variant={"destructive"}
-                            size={"sm"}
-                            onClick={() =>
-                              forceDeleteGroceryList(groceryList.id)
-                            }
-                          >
-                            Delete
-                          </Button>
+                          <AlertDialog>
+                            <AlertDialogTrigger>
+                              <Button variant={"destructive"} size={"sm"}>
+                                Delete
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Are you sure you want to delete this grocery
+                                  list?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  All data will be lost permanently! Proceed
+                                  with caution.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() =>
+                                    forceDeleteGroceryList(groceryList.id)
+                                  }
+                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                >
+                                  Delete
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </div>
                       </div>
                     ),
