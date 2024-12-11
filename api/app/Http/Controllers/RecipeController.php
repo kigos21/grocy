@@ -180,9 +180,6 @@ class RecipeController extends Controller
             'ingredients.*.category.required' => 'Category is required.'
         ]);
 
-        // TODO: Check if recipe has existing image, do not change if the image_path is null
-        // TODO: Update the image_path if image_path !== previousImagePath
-
         $prevImagePath = $existingRecipe->image_path;
 
         if ($validatedData['image_path']) {
@@ -216,7 +213,7 @@ class RecipeController extends Controller
         } else {
             $validatedData['image_path'] = $prevImagePath;
         }
-        
+
         // Call service to update the Recipe model
         $recipe = $this->recipeService->updateRecipe($validatedData, $existingRecipe);
 
