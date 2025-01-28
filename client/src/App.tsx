@@ -26,8 +26,9 @@ import TrashPage from "./pages/TrashPage";
 
 const router = createBrowserRouter([
   {
+    // Guest routes
     path: "/",
-    element: <GuestLayout />, // Guest routes
+    element: <GuestLayout />,
     children: [
       { index: true, element: <LandingPage /> },
       { path: "login", element: <Login /> },
@@ -35,12 +36,13 @@ const router = createBrowserRouter([
     ],
   },
   {
+    // Authenticated Routes
     path: "/",
     element: (
       <RequireAuth>
         <AppLayout />
       </RequireAuth>
-    ), // Authenticated routes
+    ),
     children: [
       {
         path: "grocery-lists",

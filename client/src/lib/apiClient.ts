@@ -25,14 +25,18 @@ apiClient.interceptors.request.use(
 );
 
 // Initialize XSRF token and token (if applicable) on initialization
-try {
-  await apiClient.get("/sanctum/csrf-cookie");
-} catch (error) {
-  if (error instanceof Error) {
-    console.error(error.message);
-  } else {
-    console.error(error);
+const initializeCsrfToken = async () => {
+  try {
+    await apiClient.get("/sanctum/csrf-cookie");
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error(error);
+    }
   }
-}
+};
+
+initializeCsrfToken();
 
 export default apiClient;

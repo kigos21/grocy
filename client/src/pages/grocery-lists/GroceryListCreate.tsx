@@ -36,6 +36,9 @@ function GroceryListCreate() {
   const [page, setPage] = useState("1");
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [addedRecipes, setAddedRecipes] = useState<
+    (Recipe & { quantity: number })[]
+  >([]);
 
   // Debounce the search state
   useEffect(() => {
@@ -47,10 +50,6 @@ function GroceryListCreate() {
       clearTimeout(handler); // Clear timeout on cleanup
     };
   }, [search]);
-
-  const [addedRecipes, setAddedRecipes] = useState<
-    (Recipe & { quantity: number })[]
-  >([]);
 
   const { isPending, error, data } = useQuery({
     queryKey: ["recipes", { sort, q: debouncedSearch, page }],

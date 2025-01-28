@@ -74,6 +74,9 @@ class RecipeController extends Controller
             'ingredients.*.category.required' => 'Category is required.'
         ]);
 
+        /**
+         * If there is an image, process it, then store in the public storage
+         */
         if ($validatedData['image_path']) {
             try {
                 // Extract the image data from the Base64 string
@@ -93,6 +96,8 @@ class RecipeController extends Controller
 
                 $imagePath = "storage/" . $filename;
                 $validatedData['image_path'] = $imagePath;
+
+
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => 'fail',
@@ -180,6 +185,9 @@ class RecipeController extends Controller
             'ingredients.*.category.required' => 'Category is required.'
         ]);
 
+        /**
+         * Different handling if there is no image
+         */
         $prevImagePath = $existingRecipe->image_path;
 
         if ($validatedData['image_path']) {
@@ -201,6 +209,8 @@ class RecipeController extends Controller
 
                 $imagePath = "storage/" . $filename;
                 $validatedData['image_path'] = $imagePath;
+
+
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => 'fail',
@@ -210,6 +220,8 @@ class RecipeController extends Controller
                     'timestamp' => now(),
                 ], 500);
             }
+
+
         } else {
             $validatedData['image_path'] = $prevImagePath;
         }
