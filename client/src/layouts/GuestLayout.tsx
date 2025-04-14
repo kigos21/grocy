@@ -1,7 +1,7 @@
-import { Link, Navigate, Outlet } from "react-router-dom";
+import FooterSection from "@/components/landing/FooterSection";
+import GuestNavbar from "@/components/landing/GuestNavbar";
 import useAuthStore from "@/store/authStore";
-import { Button } from "@/components/ui/button";
-import Footer from "@/components/Footer";
+import { Navigate, Outlet } from "react-router-dom";
 
 function GuestLayout() {
   const { isAuthenticated } = useAuthStore();
@@ -12,28 +12,13 @@ function GuestLayout() {
 
   return (
     <div className="flex h-screen flex-col">
-      <header className="flex items-center justify-between bg-secondary p-4">
-        <Link
-          to={"/"}
-          className="text-2xl font-semibold tracking-wider text-white"
-        >
-          Grocy&nbsp;ツ
-        </Link>
-        <div className="flex gap-1">
-          {/* <Button variant={"secondary"}>
-            <Link to={"/login"}>Login</Link>
-          </Button> */}
-          <Button>
-            <Link to={"/register"}>Register</Link>
-          </Button>
-        </div>
-      </header>
+      <GuestNavbar />
 
       <main className="flex-grow">
         <Outlet />
       </main>
 
-      <Footer />
+      <FooterSection />
     </div>
   );
 }

@@ -50,6 +50,19 @@ export default {
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
         },
+        // Custom colors for the grocery app
+        "brand-green": {
+          light: "#8BC34A",
+          DEFAULT: "#4CAF50",
+          dark: "#2E7D32",
+        },
+        "brand-orange": {
+          light: "#FFB74D",
+          DEFAULT: "#FF9800",
+          dark: "#F57C00",
+        },
+        "neutral-bg": "#F5F5F5",
+        "neutral-text": "#333333",
       },
     },
   },

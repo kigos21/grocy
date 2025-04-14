@@ -4,23 +4,23 @@ import { initializeAuthInterceptor } from "@/lib/interceptors";
 
 // Layouts
 import RequireAuth from "./components/RequireAuth";
-import GuestLayout from "./layouts/GuestLayout";
 import AppLayout from "./layouts/AppLayout";
+import GuestLayout from "./layouts/GuestLayout";
 
 // Pages
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 
-import Recipes from "./pages/recipes/Recipes";
-import RecipeDetail from "./pages/recipes/RecipeDetail";
 import RecipeCreate from "./pages/recipes/RecipeCreate";
+import RecipeDetail from "./pages/recipes/RecipeDetail";
 import RecipeEdit from "./pages/recipes/RecipeEdit";
+import Recipes from "./pages/recipes/Recipes";
 
-import GroceryLists from "./pages/grocery-lists/GroceryLists";
 import GroceryListCreate from "./pages/grocery-lists/GroceryListCreate";
 import GroceryListDetail from "./pages/grocery-lists/GroceryListDetail";
 import GroceryListEdit from "./pages/grocery-lists/GroceryListEdit";
+import GroceryLists from "./pages/grocery-lists/GroceryLists";
 
 import TrashPage from "./pages/TrashPage";
 
