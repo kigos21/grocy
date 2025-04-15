@@ -11,10 +11,10 @@ function GuestLayout() {
   }
 
   return (
-    <div className="flex h-screen min-w-[320px] flex-col">
+    <div className="flex min-h-screen min-w-[320px] flex-col">
       <GuestNavbar />
 
-      <main className="flex-grow">
+      <main className="min-h-screen flex-grow">
         <Outlet />
       </main>
 

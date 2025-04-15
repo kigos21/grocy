@@ -1,5 +1,5 @@
+import { Facebook, Instagram, Twitter } from "lucide-react";
 import React from "react";
-import { Facebook, Twitter, Instagram } from "lucide-react";
 
 const FooterSection: React.FC = () => {
   return (
@@ -8,7 +8,7 @@ const FooterSection: React.FC = () => {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div>
             <h3 className="mb-4 text-xl font-bold">
-              Pantry<span className="text-brand-orange">Plan</span>
+              <span className="text-brand-orange">Grocy</span>
             </h3>
             <p className="text-white/70">
               Simplifying meal planning and grocery shopping for home cooks
@@ -119,7 +119,7 @@ const FooterSection: React.FC = () => {
 
         <div className="mt-8 flex flex-col items-center justify-between border-t border-white/20 pt-8 md:flex-row">
           <p className="text-sm text-white/70">
-            &copy; {new Date().getFullYear()} PantryPlan. All rights reserved.
+            &copy; {new Date().getFullYear()} Grocy. All rights reserved.
           </p>
           <div className="mt-4 flex space-x-6 md:mt-0">
             <a

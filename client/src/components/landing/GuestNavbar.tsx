@@ -10,26 +10,26 @@ const GuestNavbar: React.FC = () => {
     <nav className="sticky top-0 z-50 flex items-center justify-between bg-white px-6 py-4 shadow-sm md:px-12">
       <div className="flex items-center">
         <Link to={"/"} className="text-2xl font-bold text-brand-green-dark">
-          Pantry<span className="text-brand-orange">Plan</span>
+          Grocy
         </Link>
       </div>
 
       {/* Desktop Navigation */}
       <div className="hidden items-center space-x-8 md:flex">
         <a
-          href="#features"
+          href="/#features"
           className="text-neutral-text transition-colors hover:text-brand-green"
         >
           Features
         </a>
         <a
-          href="#how-it-works"
+          href="/#how-it-works"
           className="text-neutral-text transition-colors hover:text-brand-green"
         >
           How It Works
         </a>
         <a
-          href="#benefits"
+          href="/#benefits"
           className="text-neutral-text transition-colors hover:text-brand-green"
         >
           Benefits
@@ -56,27 +56,27 @@ const GuestNavbar: React.FC = () => {
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
         <div className="absolute left-0 right-0 top-16 flex flex-col space-y-4 bg-white p-4 shadow-md md:hidden">
-          <a
-            href="#features"
+          <Link
+            to="/#features"
             className="text-neutral-text transition-colors hover:text-brand-green"
             onClick={() => setIsMenuOpen(false)}
           >
             Features
-          </a>
-          <a
-            href="#how-it-works"
+          </Link>
+          <Link
+            to="/#how-it-works"
             className="text-neutral-text transition-colors hover:text-brand-green"
             onClick={() => setIsMenuOpen(false)}
           >
             How It Works
-          </a>
-          <a
-            href="#benefits"
+          </Link>
+          <Link
+            to="/#benefits"
             className="text-neutral-text transition-colors hover:text-brand-green"
             onClick={() => setIsMenuOpen(false)}
           >
             Benefits
-          </a>
+          </Link>
           <Link to={"/login"}>
             <Button className="w-full bg-brand-orange text-white hover:bg-brand-orange-dark">
               Get Starteds

@@ -1,7 +1,4 @@
-import { AxiosError } from "axios";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,7 +7,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TypographyH2, TypographyMuted } from "@/components/ui/typography";
 import { useToast } from "@/hooks/use-toast";
@@ -19,6 +15,10 @@ import { AuthService } from "@/services/AuthService";
 import useAuthStore from "@/store/authStore";
 import { ValidationErrors } from "@/types";
 import { LoginFormValues } from "@/types/zod";
+import { AxiosError } from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 function Login() {
   const { toast } = useToast();
@@ -102,7 +102,9 @@ function Login() {
             )}
           />
           <div className="grid grid-cols-1 items-center gap-2 pt-2">
-            <Button type="submit">Login</Button>
+            <Button type="submit" className="bg-brand-green">
+              Login
+            </Button>
             <TypographyMuted className="text-center">
               Don't have an account?{" "}
               <Link to={"/register"} className="link">
