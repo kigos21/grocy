@@ -11,7 +11,7 @@ function GuestLayout() {
   }
 
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex h-screen min-w-[320px] flex-col">
       <GuestNavbar />
 
       <main className="flex-grow">

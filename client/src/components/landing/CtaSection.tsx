@@ -1,5 +1,6 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const CtaSection: React.FC = () => {
   return (
@@ -13,19 +14,23 @@ const CtaSection: React.FC = () => {
           and grocery shopping process with our app.
         </p>
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <Button
-            size="lg"
-            className="text-brand-green-dark bg-white px-8 text-lg hover:bg-gray-100"
-          >
-            Get Started Free
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="bg-brand-green-dark border-white px-8 text-lg text-white hover:bg-white/10 hover:text-white"
-          >
-            Learn More
-          </Button>
+          <Link to={"/login"} className="w-full">
+            <Button
+              size="lg"
+              className="w-full bg-white px-8 text-lg text-brand-green-dark hover:bg-gray-100"
+            >
+              Get Started Free
+            </Button>
+          </Link>
+          <Link to={"/#features"} className="w-full">
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full border-white bg-brand-green-dark px-8 text-lg text-white hover:bg-white/10 hover:text-white"
+            >
+              Learn More
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
