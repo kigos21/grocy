@@ -7,11 +7,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
+import { getErrorMessage } from "@/lib/utils";
+import { RecipeService } from "@/services/RecipeService";
 import { ValidationErrors } from "@/types";
 import { RecipeFormValues } from "@/types/zod";
+import { useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { Check, ChevronDown, Plus, X } from "lucide-react";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { Input } from "./ui/input";
+import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,13 +25,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
-import { Check, ChevronDown, Plus, X } from "lucide-react";
-import { getErrorMessage } from "@/lib/utils";
-import { AxiosError } from "axios";
-import { RecipeService } from "@/services/RecipeService";
-import { useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { Input } from "./ui/input";
 
 function RecipeFormCreate() {
   const { toast } = useToast();
@@ -300,7 +300,7 @@ function RecipeFormCreate() {
                     </div>
                   </div>
                   {/* Category and Remove button */}
-                  <div className="flex gap-2">
+                  <div className="flex flex-1 gap-2">
                     <div className="flex-1">
                       <div className="flex flex-col gap-1">
                         <DropdownMenu>
