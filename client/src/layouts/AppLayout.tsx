@@ -33,7 +33,7 @@ function AppLayout() {
       <div className="order-1 h-[4.5rem] md:order-none md:h-0" />
 
       {/* Nav */}
-      <aside className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center gap-12 bg-foreground text-background max-md:h-[4.5rem] md:bottom-0 md:top-0 md:w-[4.5rem] md:flex-col md:justify-normal md:gap-8 md:border-r md:py-6">
+      <aside className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center gap-12 bg-foreground text-background max-md:h-[4.5rem] md:bottom-0 md:top-0 md:w-[4.5rem] md:flex-col md:justify-normal md:gap-8 md:py-6">
         <Link
           to={"/grocery-lists"}
           className="hidden text-3xl font-semibold tracking-wider text-secondary transition-colors hover:text-secondary/90 md:block"
