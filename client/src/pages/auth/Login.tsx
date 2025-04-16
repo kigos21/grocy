@@ -21,10 +21,9 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 function Login() {
-  const { toast } = useToast();
-
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>();
-
+  const { toast } = useToast();
+  const { login } = useAuthStore();
   const form = useForm<LoginFormValues>({
     // resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -32,8 +31,6 @@ function Login() {
       password: "",
     },
   });
-
-  const { login } = useAuthStore();
 
   const onSubmit = async (values: LoginFormValues) => {
     try {

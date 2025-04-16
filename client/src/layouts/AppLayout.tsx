@@ -115,7 +115,7 @@ function AppLayout() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.ul
-            className="fixed left-0 right-0 top-[3.5rem] z-10 bg-foreground px-2 pb-4 pt-1 text-lg text-background shadow-lg"
+            className="fixed left-0 right-0 top-[3.5rem] z-10 bg-foreground px-2 pb-4 pt-1 text-lg text-background shadow-lg md:hidden"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -130,6 +130,7 @@ function AppLayout() {
               <Link
                 to={"/"}
                 className="flex-1 rounded px-2 transition-all hover:bg-background/5"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
@@ -143,6 +144,7 @@ function AppLayout() {
               <Link
                 to={"/recipes"}
                 className="flex-1 rounded px-2 transition-all hover:bg-background/5"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Recipes
               </Link>
@@ -156,6 +158,7 @@ function AppLayout() {
               <Link
                 to={"/trash"}
                 className="flex-1 rounded px-2 transition-all hover:bg-background/5"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Trash
               </Link>
@@ -169,6 +172,7 @@ function AppLayout() {
               <Link
                 to={"/logout"}
                 className="flex-1 rounded px-2 transition-all hover:bg-background/5"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Logout
               </Link>

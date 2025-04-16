@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { scrollToId } from "@/lib/utils";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -22,15 +23,14 @@ const CtaSection: React.FC = () => {
               Get Started Free
             </Button>
           </Link>
-          <Link to={"/#features"} className="w-full">
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full border-white bg-brand-green-dark px-8 text-lg text-white hover:bg-white/10 hover:text-white"
-            >
-              Learn More
-            </Button>
-          </Link>
+          <Button
+            size="lg"
+            variant="outline"
+            className="w-full border-white bg-brand-green-dark px-8 text-lg text-white hover:bg-white/10 hover:text-white"
+            onClick={() => scrollToId("features")}
+          >
+            Learn More
+          </Button>
         </div>
       </div>
     </section>

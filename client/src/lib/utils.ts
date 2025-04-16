@@ -72,3 +72,23 @@ export const timeDiffForHumans = (isoTimestamp: string): string => {
   const diffInYears = Math.floor(diffInMonths / 12);
   return `${diffInYears} year${diffInYears === 1 ? "" : "s"} ago`;
 };
+
+export const scrollToId = (id: string) => {
+  // Scroll to the section after a short delay to ensure the page is loaded
+  setTimeout(() => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }, 100);
+};
+
+export const scrollToTop = () => {
+  setTimeout(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, 100);
+};

@@ -1,5 +1,6 @@
 import FooterSection from "@/components/landing/FooterSection";
 import GuestNavbar from "@/components/landing/GuestNavbar";
+import ScrollToTop from "@/lib/ScrollToTop";
 import useAuthStore from "@/store/authStore";
 import { Navigate, Outlet } from "react-router-dom";
 
@@ -11,15 +12,18 @@ function GuestLayout() {
   }
 
   return (
-    <div className="flex min-h-screen min-w-[320px] flex-col">
-      <GuestNavbar />
+    <>
+      <ScrollToTop />
+      <div className="flex min-h-screen min-w-[320px] flex-col">
+        <GuestNavbar />
 
-      <main className="min-h-screen flex-grow">
-        <Outlet />
-      </main>
+        <main className="min-h-screen flex-grow">
+          <Outlet />
+        </main>
 
-      <FooterSection />
-    </div>
+        <FooterSection />
+      </div>
+    </>
   );
 }
 
