@@ -13,11 +13,14 @@ import { getInitials } from "@/lib/utils";
 import { AuthService } from "@/services/AuthService";
 import useAuthStore from "@/store/authStore";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
-import { ChefHat, House, Trash } from "lucide-react";
+import { ChefHat, House, Menu, Trash } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 function AppLayout() {
   const { user, logout } = useAuthStore();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     const { message } = await AuthService.logout();
@@ -28,22 +31,29 @@ function AppLayout() {
   };
 
   return (
-    <div className="grid min-h-screen md:grid-cols-[4.5rem_1fr] md:grid-rows-1">
-      {/* An empty element to place at the side, so as not to mess the grid layout */}
-      <div className="order-1 h-[4.5rem] md:order-none md:h-0" />
+    <div className="grid min-h-screen grid-rows-[3.5rem_1fr] md:grid-cols-[3.5rem_1fr] md:grid-rows-1">
+      {/* Grid placeholder */}
+      <div className="max-md:hidden md:w-[3.5rem]"></div>
 
       {/* Nav */}
-      <aside className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center gap-12 bg-foreground text-background max-md:h-[4.5rem] md:bottom-0 md:top-0 md:w-[4.5rem] md:flex-col md:justify-normal md:gap-8 md:py-6">
+      <aside className="sticky top-0 z-20 flex items-center justify-between bg-foreground text-background max-md:h-[3.5rem] max-md:px-4 md:fixed md:bottom-0 md:w-[3.5rem] md:flex-col md:justify-normal md:gap-8 md:py-6">
         <Link
           to={"/grocery-lists"}
-          className="hidden text-3xl font-semibold tracking-wider text-secondary transition-colors hover:text-secondary/90 md:block"
+          className="text-3xl font-semibold tracking-wider text-secondary transition-colors hover:text-secondary/90 md:block"
         >
           Gr
         </Link>
 
+        <button
+          className="rounded p-1 transition-colors hover:bg-background hover:text-foreground md:hidden"
+          onClick={() => setIsMenuOpen((open) => !open)}
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+
         <Link
           to={"/grocery-lists"}
-          className="text-xs transition-colors hover:text-background/70"
+          className="hidden text-xs transition-colors hover:text-background/70 md:block"
         >
           <div className="flex flex-col items-center">
             <House className="h-4 w-4" />
@@ -53,7 +63,7 @@ function AppLayout() {
 
         <Link
           to={"/recipes"}
-          className="text-xs transition-colors hover:text-background/70"
+          className="hidden text-xs transition-colors hover:text-background/70 md:block"
         >
           <div className="flex flex-col items-center">
             <ChefHat className="h-4 w-4" />
@@ -63,7 +73,7 @@ function AppLayout() {
 
         <Link
           to={"/trash"}
-          className="order-first text-xs transition-colors hover:text-background/70 md:order-none"
+          className="order-first hidden text-xs transition-colors hover:text-background/70 md:order-none md:block"
         >
           <div className="flex flex-col items-center text-center">
             <Trash className="h-4 w-4" />
@@ -71,7 +81,7 @@ function AppLayout() {
           </div>
         </Link>
 
-        <div className="text-xs md:mt-auto">
+        <div className="hidden text-xs md:mt-auto md:block">
           <div className="flex flex-col items-center">
             <Dialog>
               <DialogTrigger>
@@ -100,6 +110,72 @@ function AppLayout() {
           </div>
         </div>
       </aside>
+
+      {/* Mobile Navigation Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.ul
+            className="fixed left-0 right-0 top-[3.5rem] z-10 bg-foreground px-2 pb-4 pt-1 text-lg text-background shadow-lg"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.li
+              className="flex"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <Link
+                to={"/"}
+                className="flex-1 rounded px-2 transition-all hover:bg-background/5"
+              >
+                Home
+              </Link>
+            </motion.li>
+            <motion.li
+              className="flex"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.15 }}
+            >
+              <Link
+                to={"/recipes"}
+                className="flex-1 rounded px-2 transition-all hover:bg-background/5"
+              >
+                Recipes
+              </Link>
+            </motion.li>
+            <motion.li
+              className="flex"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Link
+                to={"/trash"}
+                className="flex-1 rounded px-2 transition-all hover:bg-background/5"
+              >
+                Trash
+              </Link>
+            </motion.li>
+            <motion.li
+              className="flex"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.25 }}
+            >
+              <Link
+                to={"/logout"}
+                className="flex-1 rounded px-2 transition-all hover:bg-background/5"
+              >
+                Logout
+              </Link>
+            </motion.li>
+          </motion.ul>
+        )}
+      </AnimatePresence>
 
       <main>
         <Outlet />
