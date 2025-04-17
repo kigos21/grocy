@@ -64,7 +64,15 @@ const GuestNavbar: React.FC = () => {
   }, [location]);
 
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between bg-white px-4 py-4 shadow-sm md:px-12">
+    <motion.nav
+      initial={{ y: -20, opacity: 0 }}
+      animate={{
+        y: 0,
+        opacity: 1,
+        transition: { duration: 0.5, delay: 0.2, ease: "easeInOut" },
+      }}
+      className="sticky top-0 z-50 flex items-center justify-between bg-white px-4 py-4 shadow-sm md:px-12"
+    >
       <div className="flex items-center">
         <Link
           to={"/"}
@@ -179,7 +187,7 @@ const GuestNavbar: React.FC = () => {
           </motion.ul>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 };
 

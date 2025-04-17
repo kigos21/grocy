@@ -15,7 +15,7 @@ const CtaSection: React.FC = () => {
           and grocery shopping process with our app.
         </p>
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <Link to={"/login"} className="w-full">
+          <Link to={"/login"} className="w-full" viewTransition>
             <Button
               size="lg"
               className="w-full bg-white px-8 text-lg text-brand-green-dark hover:bg-gray-100"
