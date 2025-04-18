@@ -38,7 +38,7 @@ function AppLayout() {
       {/* Nav */}
       <aside className="sticky top-0 z-20 flex items-center justify-between bg-foreground text-background max-md:h-[3.5rem] max-md:px-4 md:fixed md:bottom-0 md:w-[3.5rem] md:flex-col md:justify-normal md:gap-8 md:py-6">
         <Link
-          to={"/grocery-lists"}
+          to={"/app/grocery-lists"}
           className="text-3xl font-semibold tracking-wider text-secondary transition-colors hover:text-secondary/90 md:block"
         >
           Gr
@@ -52,7 +52,7 @@ function AppLayout() {
         </button>
 
         <Link
-          to={"/grocery-lists"}
+          to={"/app/grocery-lists"}
           className="hidden text-xs transition-colors hover:text-background/70 md:block"
         >
           <div className="flex flex-col items-center">
@@ -62,7 +62,7 @@ function AppLayout() {
         </Link>
 
         <Link
-          to={"/recipes"}
+          to={"/app/recipes"}
           className="hidden text-xs transition-colors hover:text-background/70 md:block"
         >
           <div className="flex flex-col items-center">
@@ -72,7 +72,7 @@ function AppLayout() {
         </Link>
 
         <Link
-          to={"/trash"}
+          to={"/app/trash"}
           className="order-first hidden text-xs transition-colors hover:text-background/70 md:order-none md:block"
         >
           <div className="flex flex-col items-center text-center">

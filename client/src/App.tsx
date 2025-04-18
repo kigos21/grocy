@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 
 import { initializeAuthInterceptor } from "@/lib/interceptors";
 
@@ -27,7 +31,7 @@ import TrashPage from "./pages/TrashPage";
 const router = createBrowserRouter([
   {
     // Guest routes
-    path: "/",
+    path: "",
     element: <GuestLayout />,
     children: [
       { index: true, element: <LandingPage /> },
@@ -37,13 +41,14 @@ const router = createBrowserRouter([
   },
   {
     // Authenticated Routes
-    path: "/",
+    path: "app",
     element: (
       <RequireAuth>
         <AppLayout />
       </RequireAuth>
     ),
     children: [
+      { index: true, element: <Navigate to={"/app/grocery-lists"} replace /> },
       {
         path: "grocery-lists",
         children: [

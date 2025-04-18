@@ -8,7 +8,7 @@ function GuestLayout() {
   const { isAuthenticated } = useAuthStore();
 
   if (isAuthenticated) {
-    return <Navigate to={"/grocery-lists"} />;
+    return <Navigate to={"/app/grocery-lists"} />;
   }
 
   return (
