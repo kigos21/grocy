@@ -94,8 +94,8 @@ const FooterSection: React.FC = () => {
             </ul>
           </div> */}
 
-          <div>
-            {/* <h4 className="mb-4 font-semibold">Follow Us</h4>
+          {/* <div> */}
+          {/* <h4 className="mb-4 font-semibold">Follow Us</h4>
             <div className="flex space-x-4">
               <a
                 href="#"
@@ -116,7 +116,7 @@ const FooterSection: React.FC = () => {
                 <Instagram className="h-6 w-6" />
               </a>
             </div> */}
-            <div className="flex flex-col gap-2 text-start md:text-end">
+          {/* <div className="flex flex-col gap-2 text-start md:text-end">
               <a
                 href="#"
                 className="text-sm text-white/70 transition-colors hover:text-white"
@@ -129,8 +129,8 @@ const FooterSection: React.FC = () => {
               >
                 Terms of Service
               </a>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
         </div>
 
         <div className="mt-8 flex flex-col justify-between border-t border-white/20 pt-8 md:flex-row">

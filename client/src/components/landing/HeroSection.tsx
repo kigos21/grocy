@@ -1,50 +1,16 @@
 import { Button } from "@/components/ui/button";
+import {
+  containerVariants,
+  floatingCardHeroVariants,
+  imageVariants,
+  itemVariants,
+} from "@/lib/animationVariants";
 import { scrollToId } from "@/lib/utils";
-import { motion, Variants } from "motion/react";
+import { motion } from "motion/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
 const HeroSection: React.FC = () => {
-  // Define animation variants
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  const imageVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.7, ease: "easeOut" },
-    },
-  };
-
-  const floatingCardVariants: Variants = {
-    hidden: { opacity: 0, x: 20, y: 20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      transition: { duration: 0.5, delay: 0.6 },
-    },
-  };
-
   return (
     <motion.section
       className="bg-gradient-to-r from-brand-green-light/10 to-brand-orange-light/10 px-6 py-20 md:px-12"
@@ -104,7 +70,7 @@ const HeroSection: React.FC = () => {
               />
               <motion.div
                 className="absolute -bottom-6 -right-6 rounded-lg bg-white p-4 shadow-lg"
-                variants={floatingCardVariants}
+                variants={floatingCardHeroVariants}
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-orange/20">

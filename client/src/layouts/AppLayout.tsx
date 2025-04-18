@@ -15,12 +15,40 @@ import useAuthStore from "@/store/authStore";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { ChefHat, House, Menu, Trash } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 function AppLayout() {
   const { user, logout } = useAuthStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLUListElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Handle clicks outside the menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Check if the menu is open and the click is outside both the menu and the toggle button
+      if (
+        isMenuOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    // Add event listener when menu is open
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup the event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   const handleLogout = async () => {
     const { message } = await AuthService.logout();
@@ -45,6 +73,7 @@ function AppLayout() {
         </Link>
 
         <button
+          ref={buttonRef}
           className="rounded p-1 transition-colors hover:bg-background hover:text-foreground md:hidden"
           onClick={() => setIsMenuOpen((open) => !open)}
         >
@@ -115,6 +144,7 @@ function AppLayout() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.ul
+            ref={menuRef}
             className="fixed left-0 right-0 top-[3.5rem] z-10 bg-foreground px-2 pb-4 pt-1 text-lg text-background shadow-lg md:hidden"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -128,7 +158,7 @@ function AppLayout() {
               transition={{ delay: 0.1 }}
             >
               <Link
-                to={"/"}
+                to={"/app"}
                 className="flex-1 rounded px-2 transition-all hover:bg-background/5"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -142,7 +172,7 @@ function AppLayout() {
               transition={{ delay: 0.15 }}
             >
               <Link
-                to={"/recipes"}
+                to={"/app/recipes"}
                 className="flex-1 rounded px-2 transition-all hover:bg-background/5"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -156,7 +186,7 @@ function AppLayout() {
               transition={{ delay: 0.2 }}
             >
               <Link
-                to={"/trash"}
+                to={"/app/trash"}
                 className="flex-1 rounded px-2 transition-all hover:bg-background/5"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -169,13 +199,35 @@ function AppLayout() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.25 }}
             >
-              <Link
-                to={"/logout"}
-                className="flex-1 rounded px-2 transition-all hover:bg-background/5"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Logout
-              </Link>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button className="flex-1 rounded px-2 text-left transition-all hover:bg-background/5">
+                    Logout
+                  </button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>
+                      You are logged in as {user?.email}.
+                    </DialogTitle>
+                    <DialogDescription>
+                      Log out of your account?
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() => {
+                        handleLogout();
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      Logout
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </motion.li>
           </motion.ul>
         )}
