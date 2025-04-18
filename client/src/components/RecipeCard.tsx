@@ -1,9 +1,9 @@
-import { Clock4, Utensils } from "lucide-react";
-import { Button } from "./ui/button";
-import { TypographyMuted } from "./ui/typography";
 import { Recipe } from "@/types";
+import { Clock4, Utensils } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
+import { TypographyMuted } from "./ui/typography";
 
 function RecipeCard({ id, name, image_path, servings, cook_time }: Recipe) {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ function RecipeCard({ id, name, image_path, servings, cook_time }: Recipe) {
           <Button
             variant={"secondary"}
             className="w-full"
-            onClick={() => navigate(`/recipes/${id}`)}
+            onClick={() => navigate(`/app/recipes/${id}`)}
           >
             View
           </Button>

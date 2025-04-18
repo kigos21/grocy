@@ -64,7 +64,7 @@ function RecipeFormCreate() {
         description: message,
       });
       queryClient.invalidateQueries({ queryKey: ["recipes"] });
-      navigate("/recipes");
+      navigate("/app/recipes");
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof AxiosError) {

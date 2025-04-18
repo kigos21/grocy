@@ -1,14 +1,4 @@
 import RecipeIngredientsCard from "@/components/RecipeIngredientsCard";
-import { TypographyH2 } from "@/components/ui/typography";
-import { RecipeService } from "@/services/RecipeService";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
-import ErrorPage from "../ErrorPage";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { AxiosError } from "axios";
-import { toast } from "@/hooks/use-toast";
-import { getErrorMessage } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,6 +10,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { TypographyH2 } from "@/components/ui/typography";
+import { toast } from "@/hooks/use-toast";
+import { getErrorMessage } from "@/lib/utils";
+import { RecipeService } from "@/services/RecipeService";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import ErrorPage from "../ErrorPage";
 
 function RecipeDetail() {
   const { id: recipeId } = useParams();
@@ -39,7 +39,7 @@ function RecipeDetail() {
         description: message,
       });
       queryClient.invalidateQueries({ queryKey: ["recipes"] });
-      navigate("/recipes");
+      navigate("/app/recipes");
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         // console.error(JSON.stringify(e, null, 2));
@@ -84,7 +84,7 @@ function RecipeDetail() {
             <Button
               variant={"secondary"}
               className="w-full"
-              onClick={() => navigate(`/recipes/${recipeId}/edit`)}
+              onClick={() => navigate(`/app/recipes/${recipeId}/edit`)}
             >
               Edit
             </Button>
@@ -117,7 +117,7 @@ function RecipeDetail() {
             <Button
               variant={"outline"}
               className="w-full border-foreground md:mt-5"
-              onClick={() => navigate("/recipes")}
+              onClick={() => navigate("/app/recipes")}
             >
               Back to Recipes
             </Button>

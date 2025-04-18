@@ -1,6 +1,7 @@
 import RecipeCard from "@/components/RecipeCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { TypographyH2 } from "@/components/ui/typography";
 import { RecipeService } from "@/services/RecipeService";
 import { Recipe } from "@/types";
@@ -21,9 +22,8 @@ import {
   Plus,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import ErrorPage from "../ErrorPage";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useNavigate } from "react-router-dom";
+import ErrorPage from "../ErrorPage";
 
 function Recipes() {
   const [sort, setSort] = useState("newest");
@@ -88,7 +88,7 @@ function Recipes() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <Button onClick={() => navigate("/recipes/new")}>
+            <Button onClick={() => navigate("/app/recipes/new")}>
               <Plus />
               <span className="hidden md:inline">New</span>
             </Button>

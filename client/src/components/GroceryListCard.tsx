@@ -1,7 +1,7 @@
 import { formatIsoDateToLocale, timeDiffForHumans } from "@/lib/utils";
-import { Button } from "./ui/button";
 import { GroceryList } from "@/types";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
 
 function GroceryListCard({
   id,
@@ -45,7 +45,7 @@ function GroceryListCard({
             variant="secondary"
             className="px-4"
             size={"sm"}
-            onClick={() => navigate(`/grocery-lists/${id}`)}
+            onClick={() => navigate(`/app/grocery-lists/${id}`)}
           >
             View
           </Button>

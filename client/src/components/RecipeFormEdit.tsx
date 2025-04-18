@@ -7,11 +7,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
+import { getErrorMessage } from "@/lib/utils";
+import ErrorPage from "@/pages/ErrorPage";
+import { RecipeService } from "@/services/RecipeService";
 import { ValidationErrors } from "@/types";
 import { RecipeFormValues } from "@/types/zod";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { Check, ChevronDown, Plus, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { Input } from "./ui/input";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,15 +26,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
-import { Check, ChevronDown, Plus, X } from "lucide-react";
-import { getErrorMessage } from "@/lib/utils";
-import { AxiosError } from "axios";
-import { RecipeService } from "@/services/RecipeService";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { Input } from "./ui/input";
 import { Skeleton } from "./ui/skeleton";
-import ErrorPage from "@/pages/ErrorPage";
 
 function RecipeFormEdit() {
   const { toast } = useToast();
@@ -88,7 +88,7 @@ function RecipeFormEdit() {
         description: message,
       });
       queryClient.invalidateQueries({ queryKey: ["recipes"] });
-      navigate("/recipes");
+      navigate("/app/recipes");
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof AxiosError) {

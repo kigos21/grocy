@@ -1,6 +1,8 @@
 import GroceryListCard from "@/components/GroceryListCard";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { TypographyH2 } from "@/components/ui/typography";
+import { GroceryListService } from "@/services/GroceryListService";
 import { GroceryList } from "@/types";
 import {
   DropdownMenu,
@@ -19,10 +21,8 @@ import {
   Plus,
 } from "lucide-react";
 import { useState } from "react";
-import ErrorPage from "../ErrorPage";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useNavigate } from "react-router-dom";
-import { GroceryListService } from "@/services/GroceryListService";
+import ErrorPage from "../ErrorPage";
 
 function GroceryLists() {
   const [sort, setSort] = useState("newest");
@@ -71,7 +71,7 @@ function GroceryLists() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Button onClick={() => navigate("/grocery-lists/new")}>
+            <Button onClick={() => navigate("/app/grocery-lists/new")}>
               <Plus />
               <span className="">New</span>
             </Button>

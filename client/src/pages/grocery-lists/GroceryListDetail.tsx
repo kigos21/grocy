@@ -1,13 +1,4 @@
-import { toast } from "@/hooks/use-toast";
-import { getErrorMessage } from "@/lib/utils";
-import { GroceryListService } from "@/services/GroceryListService";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import ErrorPage from "../ErrorPage";
-import { TypographyH2 } from "@/components/ui/typography";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
+import GroceryListItemsCard from "@/components/GroceryListItemsCard";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,8 +10,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import GroceryListItemsCard from "@/components/GroceryListItemsCard";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { TypographyH2 } from "@/components/ui/typography";
+import { toast } from "@/hooks/use-toast";
+import { getErrorMessage } from "@/lib/utils";
+import { GroceryListService } from "@/services/GroceryListService";
 import { GroceryListRecipe } from "@/types";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import ErrorPage from "../ErrorPage";
 
 function GroceryListDetail() {
   const { id: groceryListId } = useParams();
@@ -40,7 +40,7 @@ function GroceryListDetail() {
         description: message,
       });
       queryClient.invalidateQueries({ queryKey: ["groceryLists"] });
-      navigate("/grocery-lists");
+      navigate("/app/grocery-lists");
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         toast({
@@ -83,7 +83,9 @@ function GroceryListDetail() {
             <Button
               variant={"secondary"}
               className="w-full"
-              onClick={() => navigate(`/grocery-lists/${groceryListId}/edit`)}
+              onClick={() =>
+                navigate(`/app/grocery-lists/${groceryListId}/edit`)
+              }
             >
               Edit
             </Button>
@@ -116,7 +118,7 @@ function GroceryListDetail() {
             <Button
               variant={"outline"}
               className="w-full border-foreground md:mt-5"
-              onClick={() => navigate("/grocery-lists")}
+              onClick={() => navigate("/app/grocery-lists")}
             >
               Back to Home
             </Button>

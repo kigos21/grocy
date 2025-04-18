@@ -1,8 +1,12 @@
+import GroceryListRecipeAdded from "@/components/GroceryListRecipeAdded";
 import GroceryListRecipeCard from "@/components/GroceryListRecipeCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TypographyH2 } from "@/components/ui/typography";
+import { toast } from "@/hooks/use-toast";
+import { getErrorMessage } from "@/lib/utils";
+import { GroceryListService } from "@/services/GroceryListService";
 import { RecipeService } from "@/services/RecipeService";
 import { Recipe, ValidationErrors } from "@/types";
 import {
@@ -13,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import {
   ChevronDown,
   ChevronFirst,
@@ -21,13 +26,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import ErrorPage from "../ErrorPage";
-import GroceryListRecipeAdded from "@/components/GroceryListRecipeAdded";
-import { GroceryListService } from "@/services/GroceryListService";
-import { AxiosError } from "axios";
-import { toast } from "@/hooks/use-toast";
-import { getErrorMessage } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
+import ErrorPage from "../ErrorPage";
 
 function GroceryListCreate() {
   const [sort, setSort] = useState("newest");
@@ -71,7 +71,7 @@ function GroceryListCreate() {
         description: message,
       });
       queryClient.invalidateQueries({ queryKey: ["groceryLists"] });
-      navigate("/grocery-lists");
+      navigate("/app/grocery-lists");
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof AxiosError) {
