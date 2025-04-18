@@ -1,6 +1,6 @@
 import FooterSection from "@/components/landing/FooterSection";
 import GuestNavbar from "@/components/landing/GuestNavbar";
-import ScrollToTop from "@/lib/ScrollToTop";
+import ScrollToTop from "@/components/ScrollToTop";
 import useAuthStore from "@/store/authStore";
 import { Navigate, Outlet } from "react-router-dom";
 
