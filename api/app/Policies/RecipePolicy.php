@@ -39,7 +39,7 @@ class RecipePolicy
     {
         return $user->id === $recipe->user_id || $user->role === 'ADMIN'
             ? Response::allow()
-            : Response::deny('You do not own this post.');
+            : Response::deny('You do not own this recipe.');
     }
 
     /**

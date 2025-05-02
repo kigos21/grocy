@@ -1,7 +1,7 @@
 import { RecipeWithIngredients } from "@/types";
+import { Clock4, Utensils } from "lucide-react";
 import { Fragment, useState } from "react";
 import { TypographyMuted } from "./ui/typography";
-import { Clock4, Utensils } from "lucide-react";
 
 function RecipeIngredientsCard({
   // id,

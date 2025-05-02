@@ -22,12 +22,14 @@ class RecipeService
 
         // Form base query for USER and ADMIN
         $user = $request->user();
-        $query = null;
-        if ($user->role === 'USER') {
-            $query = Recipe::query()->where('user_id', $user->id);
-        } else {
-            $query = Recipe::query();
-        }
+        // $query = null;
+        $query = Recipe::query();
+
+        // if ($user->role === 'USER') {
+        //     $query = Recipe::query()->where('user_id', $user->id);
+        // } else {
+        //     $query = Recipe::query();
+        // }
 
         // Apply search if 'q' parameter is present
         if ($searchQuery) {
@@ -40,6 +42,8 @@ class RecipeService
         } elseif ($sort === 'name') {
             $query->orderBy('name');
         }
+
+        $query->with('user');
 
         // Get the results with pagination
         return $query->paginate(6);

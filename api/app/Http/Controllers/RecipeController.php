@@ -128,7 +128,7 @@ class RecipeController extends Controller
      */
     public function show($id)
     {
-        $recipe = Recipe::with('recipeIngredients')->findOrFail($id);
+        $recipe = Recipe::with(['recipeIngredients', 'user'])->findOrFail($id);
 
         return response()->json([
             'status' => 'success',
