@@ -7,6 +7,7 @@ use App\Services\RecipeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
 
@@ -87,16 +88,22 @@ class RecipeController extends Controller
                 // Generate a unique filename
                 $filename = time() . '_' . Str::random(10) . '.png'; // You can determine the extension from the Base64 header if needed
 
-                // Save the image to the 'uploads' directory
-                $filePath = public_path('storage') . '/' . $filename;
-                file_put_contents($filePath, $image);
+                // Create a temporary file
+                $tempPath = sys_get_temp_dir() . '/' . $filename;
+                file_put_contents($tempPath, $image);
 
-                // Resize image
-                Image::read('storage/' . $filename)->scaleDown(height: 400)->save();
+                // Resize the image while it's strill local
+                Image::read($tempPath)->scaleDown(height: 400)->save($tempPath);
 
-                $imagePath = "storage/" . $filename;
-                $validatedData['image_path'] = $imagePath;
+                // Define the path in DigitalOcean space
+                $spacesPath = 'images/' . $filename;
 
+                // Store the file in DitigalOcean Space
+                Storage::disk('s3')->put($spacesPath, file_get_contents($tempPath), 'public');
+
+                // Generate the URL for the image
+                $imageUrl = Storage::disk('s3')->url($spacesPath);
+                $validatedData['image_path'] = $imageUrl;
 
             } catch (\Exception $e) {
                 return response()->json([
@@ -200,16 +207,22 @@ class RecipeController extends Controller
                 // Generate a unique filename
                 $filename = time() . '_' . Str::random(10) . '.png'; // You can determine the extension from the Base64 header if needed
 
-                // Save the image to the 'uploads' directory
-                $filePath = public_path('storage') . '/' . $filename;
-                file_put_contents($filePath, $image);
+                // Create a temporary file
+                $tempPath = sys_get_temp_dir() . '/' . $filename;
+                file_put_contents($tempPath, $image);
 
-                // Resize image
-                Image::read('storage/' . $filename)->scaleDown(height: 400)->save();
+                // Resize the image while it's strill local
+                Image::read($tempPath)->scaleDown(height: 400)->save($tempPath);
 
-                $imagePath = "storage/" . $filename;
-                $validatedData['image_path'] = $imagePath;
+                // Define the path in DigitalOcean space
+                $spacesPath = 'images/' . $filename;
 
+                // Store the file in DitigalOcean Space
+                Storage::disk('s3')->put($spacesPath, file_get_contents($tempPath), 'public');
+
+                // Generate the URL for the image
+                $imageUrl = Storage::disk('s3')->url($spacesPath);
+                $validatedData['image_path'] = $imageUrl;
 
             } catch (\Exception $e) {
                 return response()->json([
@@ -230,8 +243,22 @@ class RecipeController extends Controller
         $recipe = $this->recipeService->updateRecipe($validatedData, $existingRecipe);
 
         // After updating the record, and upload is successful, delete the previous file, ONLY IF it was changed
-        if (File::exists(public_path($prevImagePath)) && $validatedData['image_path'] != $prevImagePath) {
-            File::delete(public_path($prevImagePath));
+        if ($prevImagePath && $validatedData['image_path'] != $prevImagePath) {
+            try {
+                // Extract path from the URL
+                $parsedUrl = parse_url($prevImagePath);
+                
+                // Check if we have a valid path to delete
+                if (isset($parsedUrl['path'])) {
+                    $pathToDelete = ltrim($parsedUrl['path'], '/');
+                    
+                    // Delete the file from DigitalOcean Spaces
+                    Storage::disk('s3')->delete($pathToDelete);
+                }
+            } catch (\Exception $e) {
+                // Log the error but don't fail the request
+                \Log::error('Failed to delete previous image from DO Spaces: ' . $e->getMessage());
+            }
         }
 
         return response()->json([
@@ -333,9 +360,17 @@ class RecipeController extends Controller
             // Perform force delete
             $recipe->forceDelete();
 
-            // Delete the image in the filesystem
-            if (File::exists(public_path($recipe->image_path))) {
-                File::delete(public_path($recipe->image_path));
+            // Delete the image in the DigitalOcean Spaces
+            if ($recipe->image_path) {
+                try {
+                    $parsedUrl = parse_url($recipe->image_path);
+                    if (isset($parsedUrl['path'])) {
+                        $pathToDelete = ltrim($parsedUrl['path'], '/');
+                        Storage::disk('s3')->delete($pathToDelete);
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('Failed to delete image during forceDelete: ' . $e->getMessage());
+                }
             }
 
             return response()->json([

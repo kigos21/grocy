@@ -1,8 +1,8 @@
+import { Recipe } from "@/types";
 import { Clock4, Utensils } from "lucide-react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { TypographyMuted } from "./ui/typography";
-import { Recipe } from "@/types";
-import { useState } from "react";
 
 function GroceryListRecipeCard({
   // id,
@@ -23,7 +23,7 @@ function GroceryListRecipeCard({
       <div className="aspect-square h-full w-[6.75rem] flex-shrink-0">
         {image_path && !imageError ? (
           <img
-            src={`http://localhost:8000/${image_path}`}
+            src={image_path}
             alt={`Image of ${name}`}
             onError={() => setImageError(true)}
             className="aspect-square h-full bg-gray-100 object-cover"

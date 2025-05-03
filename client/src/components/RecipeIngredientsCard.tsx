@@ -22,7 +22,7 @@ function RecipeIngredientsCard({
           <div className="flex flex-col gap-1">
             {image_path && !imageError ? (
               <img
-                src={`http://localhost:8000/${image_path}`}
+                src={image_path}
                 alt={`Image of ${name}`}
                 onError={() => setImageError(true)}
                 className="aspect-video rounded-sm bg-gray-100 object-cover"

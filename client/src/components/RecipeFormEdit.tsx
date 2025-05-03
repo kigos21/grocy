@@ -179,7 +179,7 @@ function RecipeFormEdit() {
                     <div>
                       {!imageError ? (
                         <img
-                          src={`http://localhost:8000/${data?.data.recipe.image_path}`}
+                          src={data?.data.recipe.image_path}
                           alt={`Image of ${data?.data.recipe.name}`}
                           onError={() => setImageError(true)}
                           className="aspect-video max-w-[18.75rem] rounded-sm bg-gray-100 object-cover"
