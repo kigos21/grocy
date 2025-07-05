@@ -31,7 +31,8 @@ class RecipeSeeder extends Seeder
         ];
 
         // Define the user IDs
-        $userIds = [2, 3, 4, 5];
+        // $userIds = [2, 3, 4, 5];
+        $userIds = [2];
 
         // Assign each recipe to all users
         foreach ($userIds as $userId) {
