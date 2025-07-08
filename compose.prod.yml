@@ -1,0 +1,62 @@
+services:
+  api:
+    image: kigos21/grocy-api:latest
+    container_name: grocy-api
+    restart: unless-stopped
+    volumes:
+      # The code is in the image, but we still need a volume for user-uploaded files
+      - ./api/storage:/var/www/html/storage
+    networks:
+      - grocy-network
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+
+  api-nginx:
+    image: nginx:alpine
+    container_name: grocy-api-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./api/public:/var/www/html/public
+      - ./api/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - grocy-network
+    depends_on:
+      - api
+
+  client:
+    image: kigos21/grocy-client:latest
+    container_name: grocy-client
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    networks:
+      - grocy-network
+
+  db:
+    image: mysql:8.0
+    container_name: grocy-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - grocy-db-data:/var/lib/mysql
+    networks:
+      - grocy-network
+
+networks:
+  grocy-network:
+    driver: bridge
+
+volumes:
+  grocy-db-data:
+    driver: local
