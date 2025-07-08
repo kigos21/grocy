@@ -3,7 +3,7 @@ FROM composer:2 as vendor
 
 WORKDIR /app
 COPY . .
-RUN composer require league/flysystem-aws-s3-v3 "^3.0" --with-all-dependencies
+# RUN composer require league/flysystem-aws-s3-v3 "^3.0" --with-all-dependencies
 RUN composer install --no-interaction --no-dev --prefer-dist
 
 # Stage 2: Build the final application image
