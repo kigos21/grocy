@@ -35,7 +35,7 @@ services:
     container_name: grocy-client
     restart: unless-stopped
     ports:
-      - "3000:80"
+      - "80:80"
     networks:
       - grocy-network
 
