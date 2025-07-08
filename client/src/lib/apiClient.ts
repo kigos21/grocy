@@ -2,7 +2,7 @@ import useAuthStore from "@/store/authStore";
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://grocy.kigos.dev/api",
+  baseURL: "https://grocy.kigos.dev",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

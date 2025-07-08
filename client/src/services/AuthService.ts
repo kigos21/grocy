@@ -1,5 +1,5 @@
-import { LoginFormValues, RegisterFormValues } from "@/types/zod";
 import apiClient from "@/lib/apiClient";
+import { LoginFormValues, RegisterFormValues } from "@/types/zod";
 
 export class AuthService {
   static async login(values: LoginFormValues) {
@@ -13,7 +13,7 @@ export class AuthService {
   }
 
   // static async getUserProfile() {
-  //   const response = await axios.get("/api/profile");
+  //   const response = await axios.get("/profile");
   //   return response.data; // Returns the user's profile information
   // }
 

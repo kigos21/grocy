@@ -17,3 +17,4 @@ Don't forget
 -   Updating the images on the VPS
 -   Making the domain work, setting up SSL, and making sure everything works for https
 -   Dealing with CORS errors. Moreover, HTTPS introduced another quirk of not being able to request to another domain.
+-   CSRF cookie handling, can't comprehend it.
